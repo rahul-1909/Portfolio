@@ -1,247 +1,224 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Mail, 
-  MapPin, 
-  Clock, 
-  Send, 
-  Check, 
-  Copy 
-} from 'lucide-react';
+import React, { useState } from 'react';
+import { Mail, ExternalLink, Copy, Check } from 'lucide-react';
 import { profileData } from '../data/profile';
-import { GithubIcon, LinkedinIcon, TwitterIcon } from '../components/SocialIcons';
-import { getISTDateTime } from '../utils/time';
-import type { ISTTimeInfo } from '../utils/time';
 
 export const ContactPage: React.FC = () => {
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const [istTime, setIstTime] = useState<ISTTimeInfo>(getISTDateTime());
-  const [formState, setFormState] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-  const [isSent, setIsSent] = useState(false);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIstTime(getISTDateTime());
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const handleCopyEmail = () => {
+  const handleCopyEmail = (e: React.MouseEvent) => {
+    e.preventDefault();
     navigator.clipboard.writeText(profileData.email);
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 2000);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formState.name || !formState.email || !formState.message) return;
-
-    const subject = encodeURIComponent(formState.subject || `Message from ${formState.name} via Portfolio`);
-    const body = encodeURIComponent(
-      `Name: ${formState.name}\nEmail: ${formState.email}\n\nMessage:\n${formState.message}`
-    );
-    window.location.href = `mailto:${profileData.email}?subject=${subject}&body=${body}`;
-    setIsSent(true);
-  };
-
   return (
-    <div className="pt-28 pb-20">
-      <div className="content-wrapper">
-        {/* Page Header matching Arshad's prompt */}
-        <header className="mb-12 max-w-3xl">
-          <div className="inline-flex items-center gap-2 rounded-full bg-accent-500/10 px-3 py-1 text-xs font-semibold text-accent-600 dark:text-accent-400 mb-3">
-            <Mail className="h-3.5 w-3.5" />
-            <span>Direct Communication</span>
-          </div>
-          <h1 className="text-3xl sm:text-5xl font-[1000] tracking-tight text-slate-900 dark:text-white leading-tight">
-            Get in touch with me anytime, through social media, e-mail
-          </h1>
-          <p className="mt-4 text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed">
-            Just a friendly reminder that the information provided here is for business purposes only. If you have any questions, feel free to chat with me directly on my social media. I appreciate your understanding in using this responsibly.
-          </p>
-        </header>
+    <div className="pt-28 pb-24">
+      <div className="content-wrapper max-w-4xl">
+        {/* Page Top Indicator matching Arshad MQ */}
+        <div className="mb-2">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#38bdf8]">
+            WORK
+          </span>
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Contact Details Card (5 cols) */}
-          <div className="lg:col-span-5 rounded-2xl border border-slate-200/80 bg-white/80 p-6 sm:p-8 backdrop-blur-md dark:border-white/5 dark:bg-slate-900/60 shadow-sm">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-6">
-              Contact Channels
-            </h2>
+        {/* Large Page Title */}
+        <h1 className="text-4xl sm:text-6xl font-[1000] tracking-tight text-slate-900 dark:text-white mb-4">
+          Contact
+        </h1>
 
-            {/* Direct Email Card */}
-            <div className="mb-6 p-4 rounded-xl border border-slate-200/80 bg-slate-50/80 dark:border-white/5 dark:bg-white/[0.02]">
-              <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-1">
-                Direct Email
-              </span>
-              <div className="flex items-center justify-between gap-2">
-                <a
-                  href={`mailto:${profileData.email}`}
-                  className="font-mono text-sm font-bold text-accent-600 dark:text-accent-400 hover:underline truncate"
-                >
-                  {profileData.email}
-                </a>
-                <button
-                  onClick={handleCopyEmail}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 hover:border-accent-500/50 hover:text-accent-600 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-300 dark:hover:text-accent-400 transition flex-shrink-0"
-                  title="Copy email to clipboard"
-                >
-                  {copiedEmail ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
-                </button>
-              </div>
-            </div>
+        {/* Subtitle */}
+        <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed mb-12">
+          Get in touch with me anytime, through social media, e-mail, or schedule 30min call with me.
+        </p>
 
-            {/* Location & Timezone with Live Clock */}
-            <div className="space-y-4 text-sm text-slate-600 dark:text-slate-300 mb-8">
-              <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-accent-500 flex-shrink-0 mt-0.5" />
-                <div>
-                  <span className="font-semibold text-slate-900 dark:text-white block">Location</span>
-                  <span>{profileData.location}</span>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <Clock className="h-5 w-5 text-cyan-500 flex-shrink-0 mt-0.5" />
-                <div>
-                  <span className="font-semibold text-slate-900 dark:text-white block">
-                    Current Time (IST)
-                  </span>
-                  <div className="flex items-center gap-2 mt-0.5">
-                    <span className="font-mono font-bold text-slate-900 dark:text-white">
-                      {istTime.timeStr}
-                    </span>
-                    <span className="text-xs text-slate-400">· {istTime.dateStr}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Social Channels */}
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-3">
-                Connect Directly
-              </span>
-              <div className="grid grid-cols-3 gap-2">
-                <a
-                  href={profileData.socials.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex flex-col items-center justify-center rounded-xl border border-slate-200 p-3 text-slate-700 transition hover:border-blue-500/40 hover:bg-blue-50/50 hover:text-blue-600 dark:border-white/10 dark:text-slate-300 dark:hover:bg-blue-950/20 dark:hover:text-blue-400"
-                >
-                  <LinkedinIcon className="h-5 w-5 mb-1 text-blue-600" />
-                  <span className="text-xs font-semibold">LinkedIn</span>
-                </a>
-
-                <a
-                  href={profileData.socials.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex flex-col items-center justify-center rounded-xl border border-slate-200 p-3 text-slate-700 transition hover:border-slate-400 hover:bg-slate-100 hover:text-slate-900 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/[0.05] dark:hover:text-white"
-                >
-                  <GithubIcon className="h-5 w-5 mb-1" />
-                  <span className="text-xs font-semibold">GitHub</span>
-                </a>
-
-                <a
-                  href={profileData.socials.twitter}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex flex-col items-center justify-center rounded-xl border border-slate-200 p-3 text-slate-700 transition hover:border-slate-400 hover:bg-slate-100 hover:text-slate-900 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/[0.05] dark:hover:text-white"
-                >
-                  <TwitterIcon className="h-5 w-5 mb-1" />
-                  <span className="text-xs font-semibold">X / Twitter</span>
-                </a>
-              </div>
-            </div>
+        {/* Content Area with subtle vertical left rule */}
+        <div className="relative pl-6 sm:pl-8 border-l border-slate-200/80 dark:border-white/10 space-y-10">
+          {/* Business disclaimer notice */}
+          <div className="space-y-4 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+            <p>
+              Just a friendly reminder that the information provided here is for{' '}
+              <strong className="font-semibold text-slate-900 dark:text-white">
+                business purposes only
+              </strong>
+              . If you have any questions, feel free to chat with me directly on my social media.
+            </p>
+            <p>
+              I appreciate your understanding in using this responsibly.
+            </p>
           </div>
 
-          {/* Contact Form (7 cols) */}
-          <div className="lg:col-span-7 rounded-2xl border border-slate-200/80 bg-white/80 p-6 sm:p-8 backdrop-blur-md dark:border-white/5 dark:bg-slate-900/60 shadow-sm">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-              Send a Direct Message
+          <hr className="border-slate-200/80 dark:border-white/10" />
+
+          {/* Section: Contact */}
+          <div>
+            <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-4">
+              Contact
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-6">
-              Fill out this form to prepare a pre-formatted message in your default email client.
+
+            {/* Contact Details Table matching screenshot */}
+            <div className="overflow-hidden rounded-xl border border-slate-200/80 dark:border-[#1e2235] bg-white dark:bg-[#0c0d16] shadow-sm">
+              <table className="w-full text-left text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-200/80 dark:border-[#1e2235] bg-slate-50 dark:bg-[#121422] text-xs font-bold text-slate-700 dark:text-slate-300">
+                    <th className="py-3 px-4 sm:px-6 w-1/3">Contact</th>
+                    <th className="py-3 px-4 sm:px-6">Detail</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200/60 dark:divide-[#1e2235]/60 text-slate-700 dark:text-slate-300">
+                  <tr>
+                    <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-500 dark:text-slate-400">
+                      Address
+                    </td>
+                    <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-900 dark:text-slate-200">
+                      {profileData.location}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-500 dark:text-slate-400">
+                      Timezone
+                    </td>
+                    <td className="py-3.5 px-4 sm:px-6 font-mono font-medium text-slate-900 dark:text-slate-200">
+                      GMT+5.30
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-500 dark:text-slate-400">
+                      E-mail Official
+                    </td>
+                    <td className="py-3.5 px-4 sm:px-6">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <a
+                          href={`mailto:${profileData.email}`}
+                          className="inline-flex items-center gap-2 font-mono text-blue-600 dark:text-[#38bdf8] hover:underline"
+                        >
+                          <Mail className="h-4 w-4" />
+                          <span>{profileData.email}</span>
+                        </a>
+                        <button
+                          onClick={handleCopyEmail}
+                          title="Copy Email"
+                          className="inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white transition"
+                        >
+                          {copiedEmail ? (
+                            <>
+                              <Check className="h-3 w-3 text-emerald-500" />
+                              <span className="text-emerald-500">Copied</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="h-3 w-3" />
+                              <span>Copy</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Note below table */}
+            <p className="mt-4 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+              If you need any further information, such as my phone number, please do not hesitate to send me an email first.
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                    Your Name *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formState.name}
-                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    placeholder="e.g. Recruiter / Engineering Manager"
-                    className="w-full rounded-xl border border-slate-200 bg-white/80 px-3.5 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:border-accent-500 focus:outline-none dark:border-white/10 dark:bg-white/[0.04] dark:text-white"
-                  />
-                </div>
+            {/* Schedule a Call Button */}
+            <div className="mt-5">
+              <a
+                href={`mailto:${profileData.email}?subject=Schedule%20a%20Call%20with%20Rahul%20Teja`}
+                className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-blue-600/30 transition hover:bg-blue-700 hover:shadow-blue-600/40"
+              >
+                Schedule a Call
+              </a>
+            </div>
+          </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                    Your Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={formState.email}
-                    onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                    placeholder="name@company.com"
-                    className="w-full rounded-xl border border-slate-200 bg-white/80 px-3.5 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:border-accent-500 focus:outline-none dark:border-white/10 dark:bg-white/[0.04] dark:text-white"
-                  />
-                </div>
-              </div>
+          <hr className="border-slate-200/80 dark:border-white/10" />
 
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  value={formState.subject}
-                  onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
-                  placeholder="Software / Backend Engineering Opportunity"
-                  className="w-full rounded-xl border border-slate-200 bg-white/80 px-3.5 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:border-accent-500 focus:outline-none dark:border-white/10 dark:bg-white/[0.04] dark:text-white"
-                />
-              </div>
+          {/* Section: Social Media */}
+          <div>
+            <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-2">
+              Social Media
+            </h2>
 
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                  Message *
-                </label>
-                <textarea
-                  rows={5}
-                  required
-                  value={formState.message}
-                  onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                  placeholder="Hi Rahul, we reviewed your projects and would love to discuss a potential opportunity..."
-                  className="w-full rounded-xl border border-slate-200 bg-white/80 px-3.5 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:border-accent-500 focus:outline-none dark:border-white/10 dark:bg-white/[0.04] dark:text-white"
-                />
-              </div>
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed mb-2">
+              If you want to find me on social media, just search for{' '}
+              <strong className="font-semibold text-slate-900 dark:text-white">
+                @Knightswatch__
+              </strong>{' '}
+              or{' '}
+              <strong className="font-semibold text-slate-900 dark:text-white">
+                @rahul-1909
+              </strong>
+              . That's my username on almost all platforms, so it should be easy to find me.
+            </p>
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+              But if you're short on time, I've included some links to the social media platforms I use most frequently below.
+            </p>
 
-              <div className="flex items-center justify-between pt-2">
-                <button
-                  type="submit"
-                  className="flex items-center gap-2 rounded-xl bg-accent-600 px-6 py-3 text-xs font-bold text-white shadow-md shadow-accent-600/25 transition hover:bg-accent-700 active:scale-95"
-                >
-                  <Send className="h-3.5 w-3.5" />
-                  <span>Send Message via Email Client</span>
-                </button>
-
-                {isSent && (
-                  <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-                    <Check className="h-3.5 w-3.5" /> Email client triggered!
-                  </span>
-                )}
-              </div>
-            </form>
+            {/* Social Media Table matching screenshot */}
+            <div className="overflow-hidden rounded-xl border border-slate-200/80 dark:border-[#1e2235] bg-white dark:bg-[#0c0d16] shadow-sm">
+              <table className="w-full text-left text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-200/80 dark:border-[#1e2235] bg-slate-50 dark:bg-[#121422] text-xs font-bold text-slate-700 dark:text-slate-300">
+                    <th className="py-3 px-4 sm:px-6 w-1/3">Social Media</th>
+                    <th className="py-3 px-4 sm:px-6">Profile URL</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200/60 dark:divide-[#1e2235]/60 text-slate-700 dark:text-slate-300">
+                  <tr>
+                    <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-900 dark:text-slate-200">
+                      LinkedIn
+                    </td>
+                    <td className="py-3.5 px-4 sm:px-6">
+                      <a
+                        href={profileData.socials.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-blue-600 dark:text-[#38bdf8] hover:underline"
+                      >
+                        <span className="truncate">{profileData.socials.linkedin}</span>
+                        <ExternalLink className="h-3 w-3 shrink-0 opacity-70" />
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-900 dark:text-slate-200">
+                      Twitter
+                    </td>
+                    <td className="py-3.5 px-4 sm:px-6">
+                      <a
+                        href={profileData.socials.twitter}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-blue-600 dark:text-[#38bdf8] hover:underline"
+                      >
+                        <span className="truncate">{profileData.socials.twitter}</span>
+                        <ExternalLink className="h-3 w-3 shrink-0 opacity-70" />
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-3.5 px-4 sm:px-6 font-medium text-slate-900 dark:text-slate-200">
+                      GitHub
+                    </td>
+                    <td className="py-3.5 px-4 sm:px-6">
+                      <a
+                        href={profileData.socials.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-blue-600 dark:text-[#38bdf8] hover:underline"
+                      >
+                        <span className="truncate">{profileData.socials.github}</span>
+                        <ExternalLink className="h-3 w-3 shrink-0 opacity-70" />
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

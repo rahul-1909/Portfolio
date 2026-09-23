@@ -1,8 +1,10 @@
 import React from 'react';
-import { Briefcase, Calendar, MapPin, CheckCircle2 } from 'lucide-react';
+import { Briefcase, Calendar, MapPin, CheckCircle2, FileText, ExternalLink, ShieldCheck } from 'lucide-react';
 import { experienceData } from '../data/experience';
 
 export const ExperiencePage: React.FC = () => {
+  const serviceLetterUrl = "https://drive.google.com/file/d/13vHdfLoxY705xedUs1SP6itxNkY2wXp-/view?usp=sharing";
+
   return (
     <div className="pt-28 pb-20">
       <div className="content-wrapper">
@@ -73,6 +75,39 @@ export const ExperiencePage: React.FC = () => {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              {/* Official Service / Experience Letter Verification Card */}
+              <div className="mt-6 rounded-xl border border-emerald-500/20 bg-emerald-50/50 p-4 dark:border-emerald-500/15 dark:bg-emerald-950/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                    <ShieldCheck className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-bold text-slate-900 dark:text-white">
+                        Official Virtusa Service & Experience Letter
+                      </span>
+                      <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-bold text-emerald-700 dark:text-emerald-300">
+                        Verified
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+                      Issued by Virtusa Consulting Services Pvt. Ltd. verifying tenure, designation, and project contributions.
+                    </p>
+                  </div>
+                </div>
+
+                <a
+                  href={serviceLetterUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
+                >
+                  <FileText className="h-3.5 w-3.5 text-emerald-400 dark:text-emerald-600" />
+                  <span>View Service Letter</span>
+                  <ExternalLink className="h-3 w-3 opacity-70" />
+                </a>
               </div>
 
               {/* Technologies Pills */}
