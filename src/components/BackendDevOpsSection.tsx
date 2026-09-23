@@ -52,18 +52,19 @@ export const BackendDevOpsSection: React.FC = () => {
       <div className="relative border-t border-slate-200/60 dark:border-slate-800/60">
         <div className="background-grid background-grid--fade-out absolute inset-0 z-0"></div>
         <div className="content-wrapper relative z-10 pt-16 pb-12">
+          {/* Top 2 Columns Section with Cards 1-4 (Matching Screenshot media_1790174572364.png) */}
           <div className="flex flex-col gap-12 lg:flex-row lg:gap-16">
-            {/* Backend Column (Matches User Screenshot) */}
+            {/* Backend Column */}
             <div className="flex-1">
               <header className="mb-8">
                 <span className="text-accent-600 dark:text-accent-400 mb-2 block text-xs font-bold uppercase tracking-widest">
-                  ROBUST & SCALABLE
+                  BACKEND
                 </span>
                 <h2 className="mb-4 text-3xl font-extrabold leading-tight text-slate-900 lg:text-4xl dark:text-white">
-                  Structured Logic with Focus on Performance and Security.
+                  Resilient, Modular & High-Performance Architecture.
                 </h2>
                 <p className="max-w-lg leading-relaxed text-sm text-slate-600 dark:text-slate-400">
-                  Designing modular, secure APIs with scalable architecture, prioritizing clean code and efficient data flow.
+                  Build robust systems with clean logic, optimized for speed, scalability, and security.
                 </p>
               </header>
 
@@ -71,12 +72,12 @@ export const BackendDevOpsSection: React.FC = () => {
                 {backendItems.map((item) => (
                   <div
                     key={item.num}
-                    className="group flex flex-1 items-start gap-4 rounded-2xl border bg-white/80 px-5 py-4 text-left backdrop-blur-sm dark:bg-slate-900/60 border-slate-200/80 hover:border-slate-300 dark:border-slate-700/50 dark:hover:border-slate-600 transition-all duration-200 hover:-translate-y-0.5"
+                    className="group flex flex-1 items-center gap-5 rounded-2xl border bg-white/80 px-5 py-4 text-left backdrop-blur-sm dark:bg-[#0e101f] border-slate-200/80 hover:border-slate-300 dark:border-[#1a1f36] dark:hover:border-slate-700 transition-all duration-200 hover:-translate-y-0.5"
                   >
-                    <span className="hidden w-16 shrink-0 justify-center text-center text-5xl font-black xl:flex text-slate-300 group-hover:text-slate-400 dark:text-slate-700 dark:group-hover:text-slate-600 select-none">
+                    <span className="w-12 shrink-0 flex items-center justify-center text-center text-4xl sm:text-5xl font-black text-slate-300 group-hover:text-slate-400 dark:text-slate-700 dark:group-hover:text-slate-500 select-none">
                       {item.num}
                     </span>
-                    <div className="flex-1">
+                    <div className="flex-1 border-l border-slate-200/60 dark:border-white/5 pl-4">
                       <span className="block font-bold text-slate-900 dark:text-slate-100">
                         {item.title}
                       </span>
@@ -89,17 +90,17 @@ export const BackendDevOpsSection: React.FC = () => {
               </div>
             </div>
 
-            {/* AI / ML Column (Replaced DevOps as Requested) */}
+            {/* AI / ML Column */}
             <div className="flex-1">
               <header className="mb-8">
                 <span className="text-accent-600 dark:text-accent-400 mb-2 block text-xs font-bold uppercase tracking-widest">
-                  AUTONOMOUS & INTELLIGENT
+                  AI / ML
                 </span>
                 <h2 className="mb-4 text-3xl font-extrabold leading-tight text-slate-900 lg:text-4xl dark:text-white">
-                  Agentic AI Workflows with Focus on Precision and Determinism.
+                  Autonomous, Agentic & High-Throughput Pipelines.
                 </h2>
                 <p className="max-w-lg leading-relaxed text-sm text-slate-600 dark:text-slate-400">
-                  Engineering deterministic RAG pipelines, autonomous agentic state graphs, and low-latency inference for high-precision workflows.
+                  Engineering deterministic RAG pipelines, autonomous agentic state graphs, and low-latency inference.
                 </p>
               </header>
 
@@ -107,12 +108,12 @@ export const BackendDevOpsSection: React.FC = () => {
                 {aimlItems.map((item) => (
                   <div
                     key={item.num}
-                    className="group flex flex-1 items-start gap-4 rounded-2xl border bg-white/80 px-5 py-4 text-left backdrop-blur-sm dark:bg-slate-900/60 border-slate-200/80 hover:border-slate-300 dark:border-slate-700/50 dark:hover:border-slate-600 transition-all duration-200 hover:-translate-y-0.5"
+                    className="group flex flex-1 items-center gap-5 rounded-2xl border bg-white/80 px-5 py-4 text-left backdrop-blur-sm dark:bg-[#0e101f] border-slate-200/80 hover:border-slate-300 dark:border-[#1a1f36] dark:hover:border-slate-700 transition-all duration-200 hover:-translate-y-0.5"
                   >
-                    <span className="hidden w-16 shrink-0 justify-center text-center text-5xl font-black xl:flex text-slate-300 group-hover:text-slate-400 dark:text-slate-700 dark:group-hover:text-slate-600 select-none">
+                    <span className="w-12 shrink-0 flex items-center justify-center text-center text-4xl sm:text-5xl font-black text-slate-300 group-hover:text-slate-400 dark:text-slate-700 dark:group-hover:text-slate-500 select-none">
                       {item.num}
                     </span>
-                    <div className="flex-1">
+                    <div className="flex-1 border-l border-slate-200/60 dark:border-white/5 pl-4">
                       <span className="block font-bold text-slate-900 dark:text-slate-100">
                         {item.title}
                       </span>
@@ -123,6 +124,35 @@ export const BackendDevOpsSection: React.FC = () => {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+
+          {/* Lower Two Feature Blocks (Matching Lower Half of Arshad's Screenshot) */}
+          <div className="mt-20 pt-16 border-t border-slate-200/60 dark:border-slate-800/60 space-y-16 max-w-4xl">
+            {/* Block 1: Robust & Scalable */}
+            <div>
+              <span className="text-accent-600 dark:text-accent-400 mb-2 block text-xs font-bold uppercase tracking-widest">
+                ROBUST & SCALABLE
+              </span>
+              <h3 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-3">
+                Structured Logic with Focus on Performance and Security.
+              </h3>
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
+                Designing modular, secure APIs with scalable architecture, prioritizing clean code and efficient data flow.
+              </p>
+            </div>
+
+            {/* Block 2: Autonomous & Adaptive (AI / ML) */}
+            <div>
+              <span className="text-accent-600 dark:text-accent-400 mb-2 block text-xs font-bold uppercase tracking-widest">
+                AUTONOMOUS & ADAPTIVE
+              </span>
+              <h3 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-3">
+                Agentic AI Workflows with Focus on Precision and Determinism.
+              </h3>
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
+                Engineering deterministic RAG pipelines, autonomous agentic state graphs, and low-latency inference for high-precision workflows.
+              </p>
             </div>
           </div>
         </div>

@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
-import { Award, ExternalLink, ShieldCheck, Calendar } from 'lucide-react';
+import { Award, ExternalLink, ShieldCheck, Calendar, Copy, Check } from 'lucide-react';
 import { certificationsData } from '../data/certifications';
 
 export const CertificationsPage: React.FC = () => {
   const [providerFilter, setProviderFilter] = useState<string>('All');
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const providers = ['All', 'Microsoft', 'Amazon Web Services (AWS)', 'Anthropic'];
 
   const filteredCertifications = providerFilter === 'All'
     ? certificationsData
     : certificationsData.filter(c => c.issuer === providerFilter);
+
+  const handleCopyCode = (code: string) => {
+    navigator.clipboard.writeText(code);
+    setCopiedId(code);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
 
   return (
     <div className="pt-28 pb-20">
@@ -45,7 +52,7 @@ export const CertificationsPage: React.FC = () => {
           ))}
         </div>
 
-        {/* Certifications Grid: 3 cols on desktop, 2 on tablet, 1 on mobile */}
+        {/* Certifications Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredCertifications.map((cert) => (
             <div
@@ -78,6 +85,40 @@ export const CertificationsPage: React.FC = () => {
                     {cert.expirationDate && (
                       <span> · Exp: {cert.expirationDate}</span>
                     )}
+                  </div>
+                )}
+
+                {/* Official Verification Code Container (especially for AWS Certmetrics) */}
+                {cert.credentialId && (
+                  <div className="mt-4 rounded-xl border border-amber-500/20 bg-amber-50/60 p-3 dark:border-amber-500/15 dark:bg-amber-950/20">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
+                        Verification Code
+                      </span>
+                      <button
+                        onClick={() => handleCopyCode(cert.credentialId!)}
+                        className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-600 dark:text-amber-300 hover:underline"
+                        title="Copy code to clipboard"
+                      >
+                        {copiedId === cert.credentialId ? (
+                          <>
+                            <Check className="h-3 w-3 text-emerald-500" />
+                            <span className="text-emerald-600 dark:text-emerald-400">Copied</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="h-3 w-3" />
+                            <span>Copy Code</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                    <p className="mt-1 font-mono text-xs font-bold text-slate-900 dark:text-slate-100 select-all break-all">
+                      {cert.credentialId}
+                    </p>
+                    <p className="mt-1 text-[10px] text-slate-500 dark:text-slate-400">
+                      Enter this verification code on Certmetrics to validate this AWS certificate.
+                    </p>
                   </div>
                 )}
               </div>

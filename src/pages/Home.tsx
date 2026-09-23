@@ -122,13 +122,12 @@ export const Home: React.FC<HomeProps> = ({ onOpenResume }) => {
                   {/* Illustration Image Container with Smooth Rounded Silhouette */}
                   <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] border border-slate-300/80 bg-slate-100 shadow-2xl dark:border-white/15 dark:bg-[#0c0c14] backdrop-blur-sm">
                     <img
-                      src="/assets/images/anime-dev.jpg"
+                      src="/assets/images/dashboard-avatar.png"
                       alt="Rahul Teja - Software Developer"
                       className="h-full w-full object-cover object-center dark:brightness-95 contrast-105 transition-transform duration-700 hover:scale-105"
                       loading="eager"
                       onError={(e) => {
-                        // Fallback to coder image if anything fails
-                        (e.currentTarget as HTMLImageElement).src = '/assets/images/anime-coder.jpg';
+                        (e.currentTarget as HTMLImageElement).src = '/assets/images/dashboard-avatar.gif';
                       }}
                     />
                   </div>

@@ -63,7 +63,7 @@ export const certificationsData: Certification[] = [
     issueDate: "August 4, 2024",
     expirationDate: "August 4, 2027",
     credentialId: "cae1d06cc0504851a742343167d386a3",
-    verificationUrl: "https://aws.amazon.com/verification",
+    verificationUrl: "https://www.certmetrics.com/amazon/public/verification.aspx",
     badgeAccent: {
       bgLight: "bg-amber-50",
       bgDark: "dark:bg-amber-950/40",
