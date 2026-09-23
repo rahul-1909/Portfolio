@@ -168,7 +168,7 @@ export const QuickAccessModal: React.FC<QuickAccessModalProps> = ({ isOpen, onCl
                         {item.label}
                       </span>
                       <span className="hidden text-xs text-slate-400 sm:inline sm:ml-2">
-                        — {item.desc}
+                        - {item.desc}
                       </span>
                     </div>
                   </div>

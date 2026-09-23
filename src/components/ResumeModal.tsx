@@ -32,7 +32,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               {profileData.name}
             </h2>
             <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
-              Software Developer — Backend Engineering & AI/ML
+              Software Developer - Backend Engineering & AI/ML
             </p>
           </div>
           <button

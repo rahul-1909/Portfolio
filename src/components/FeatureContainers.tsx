@@ -11,7 +11,7 @@ export const FeatureContainers: React.FC = () => {
     },
     {
       title: "Scalable Architecture",
-      description: "Designing systems that grow effortlessly — whether it's handling 10 or 10 million requests.",
+      description: "Designing systems that grow effortlessly, whether it's handling 10 or 10 million requests.",
       icon: Heart,
       gradient: "from-pink-400 to-rose-500 dark:from-pink-500 dark:to-rose-600"
     },

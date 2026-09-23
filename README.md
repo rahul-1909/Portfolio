@@ -1,4 +1,4 @@
-# Rahul Teja — Personal Portfolio Website
+# Rahul Teja - Personal Portfolio Website
 
 A modern, production-grade personal portfolio website for **Rahul Teja**, Software Developer focused on Backend Engineering and AI/ML.
 
@@ -6,37 +6,51 @@ Built with **React 19**, **TypeScript**, **Vite**, **Tailwind CSS**, and modern 
 
 ---
 
-## 🚀 Key Features
+## 🛠️ Tech Stack & Architecture
 
-- **Personal Branding & Hero Dashboard**: Dynamic greeting, professional positioning, quick CTAs, and a core technology stack strip.
-- **Dynamic Real-Time IST Clock**: Automatic live calculation for India Standard Time (GMT+5:30) synchronized with system time.
-- **Dark & Light Mode**: Seamless single-click switching with `localStorage` persistence and automatic system preference detection.
-- **Quick Access Action Center**: Command modal accessible anytime via button or keyboard shortcut <kbd>Q</kbd>.
-- **Curated Projects Showcase**:
-  - **Gold Lending Platform** (Spring Boot 3.5, Angular 20, MySQL 9, JWT RBAC) — [Live Demo](https://starfinance-app.vercel.app/login)
-  - **Natural Language to SQL Analytics Copilot** (Python, Groq Whisper, Streamlit, Plotly) — [Live Demo](https://nl2sql-analytics.streamlit.app/)
-  - **LinkedIn Profile Intelligence API** (FastAPI, Voyager REST Engine, Pydantic) — [Live Demo](https://linkedin-profile-intelligence-api.vercel.app/)
-  - **Multi-Agent Autonomous RAG Engine** (LangGraph, Qdrant, FastAPI) — [Live Demo](https://multi-agent-autonomous-rag-engine.onrender.com/)
-  - **Production AI Customer Support Agent** (Python, ChromaDB, 2.8M Twitter dataset) — [GitHub Repo](https://github.com/rahul-1909/Hiver_Assignment)
-  - **SkillBridge Attendance Management API** (FastAPI, SQLAlchemy, Dual JWT RBAC) — [Live Demo](https://skillbridge-attendance-management-api.onrender.com/)
-- **Categorized Skills Matrix**: Grouped into Languages, Backend & Systems, AI/ML & Agentic Systems, Frontend, Databases, Cloud & DevOps, Data & Analytics, and Tools.
-- **Official Certifications**: Formally verified credentials for Microsoft, Amazon Web Services (AWS), and Anthropic.
-- **T.I.L. (Today I Learned)**: Engineering journal with technical lessons and architectural takeaways.
-- **Contact & Direct Communication**: Functional contact form with email client pre-fill, verified socials, and location/timezone info.
+- **Core Framework**: React 19 + Vite
+- **Language**: TypeScript (Strict Mode)
+- **Routing**: React Router DOM (Multi-page client-side SPA)
+- **Styling**: Tailwind CSS + Custom CSS Variables
+- **Icons**: Lucide React + React Icons (Vector Brand & Language Logotypes)
+- **Animations & Visuals**: Interactive Canvas Particle Network, CSS Parallax Effects
+- **Deployment**: Vercel (Edge Network with Single Page Application rewrites)
 
 ---
 
-## 🛠️ Tech Stack
+## 📂 Project Structure
 
-- **Framework**: React 19 + Vite
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS + Custom Design Tokens
-- **Icons**: Lucide React + Custom SVG Tech Icons
-- **Animation & Canvas**: Lightweight ambient particle network
+```
+portfolio/
+├── public/                  # Static assets, verified letters, and imagery
+│   └── assets/
+│       ├── images/          # Optimized production visual assets
+│       └── letters/         # Experience and verification documents
+├── src/
+│   ├── components/          # Reusable UI components, header, footer, modals
+│   ├── context/             # ThemeContext (Dark/Light mode state)
+│   ├── data/                # Data models (projects, skills, certs, timeline)
+│   ├── pages/               # Routed pages (Home, Projects, Skills, Experience, Certifications, TIL, Contact)
+│   ├── utils/               # Timezone, date, and string formatting helpers
+│   ├── App.tsx              # Root routing configuration
+│   ├── main.tsx             # Application entrypoint
+│   └── index.css            # Tailwind directives and custom animation styles
+├── vercel.json              # Vercel SPA rewrite configuration
+├── tailwind.config.js       # Design tokens, custom colors, and typography
+├── tsconfig.json            # TypeScript configuration
+└── package.json             # Dependencies and scripts
+```
 
 ---
 
 ## 💻 Local Development
+
+### Prerequisites
+
+- **Node.js**: v18.0.0 or higher
+- **npm**: v9.0.0 or higher
+
+### Installation
 
 Clone the repository and install dependencies:
 
@@ -46,23 +60,47 @@ cd Portfolio
 npm install
 ```
 
+### Running Locally
+
 Start the local development server:
 
 ```bash
 npm run dev
 ```
 
-Build for production:
+The application will be accessible at `http://localhost:5173/`.
+
+### Production Build
+
+Create an optimized production build:
 
 ```bash
 npm run build
 ```
 
-Preview production build:
+Preview the production build locally:
 
 ```bash
 npm run preview
 ```
+
+---
+
+## 🚀 Deployment on Vercel
+
+This portfolio is configured for zero-configuration deployment on **Vercel**:
+
+1. Log into your **Vercel Dashboard**.
+2. Click **Add New...** > **Project**.
+3. Import your GitHub repository (`Portfolio`).
+4. Keep the default settings:
+   - **Framework Preset**: `Vite`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+   - **Install Command**: `npm install`
+5. Click **Deploy**.
+
+The included `vercel.json` file ensures that all client-side routes (e.g., `/projects`, `/work/experience`, `/work/certifications`) route smoothly without 404 errors on browser refresh.
 
 ---
 

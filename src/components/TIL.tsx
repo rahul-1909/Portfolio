@@ -13,7 +13,7 @@ export const TIL: React.FC = () => {
             <span>Continuous Knowledge Log</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-            T.I.L. — Today I Learned
+            T.I.L. - Today I Learned
           </h2>
           <p className="mt-3 text-base text-slate-600 dark:text-slate-400 leading-relaxed">
             An engineering journal documenting technical architecture decisions, system edge-cases, and practical insights discovered while building distributed backend and agentic AI systems.
