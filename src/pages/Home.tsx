@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FileText } from 'lucide-react';
-import { AppleLockscreenClock } from '../components/AppleLockscreenClock';
 import { TechStackStrip } from '../components/TechStackStrip';
 import { FeatureContainers } from '../components/FeatureContainers';
 import { DashboardQuote } from '../components/DashboardQuote';
@@ -49,11 +48,6 @@ export const Home: React.FC<HomeProps> = ({ onOpenResume }) => {
             <div className="flex flex-col-reverse lg:flex-row lg:items-center justify-between gap-10 lg:gap-12">
               {/* Left Column: Greeting, Name, Positioning, CTAs & Tech Strip */}
               <div className="max-w-2xl relative z-20 flex-1">
-                {/* Apple Lockscreen Time and Date Widget */}
-                <div className="mb-6">
-                  <AppleLockscreenClock />
-                </div>
-
                 {/* Hi there! + Single Animated Gesture Emoji */}
                 <div className="mb-2 flex items-center gap-3 text-2xl font-medium text-slate-600 md:mb-3 md:text-4xl dark:text-slate-300">
                   <span>Hi there!</span>

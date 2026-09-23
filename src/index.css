@@ -109,41 +109,4 @@
   .light .footer-link:hover {
     color: #7c3aed;
   }
-
-  /* Apple Lockscreen Liquid Glass Typography */
-  .apple-liquid-glass {
-    font-family: 'Antonio', 'Barlow Condensed', -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Display", sans-serif;
-    letter-spacing: -0.02em;
-    font-feature-settings: "tnum";
-    font-variant-numeric: tabular-nums;
-    display: inline-block;
-    transform: scaleY(1.08);
-    transform-origin: center;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.12) 50%, rgba(255, 255, 255, 0.28) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.75);
-    filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.9)) drop-shadow(0 4px 16px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 20px rgba(139, 92, 246, 0.15));
-  }
-
-  .light .apple-liquid-glass {
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0.45) 0%, rgba(15, 23, 42, 0.12) 50%, rgba(15, 23, 42, 0.25) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 1.5px rgba(15, 23, 42, 0.65);
-    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.1));
-  }
-
-  /* Liquid Glass Colon Dots */
-  .apple-glass-dot {
-    border: 1.5px solid rgba(255, 255, 255, 0.75);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.15) 100%);
-    box-shadow: 0 0 1px rgba(255, 255, 255, 0.9), 0 0 8px rgba(255, 255, 255, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.5);
-  }
-
-  .light .apple-glass-dot {
-    border: 1.5px solid rgba(15, 23, 42, 0.65);
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0.35) 0%, rgba(15, 23, 42, 0.15) 100%);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
 }

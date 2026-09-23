@@ -8,7 +8,6 @@ import {
 } from 'lucide-react';
 import { profileData } from '../data/profile';
 import { heroTechSkills } from '../data/skills';
-import { AppleLockscreenClock } from './AppleLockscreenClock';
 
 interface HeroProps {
   onOpenResume: () => void;
@@ -24,8 +23,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
-        {/* Top Badges Row: Availability + Real-Time Apple Lockscreen Clock */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
+        {/* Top Badges Row: Availability */}
+        <div className="flex items-center gap-4 mb-6">
           {/* Target Role & Open for Opportunities Badge */}
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-50/70 px-3.5 py-1 text-xs font-semibold text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-300 backdrop-blur-md shadow-sm">
             <span className="relative flex h-2 w-2">
@@ -34,8 +33,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
             </span>
             <span>Open for Software, Backend & AI/ML Opportunities</span>
           </div>
-
-          <AppleLockscreenClock />
         </div>
 
         {/* Hero Greeting & Name */}
