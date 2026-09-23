@@ -160,38 +160,18 @@ export const ProjectsPage: React.FC = () => {
               </div>
             </div>
           ))}
+        </div>
 
-          {/* Explore All Projects Container (Redirects to GitHub Repositories) */}
+        {/* Explore All Projects Small Box Container (Redirects to GitHub Repositories) */}
+        <div className="mt-14 flex justify-center">
           <a
             href="https://github.com/rahul-1909?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex flex-col justify-between rounded-2xl border-2 border-dashed border-accent-500/35 bg-gradient-to-br from-accent-500/5 via-blue-500/5 to-purple-500/5 p-6 backdrop-blur-md transition-all duration-300 hover:border-accent-500 hover:bg-accent-500/10 hover:shadow-2xl hover:shadow-accent-500/10 hover:-translate-y-1.5 dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-accent-500/50 dark:hover:bg-white/[0.05]"
+            className="group inline-flex items-center gap-2.5 rounded-xl border border-slate-300/80 bg-white/80 px-6 py-3 text-sm font-semibold text-slate-800 backdrop-blur-md shadow-sm transition-all duration-300 hover:border-accent-500 hover:bg-accent-500 hover:text-white hover:shadow-lg hover:shadow-accent-500/25 hover:-translate-y-0.5 dark:border-white/10 dark:bg-slate-900/80 dark:text-slate-100 dark:hover:border-accent-500 dark:hover:bg-accent-600"
           >
-            <div>
-              <div className="flex items-center justify-between gap-2 mb-4">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-500/15 text-accent-600 dark:text-accent-400 group-hover:scale-110 transition-transform">
-                  <GithubIcon className="h-6 w-6" />
-                </span>
-                <span className="inline-flex items-center gap-1 rounded-full bg-accent-500/10 px-3 py-1 text-xs font-bold text-accent-600 dark:text-accent-400">
-                  <span>GitHub Repositories</span>
-                  <ExternalLink className="h-3 w-3" />
-                </span>
-              </div>
-
-              <h3 className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
-                Explore All Projects
-              </h3>
-
-              <p className="mt-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                Discover all my public repositories, experimental AI/ML pipelines, backend microservices, and algorithmic contributions directly on GitHub.
-              </p>
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-slate-200/60 dark:border-white/10 flex items-center justify-between text-xs font-bold text-accent-600 dark:text-accent-400">
-              <span>View All Repositories on GitHub</span>
-              <ExternalLink className="h-4 w-4 group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform" />
-            </div>
+            <span>Explore All Projects</span>
+            <ExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         </div>
 
