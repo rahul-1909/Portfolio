@@ -41,7 +41,7 @@ export default {
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
-        appleClock: ['"SF Pro Rounded"', '"SF Pro Display"', '"Barlow Condensed"', 'system-ui', '-apple-system', 'sans-serif'],
+        appleClock: ['Antonio', 'Barlow Condensed', 'SF Pro Rounded', 'SF Pro Display', 'system-ui', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
