@@ -40,14 +40,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
       }`}
     >
       <div className="content-wrapper flex items-center justify-between">
-        {/* Brand Logo (Arshad Style: square violet icon with slash + name.) */}
+        {/* Brand Logo (RT icon logo inside square violet container + rahul.) */}
         <Link 
           to="/" 
           className="flex items-center gap-2 group"
           aria-label="Home"
         >
           <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-accent-600 shadow-md shadow-accent-600/30 group-hover:scale-105 transition-transform">
-            <div className="h-3.5 w-0.5 rotate-12 rounded-full bg-white"></div>
+            <span className="font-[900] text-xs tracking-tight text-white select-none">RT</span>
           </div>
           <div className="font-extrabold text-xl tracking-tight text-slate-900 dark:text-white">
             <span>rahul</span>
