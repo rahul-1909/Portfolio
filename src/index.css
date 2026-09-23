@@ -109,4 +109,23 @@
   .light .footer-link:hover {
     color: #7c3aed;
   }
+
+  /* Apple Lockscreen Typography & Glass Styling */
+  .apple-lockscreen-digits {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Display", "Barlow Condensed", system-ui, sans-serif;
+    letter-spacing: -0.03em;
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.75) 55%, rgba(255, 255, 255, 0.45) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 10px rgba(255, 255, 255, 0.2)) drop-shadow(0 8px 24px rgba(0, 0, 0, 0.4));
+  }
+
+  .light .apple-lockscreen-digits {
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.82) 55%, rgba(51, 65, 85, 0.55) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.08));
+  }
 }

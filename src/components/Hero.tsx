@@ -1,32 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { 
   ArrowRight, 
   FileText, 
-  Clock, 
   MapPin, 
   Sparkles,
   Terminal
 } from 'lucide-react';
 import { profileData } from '../data/profile';
 import { heroTechSkills } from '../data/skills';
-import { getISTDateTime } from '../utils/time';
-import type { ISTTimeInfo } from '../utils/time';
+import { AppleLockscreenClock } from './AppleLockscreenClock';
 
 interface HeroProps {
   onOpenResume: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
-  const [istTime, setIstTime] = useState<ISTTimeInfo>(getISTDateTime());
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIstTime(getISTDateTime());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
   return (
     <section className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-28">
       {/* Ambient background glows */}
@@ -36,8 +24,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
-        {/* Top Badges Row: Availability + Real-Time IST Clock */}
-        <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 mb-6">
+        {/* Top Badges Row: Availability + Real-Time Apple Lockscreen Clock */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
           {/* Target Role & Open for Opportunities Badge */}
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-50/70 px-3.5 py-1 text-xs font-semibold text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-300 backdrop-blur-md shadow-sm">
             <span className="relative flex h-2 w-2">
@@ -47,16 +35,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
             <span>Open for Software, Backend & AI/ML Opportunities</span>
           </div>
 
-          {/* Dynamic IST Live Clock Badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3.5 py-1 text-xs font-medium text-slate-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-300 backdrop-blur-md shadow-sm">
-            <Clock className="h-3.5 w-3.5 text-accent-500 animate-pulse" />
-            <span className="font-mono font-semibold text-slate-900 dark:text-white">
-              {istTime.timeStr}
-            </span>
-            <span className="text-slate-400">·</span>
-            <span>{istTime.dateStr}</span>
-            <span className="hidden sm:inline text-slate-400">({istTime.timeZoneStr})</span>
-          </div>
+          <AppleLockscreenClock />
         </div>
 
         {/* Hero Greeting & Name */}

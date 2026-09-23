@@ -1,28 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FileText, Clock } from 'lucide-react';
+import { FileText } from 'lucide-react';
+import { AppleLockscreenClock } from '../components/AppleLockscreenClock';
 import { TechStackStrip } from '../components/TechStackStrip';
 import { FeatureContainers } from '../components/FeatureContainers';
 import { DashboardQuote } from '../components/DashboardQuote';
 import { BackendDevOpsSection } from '../components/BackendDevOpsSection';
-import { getISTDateTime } from '../utils/time';
-import type { ISTTimeInfo } from '../utils/time';
-
 interface HomeProps {
   onOpenResume: () => void;
 }
 
 export const Home: React.FC<HomeProps> = ({ onOpenResume }) => {
-  const [istTime, setIstTime] = useState<ISTTimeInfo>(getISTDateTime());
   const [scrollY, setScrollY] = useState(0);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIstTime(getISTDateTime());
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,25 +49,9 @@ export const Home: React.FC<HomeProps> = ({ onOpenResume }) => {
             <div className="flex flex-col-reverse lg:flex-row lg:items-center justify-between gap-10 lg:gap-12">
               {/* Left Column: Greeting, Name, Positioning, CTAs & Tech Strip */}
               <div className="max-w-2xl relative z-20 flex-1">
-                {/* Real-time IST dynamic badge */}
-                <div className="mb-6 inline-flex flex-wrap items-center gap-2.5 rounded-full border border-slate-300 bg-white/95 px-4 py-2 text-xs sm:text-sm font-medium text-slate-800 shadow-md backdrop-blur-md dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-100">
-                  <span className="relative flex h-2.5 w-2.5">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-accent-600 dark:text-accent-400" />
-                    <span className="font-mono text-sm sm:text-base font-bold text-slate-950 dark:text-white">
-                      {istTime.timeStr}
-                    </span>
-                    <span className="text-slate-300 dark:text-slate-600">|</span>
-                    <span className="font-semibold text-slate-700 dark:text-slate-200">
-                      {istTime.dateStr}
-                    </span>
-                    <span className="rounded-md bg-accent-500/10 px-2 py-0.5 text-[11px] font-bold tracking-wide uppercase text-accent-700 dark:bg-accent-400/20 dark:text-accent-300">
-                      IST (GMT+5:30)
-                    </span>
-                  </div>
+                {/* Apple Lockscreen Time and Date Widget */}
+                <div className="mb-6">
+                  <AppleLockscreenClock />
                 </div>
 
                 {/* Hi there! + Single Animated Gesture Emoji */}
