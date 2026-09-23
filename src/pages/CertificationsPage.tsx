@@ -77,6 +77,23 @@ export const CertificationsPage: React.FC = () => {
                   {cert.title}
                 </h2>
 
+                {/* Description to eliminate empty blank space */}
+                <p className="mt-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  {cert.description}
+                </p>
+
+                {/* Skills & Competencies Pills */}
+                <div className="mt-3.5 flex flex-wrap gap-1.5">
+                  {cert.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="rounded-md bg-slate-100/90 px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:bg-white/[0.04] dark:text-slate-300"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+
                 {/* Dates if available */}
                 {cert.issueDate && (
                   <div className="mt-3 flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
@@ -90,7 +107,7 @@ export const CertificationsPage: React.FC = () => {
 
                 {/* Official Verification Code Container (especially for AWS Certmetrics) */}
                 {cert.credentialId && (
-                  <div className="mt-4 rounded-xl border border-amber-500/20 bg-amber-50/60 p-3 dark:border-amber-500/15 dark:bg-amber-950/20">
+                  <div className="mt-3.5 rounded-xl border border-amber-500/20 bg-amber-50/60 p-3 dark:border-amber-500/15 dark:bg-amber-950/20">
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
                         Verification Code
