@@ -29,12 +29,12 @@ export const ContactPage: React.FC = () => {
 
         {/* Subtitle */}
         <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed mb-12">
-          Get in touch with me anytime, through social media, e-mail, or schedule 30min call with me.
+          Get in touch with me anytime through social media or direct email.
         </p>
 
         {/* Content Area with subtle vertical left rule */}
         <div className="relative pl-6 sm:pl-8 border-l border-slate-200/80 dark:border-white/10 space-y-10">
-          {/* Business disclaimer notice */}
+          {/* Business purpose disclaimer notice */}
           <div className="space-y-4 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
             <p>
               Just a friendly reminder that the information provided here is for{' '}
@@ -56,7 +56,7 @@ export const ContactPage: React.FC = () => {
               Contact
             </h2>
 
-            {/* Contact Details Table matching screenshot */}
+            {/* Contact Details Table */}
             <div className="overflow-hidden rounded-xl border border-slate-200/80 dark:border-[#1e2235] bg-white dark:bg-[#0c0d16] shadow-sm">
               <table className="w-full text-left text-sm border-collapse">
                 <thead>
@@ -123,42 +123,21 @@ export const ContactPage: React.FC = () => {
             <p className="mt-4 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
               If you need any further information, such as my phone number, please do not hesitate to send me an email first.
             </p>
-
-            {/* Schedule a Call Button */}
-            <div className="mt-5">
-              <a
-                href={`mailto:${profileData.email}?subject=Schedule%20a%20Call%20with%20Rahul%20Teja`}
-                className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-blue-600/30 transition hover:bg-blue-700 hover:shadow-blue-600/40"
-              >
-                Schedule a Call
-              </a>
-            </div>
           </div>
 
           <hr className="border-slate-200/80 dark:border-white/10" />
 
           {/* Section: Social Media */}
           <div>
-            <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-2">
+            <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-3">
               Social Media
             </h2>
 
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed mb-2">
-              If you want to find me on social media, just search for{' '}
-              <strong className="font-semibold text-slate-900 dark:text-white">
-                @Knightswatch__
-              </strong>{' '}
-              or{' '}
-              <strong className="font-semibold text-slate-900 dark:text-white">
-                @rahul-1909
-              </strong>
-              . That's my username on almost all platforms, so it should be easy to find me.
-            </p>
             <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
-              But if you're short on time, I've included some links to the social media platforms I use most frequently below.
+              Connect with me or follow my latest work across my primary profiles below.
             </p>
 
-            {/* Social Media Table matching screenshot */}
+            {/* Social Media Table */}
             <div className="overflow-hidden rounded-xl border border-slate-200/80 dark:border-[#1e2235] bg-white dark:bg-[#0c0d16] shadow-sm">
               <table className="w-full text-left text-sm border-collapse">
                 <thead>

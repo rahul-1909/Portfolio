@@ -16,7 +16,7 @@ export const experienceData: ExperienceItem[] = [
     id: "virtusa-intern",
     role: "Software Intern / Full Stack Software Intern",
     company: "Virtusa",
-    location: "Hyderabad, India",
+    location: "Chennai, India",
     period: "August 2025 – June 2026",
     current: false,
     type: "Internship",
