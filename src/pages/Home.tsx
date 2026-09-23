@@ -25,7 +25,7 @@ export const Home: React.FC<HomeProps> = ({ onOpenResume }) => {
   return (
     <div className="relative overflow-hidden">
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-32 pb-16 lg:pt-48 lg:pb-28">
+      <section className="relative overflow-hidden pt-28 pb-16 lg:pt-40 lg:pb-28">
         {/* Ambient Glows & Grid */}
         <div className="pointer-events-none absolute inset-0 z-0">
           <div className="absolute -top-40 -right-40 h-[500px] w-[500px] rounded-full opacity-[0.08] bg-accent-500 blur-[120px] dark:opacity-[0.14]" />
@@ -35,22 +35,32 @@ export const Home: React.FC<HomeProps> = ({ onOpenResume }) => {
 
         <div className="content-wrapper relative z-10">
           <div className="relative">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-12">
-              {/* Left Column Text */}
-              <div className="max-w-2xl relative z-20">
-                {/* Real-time IST dynamic badge */}
-                <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3.5 py-1 text-xs font-medium text-slate-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-300 backdrop-blur-md shadow-sm">
-                  <Clock className="h-3.5 w-3.5 text-accent-500 animate-pulse" />
-                  <span className="font-mono font-semibold text-slate-900 dark:text-white">
-                    {istTime.timeStr}
+            <div className="flex flex-col-reverse lg:flex-row lg:items-center justify-between gap-10 lg:gap-12">
+              {/* Left Column: Greeting, Name, Positioning, CTAs & Tech Strip */}
+              <div className="max-w-2xl relative z-20 flex-1">
+                {/* Real-time IST dynamic badge - Crisp, Clean & Prominently Visible */}
+                <div className="mb-6 inline-flex flex-wrap items-center gap-2.5 rounded-full border border-slate-300 bg-white/95 px-4 py-2 text-xs sm:text-sm font-medium text-slate-800 shadow-md backdrop-blur-md dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-100">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
                   </span>
-                  <span className="text-slate-400">·</span>
-                  <span>{istTime.dateStr}</span>
-                  <span className="text-slate-400 text-[11px]">(IST, GMT+5:30)</span>
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-accent-600 dark:text-accent-400" />
+                    <span className="font-mono text-sm sm:text-base font-bold text-slate-950 dark:text-white">
+                      {istTime.timeStr}
+                    </span>
+                    <span className="text-slate-300 dark:text-slate-600">|</span>
+                    <span className="font-semibold text-slate-700 dark:text-slate-200">
+                      {istTime.dateStr}
+                    </span>
+                    <span className="rounded-md bg-accent-500/10 px-2 py-0.5 text-[11px] font-bold tracking-wide uppercase text-accent-700 dark:bg-accent-400/20 dark:text-accent-300">
+                      IST (GMT+5:30)
+                    </span>
+                  </div>
                 </div>
 
                 {/* Hi there! + Gesture emoji */}
-                <div className="mb-2 flex items-center gap-2.5 text-2xl font-medium text-slate-500 md:mb-3 md:gap-3 md:text-4xl dark:text-slate-400">
+                <div className="mb-2 flex items-center gap-2.5 text-2xl font-medium text-slate-600 md:mb-3 md:gap-3 md:text-4xl dark:text-slate-300">
                   <span>Hi there!</span>
                   <img
                     alt="Love-you Gesture"
@@ -75,7 +85,7 @@ export const Home: React.FC<HomeProps> = ({ onOpenResume }) => {
                 {/* Subtitle matching Arshad's clean structure */}
                 <p className="block max-w-xl text-lg leading-relaxed text-slate-600 md:text-xl dark:text-slate-400">
                   A{" "}
-                  <span className="font-semibold text-slate-800 dark:text-slate-200">
+                  <span className="font-semibold text-slate-900 dark:text-slate-100">
                     Software Developer focused on Backend Engineering & AI/ML
                   </span>{" "}
                   who loves intuitive, clean and modern technologies.
@@ -92,7 +102,7 @@ export const Home: React.FC<HomeProps> = ({ onOpenResume }) => {
 
                   <button
                     onClick={onOpenResume}
-                    className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white/60 px-5 py-3.5 text-sm font-semibold text-slate-700 backdrop-blur-md transition hover:border-slate-400 hover:bg-slate-100/80 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:bg-slate-800/60"
+                    className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white/80 px-5 py-3.5 text-sm font-semibold text-slate-800 backdrop-blur-md transition hover:border-slate-400 hover:bg-slate-100/90 dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-100 dark:hover:bg-slate-800/80"
                   >
                     <FileText className="h-4 w-4" />
                     <span>Resume</span>
@@ -103,18 +113,23 @@ export const Home: React.FC<HomeProps> = ({ onOpenResume }) => {
                 <TechStackStrip />
               </div>
 
-              {/* Right Column: Anime Style Portrait Illustration (as in Arshad screenshot) */}
-              <div className="relative hidden select-none lg:flex justify-end items-center flex-1">
-                <div className="relative h-[480px] w-[420px] xl:h-[540px] xl:w-[480px]">
+              {/* Right Column: Anime Style Portrait Illustration (Visible on all viewports) */}
+              <div className="relative select-none flex justify-center lg:justify-end items-center flex-1">
+                <div className="relative h-[320px] w-[280px] sm:h-[380px] sm:w-[340px] md:h-[420px] md:w-[380px] lg:h-[480px] lg:w-[410px] xl:h-[520px] xl:w-[450px]">
                   {/* Subtle radial glow */}
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-t from-accent-500/20 via-blue-500/10 to-transparent blur-3xl opacity-60 dark:opacity-40" />
+                  <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-t from-accent-500/25 via-blue-500/15 to-transparent blur-3xl opacity-70 dark:opacity-50" />
                   
-                  {/* Illustration Image Container with Arched Silhouette */}
-                  <div className="relative h-full w-full overflow-hidden rounded-[3rem] border border-slate-200/50 dark:border-white/10 shadow-2xl bg-[#0c0c14]/40 backdrop-blur-sm">
+                  {/* Illustration Image Container with Smooth Rounded Silhouette */}
+                  <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] border border-slate-300/80 bg-slate-100 shadow-2xl dark:border-white/15 dark:bg-[#0c0c14] backdrop-blur-sm">
                     <img
-                      src="/assets/images/animated.png"
-                      alt="Rahul Teja Portrait"
+                      src="/assets/images/anime-dev.jpg"
+                      alt="Rahul Teja - Software Developer"
                       className="h-full w-full object-cover object-center dark:brightness-95 contrast-105 transition-transform duration-700 hover:scale-105"
+                      loading="eager"
+                      onError={(e) => {
+                        // Fallback to coder image if anything fails
+                        (e.currentTarget as HTMLImageElement).src = '/assets/images/anime-coder.jpg';
+                      }}
                     />
                   </div>
                 </div>
@@ -130,7 +145,7 @@ export const Home: React.FC<HomeProps> = ({ onOpenResume }) => {
       {/* Dashboard Quote Section (Screenshot 4) */}
       <DashboardQuote />
 
-      {/* 2-Column Architecture & Pipelines Section (Screenshot 5) */}
+      {/* 2-Column Architecture & Pipelines Section (Screenshot 5: Backend & AI/ML) */}
       <BackendDevOpsSection />
     </div>
   );
