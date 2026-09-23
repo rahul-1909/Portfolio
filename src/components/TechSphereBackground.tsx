@@ -26,7 +26,7 @@ export const TechSphereBackground: React.FC = () => {
       const width = canvas.offsetWidth;
       const height = canvas.offsetHeight;
       const cx = width / 2;
-      const cy = height * 0.48; // Centered behind the middle rows of tech cards
+      const cy = height * 0.44; // Centered behind the tech cards
 
       ctx.clearRect(0, 0, width, height);
 
@@ -39,7 +39,7 @@ export const TechSphereBackground: React.FC = () => {
       const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, nebulaRadius);
       grad.addColorStop(0, 'rgba(168, 85, 247, 0.4)');
       grad.addColorStop(0.3, 'rgba(126, 34, 206, 0.22)');
-      grad.addColorStop(0.65, 'rgba(30, 10, 60, 0.5)');
+      grad.addColorStop(0.65, 'rgba(30, 10, 60, 0.45)');
       grad.addColorStop(1, 'rgba(8, 3, 24, 0)');
 
       ctx.fillStyle = grad;
@@ -51,7 +51,7 @@ export const TechSphereBackground: React.FC = () => {
       ctx.save();
       ctx.lineWidth = 1;
 
-      // Radial perspective lines radiating outward from the central horizon
+      // Radial perspective rays
       const numRays = 28;
       for (let i = 0; i < numRays; i++) {
         const angle = (i / numRays) * Math.PI * 2;
@@ -70,7 +70,7 @@ export const TechSphereBackground: React.FC = () => {
         ctx.stroke();
       }
 
-      // Concentric elliptical contour lines expanding outward (curved warp net)
+      // Concentric elliptical contour lines
       const numContours = 9;
       for (let i = 1; i <= numContours; i++) {
         const factor = i / numContours;
@@ -96,14 +96,14 @@ export const TechSphereBackground: React.FC = () => {
       ctx.arc(cx, cy, sphereRadius, 0, Math.PI * 2);
       ctx.fill();
 
-      // Sphere Outer Boundary Ring with neon glow
+      // Sphere Outer Boundary Ring
       ctx.strokeStyle = 'rgba(216, 180, 254, 0.6)';
       ctx.lineWidth = 1.5;
       ctx.beginPath();
       ctx.arc(cx, cy, sphereRadius, 0, Math.PI * 2);
       ctx.stroke();
 
-      // Horizontal Latitude Lines across the sphere
+      // Horizontal Latitude Lines
       ctx.lineWidth = 1;
       const numLats = 7;
       for (let i = -numLats; i <= numLats; i++) {
@@ -117,7 +117,7 @@ export const TechSphereBackground: React.FC = () => {
         ctx.stroke();
       }
 
-      // Rotating Longitude Ellipses (creates real 3D rotation)
+      // Rotating Longitude Ellipses
       const numLongs = 8;
       for (let i = 0; i < numLongs; i++) {
         const baseAngle = (i / numLongs) * Math.PI + rotation;
@@ -129,12 +129,22 @@ export const TechSphereBackground: React.FC = () => {
         ctx.stroke();
       }
 
-      // Orbital tilted cyan/purple neon ring
+      // Orbital tilted cyan ring
       ctx.lineWidth = 1.2;
       ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
       ctx.beginPath();
       ctx.ellipse(cx, cy, sphereRadius * 1.15, sphereRadius * 0.45, -0.4, 0, Math.PI * 2);
       ctx.stroke();
+
+      // 5. Seamless Bottom Fade into Footer Color (#0a0a0f)
+      const bottomFadeHeight = 220;
+      const bottomFade = ctx.createLinearGradient(0, height - bottomFadeHeight, 0, height);
+      bottomFade.addColorStop(0, 'rgba(8, 3, 24, 0)');
+      bottomFade.addColorStop(0.65, 'rgba(10, 10, 15, 0.85)');
+      bottomFade.addColorStop(1, '#0a0a0f');
+
+      ctx.fillStyle = bottomFade;
+      ctx.fillRect(0, height - bottomFadeHeight, width, bottomFadeHeight);
 
       ctx.restore();
 

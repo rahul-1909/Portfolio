@@ -174,6 +174,9 @@ export const SkillsPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Seamless Bottom Gradient Fade into Footer */}
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-44 bg-gradient-to-b from-transparent via-[#0a0a0f]/75 to-[#0a0a0f] z-10" />
     </div>
   );
 };

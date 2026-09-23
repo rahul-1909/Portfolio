@@ -113,22 +113,19 @@ export const Home: React.FC<HomeProps> = ({ onOpenResume }) => {
                 <TechStackStrip />
               </div>
 
-              {/* Right Column: Anime Style Portrait Illustration (Visible on all viewports) */}
+              {/* Right Column: Borderless Moving Animated Eren Yeager GIF */}
               <div className="relative select-none flex justify-center lg:justify-end items-center flex-1">
-                <div className="relative h-[320px] w-[280px] sm:h-[380px] sm:w-[340px] md:h-[420px] md:w-[380px] lg:h-[480px] lg:w-[410px] xl:h-[520px] xl:w-[450px]">
-                  {/* Subtle radial glow */}
-                  <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-t from-accent-500/25 via-blue-500/15 to-transparent blur-3xl opacity-70 dark:opacity-50" />
+                <div className="relative w-[300px] sm:w-[360px] md:w-[420px] lg:w-[460px] xl:w-[500px]">
+                  {/* Subtle radial ambient sky glow */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-t from-sky-500/20 via-blue-500/15 to-purple-500/10 blur-3xl opacity-80" />
                   
-                  {/* Illustration Image Container with Smooth Rounded Silhouette */}
-                  <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] border border-slate-300/80 bg-slate-100 shadow-2xl dark:border-white/15 dark:bg-[#0c0c14] backdrop-blur-sm">
+                  {/* Pure Borderless Floating Animated GIF with Feathered Edge Dissolve */}
+                  <div className="relative overflow-hidden [mask-image:radial-gradient(ellipse_at_center,black_72%,transparent_100%)]">
                     <img
-                      src="/assets/images/dashboard-avatar.png"
-                      alt="Rahul Teja - Software Developer"
-                      className="h-full w-full object-cover object-center dark:brightness-95 contrast-105 transition-transform duration-700 hover:scale-105"
+                      src="/assets/images/dashboard-avatar.gif"
+                      alt="Eren Yeager Freedom"
+                      className="w-full h-auto object-contain select-none drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)] transition-transform duration-700 hover:scale-105"
                       loading="eager"
-                      onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src = '/assets/images/dashboard-avatar.gif';
-                      }}
                     />
                   </div>
                 </div>
