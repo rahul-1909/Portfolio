@@ -3,6 +3,7 @@ import {
   SiPython,
   SiJavascript,
   SiTypescript,
+  SiGo,
   SiC,
   SiCplusplus,
   SiHtml5,
@@ -63,6 +64,10 @@ export const TechIcon: React.FC<TechIconProps> = ({ name, className = "h-7 w-7 s
       return <SiTypescript className={className} />;
     case 'java':
       return <FaJava className={className} />;
+    case 'go':
+    case 'golang':
+    case 'go lang':
+      return <SiGo className={className} />;
     case 'c':
       return <SiC className={className} />;
     case 'c++':

@@ -20,6 +20,7 @@ export const skillCategories: SkillCategory[] = [
     description: "Core languages used for backend services, algorithms, and system design.",
     skills: [
       { name: "Python", category: "languages", proficiency: "Core", tag: "Primary" },
+      { name: "Go Lang", category: "languages", proficiency: "Advanced", tag: "Concurrent Systems" },
       { name: "Java", category: "languages", proficiency: "Core", tag: "Enterprise" },
       { name: "JavaScript", category: "languages", proficiency: "Core" },
       { name: "TypeScript", category: "languages", proficiency: "Advanced" },

@@ -19,7 +19,7 @@ export const SkillsPage: React.FC = () => {
       { name: 'JavaScript', category: 'languages' },
       { name: 'TypeScript', category: 'languages' },
       { name: 'Java', category: 'languages' },
-      { name: 'C', category: 'languages' },
+      { name: 'Go Lang', category: 'languages' },
       { name: 'C++', category: 'languages' },
       { name: 'HTML', category: 'frontend' },
       { name: 'CSS', category: 'frontend' },
