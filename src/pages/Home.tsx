@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { DoodleStudioHero } from '../components/DoodleStudioHero';
-import { DoodleBlueprints } from '../components/DoodleBlueprints';
-import { DoodleCredentialsWall } from '../components/DoodleCredentialsWall';
-import { DoodleCoffeeConnect } from '../components/DoodleCoffeeConnect';
+import { FraDoodleHero } from '../components/FraDoodleHero';
+import { DoodleMarquee } from '../components/DoodleMarquee';
+import { FraAboutSection } from '../components/FraAboutSection';
+import { FraProjectsSection } from '../components/FraProjectsSection';
+import { FraCrowdContactSection } from '../components/FraCrowdContactSection';
 
 interface HomeProps {
   onOpenResume: () => void;
@@ -26,17 +27,47 @@ export const Home: React.FC<HomeProps> = ({ onOpenResume }) => {
 
   return (
     <div className="relative overflow-hidden bg-white text-black min-h-screen">
-      {/* 1. The Doodle Studio / Hero */}
-      <DoodleStudioHero onOpenResume={onOpenResume} />
+      {/* 1. Fra! Doodle Hero */}
+      <FraDoodleHero onOpenResume={onOpenResume} />
 
-      {/* 2. Project Blueprints & Schematics */}
-      <DoodleBlueprints />
+      {/* Marquee Ticker 1 */}
+      <DoodleMarquee 
+        items={[
+          'BACKEND ARCHITECTURES', 
+          'ASGI MICROSERVICES', 
+          'LANGGRAPH MULTI-AGENT RAG', 
+          'SUB-14MS VECTOR SEARCH', 
+          'PYTHON & GO LANG', 
+          'VIRTUSA ALUMNI',
+          'DOCKER & AWS'
+        ]} 
+        bgColor="bg-black" 
+        textColor="text-white" 
+      />
 
-      {/* 3. The Credentials & Commercial Experience Wall */}
-      <DoodleCredentialsWall />
+      {/* 2. Who is Rahul? (Ma chi è fra?) */}
+      <FraAboutSection />
 
-      {/* 4. Coffee Stand / Direct Connect */}
-      <DoodleCoffeeConnect onOpenResume={onOpenResume} />
+      {/* Marquee Ticker 2 (Yellow Reverse) */}
+      <DoodleMarquee 
+        items={[
+          'SELECTED PRODUCTION WORKS', 
+          'HIGH-THROUGHPUT PIPELINES', 
+          'ARCHITECTURAL BLUEPRINTS', 
+          'AST QUERY VALIDATION', 
+          'JWT STATELESS RBAC'
+        ]} 
+        reverse={true} 
+        bgColor="bg-[#FFE600]" 
+        textColor="text-black" 
+        speed="fast" 
+      />
+
+      {/* 3. Projects Packed with Lines & Code */}
+      <FraProjectsSection />
+
+      {/* 4. The Grand Crowd Contact Hub (Contact Station + Skiper UI Crowd Canvas) */}
+      <FraCrowdContactSection onOpenResume={onOpenResume} />
     </div>
   );
 };

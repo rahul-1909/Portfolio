@@ -38,7 +38,62 @@
 }
 
 @layer utilities {
-  /* Hand-Drawn Doodle Utilities */
+  /* Hand-Drawn Doodle Utilities & Animations (Inspired by FRA! fradesign.it) */
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes marquee-reverse {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0%); }
+  }
+
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(3deg); }
+  }
+
+  @keyframes float-reverse {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(12px) rotate(-3deg); }
+  }
+
+  @keyframes doodle-wobble {
+    0%, 100% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg); }
+  }
+
+  .animate-marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 25s linear infinite;
+  }
+
+  .animate-marquee-fast {
+    display: flex;
+    width: max-content;
+    animation: marquee 16s linear infinite;
+  }
+
+  .animate-marquee-reverse {
+    display: flex;
+    width: max-content;
+    animation: marquee-reverse 25s linear infinite;
+  }
+
+  .animate-float {
+    animation: float-slow 4s ease-in-out infinite;
+  }
+
+  .animate-float-reverse {
+    animation: float-reverse 4.5s ease-in-out infinite;
+  }
+
+  .animate-wobble {
+    animation: doodle-wobble 3s ease-in-out infinite;
+  }
+
   .doodle-box {
     border: 2px solid #000;
     border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;

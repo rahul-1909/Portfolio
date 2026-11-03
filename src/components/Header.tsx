@@ -20,14 +20,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>('studio');
+  const [activeSection, setActiveSection] = useState<string>('hero');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      const sections = ['studio', 'blueprints', 'credentials', 'connect'];
+      const sections = ['hero', 'about', 'projects', 'contact'];
       const scrollPosition = window.scrollY + 200;
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -62,10 +62,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
   };
 
   const navItems = [
-    { id: 'studio', label: 'Studio' },
-    { id: 'blueprints', label: 'Blueprints' },
-    { id: 'credentials', label: 'Credentials' },
-    { id: 'connect', label: 'Connect' },
+    { id: 'hero', label: 'Studio' },
+    { id: 'about', label: 'Who is Rahul?' },
+    { id: 'projects', label: 'Projects' },
+    { id: 'contact', label: 'Contact' },
   ];
 
   return (
@@ -80,11 +80,11 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
         
         {/* Brand Logo */}
         <button
-          onClick={() => scrollToSection('studio')}
+          onClick={() => scrollToSection('hero')}
           className="flex items-center gap-2 group text-left cursor-pointer"
           aria-label="Scroll to top"
         >
-          <div className="flex h-8 w-8 items-center justify-center bg-black text-white doodle-box-sm font-mono text-xs font-bold shadow-[2px_2px_0px_0px_#000] group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform">
+          <div className="flex h-8 w-8 items-center justify-center bg-black text-white doodle-box-sm font-mono text-xs font-[1000] shadow-[2px_2px_0px_0px_#000] group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform">
             <span>RT</span>
           </div>
           <div className="font-[1000] text-lg tracking-tight text-black uppercase">
@@ -100,7 +100,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`px-4 py-1 font-mono text-xs font-bold tracking-wider uppercase transition-all rounded ${
+                className={`px-4 py-1 font-mono text-xs font-[1000] uppercase tracking-wider transition-all rounded ${
                   isActive
                     ? 'bg-black text-white shadow-sm'
                     : 'text-black hover:bg-neutral-200'

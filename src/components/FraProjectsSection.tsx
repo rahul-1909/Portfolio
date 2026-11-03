@@ -11,7 +11,7 @@ import type { Project } from '../data/projects';
 import { GithubIcon } from './SocialIcons';
 import { ProjectDetailModal } from './ProjectDetailModal';
 
-export const DoodleBlueprints: React.FC = () => {
+export const FraProjectsSection: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -28,21 +28,21 @@ export const DoodleBlueprints: React.FC = () => {
   });
 
   return (
-    <section id="blueprints" className="py-24 bg-white text-black border-b-2 border-black relative notebook-paper">
+    <section id="projects" className="py-24 bg-white text-black border-b-2 border-black relative notebook-paper">
       <div className="content-wrapper max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
+        {/* Section Header (Fra style) */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 bg-yellow-100 border-2 border-black px-3 py-1 doodle-box-sm font-mono text-xs font-bold uppercase tracking-wider mb-3 shadow-[2px_2px_0px_0px_#000]">
+            <div className="inline-flex items-center gap-2 bg-[#FFE600] border-2 border-black px-3.5 py-1 doodle-box-sm font-mono text-xs font-[1000] uppercase tracking-wider mb-3 shadow-[3px_3px_0px_#000]">
               <FolderGit2 className="h-3.5 w-3.5" />
-              <span>PRODUCTION BLUEPRINTS & SCHEMATICS</span>
+              <span>TANTI PROGETTI · PACKED WITH CODE & LOGIC</span>
             </div>
-            <h2 className="text-4xl sm:text-6xl font-[1000] tracking-tight text-black uppercase leading-tight">
+            <h2 className="text-4xl sm:text-6xl md:text-7xl font-[1000] tracking-tight text-black uppercase leading-[0.95]">
               Selected Works
             </h2>
-            <p className="mt-3 text-base text-black/75 leading-relaxed font-medium">
-              Engineered for algorithmic precision, AST query safety, sub-14ms retrieval latency, and distributed fault tolerance.
+            <p className="mt-3 text-base sm:text-lg text-black/75 leading-relaxed font-medium">
+              Engineered with algorithmic precision, AST query safety, sub-14ms retrieval latency, and distributed fault tolerance.
             </p>
           </div>
 
@@ -51,7 +51,7 @@ export const DoodleBlueprints: React.FC = () => {
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-black/50" />
             <input
               type="text"
-              placeholder="Search blueprints by stack, topic..."
+              placeholder="Search by stack, topic..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-white pl-10 pr-4 py-2.5 text-xs sm:text-sm font-mono text-black placeholder:text-black/40 focus:outline-none doodle-box shadow-[3px_3px_0px_0px_#000]"
@@ -65,7 +65,7 @@ export const DoodleBlueprints: React.FC = () => {
             <button
               key={cat}
               onClick={() => setActiveFilter(cat)}
-              className={`px-4 py-1.5 font-mono text-xs font-bold doodle-btn ${
+              className={`px-4 py-1.5 font-mono text-xs font-[1000] uppercase tracking-wider doodle-btn ${
                 activeFilter === cat
                   ? 'bg-black text-white'
                   : 'bg-white text-black hover:bg-neutral-100'
@@ -81,11 +81,11 @@ export const DoodleBlueprints: React.FC = () => {
           {filteredProjects.map((project) => (
             <div
               key={project.id}
-              className="group flex flex-col justify-between bg-white p-7 doodle-box shadow-[5px_6px_0px_0px_#000] hover:shadow-[8px_10px_0px_0px_#000] hover:-translate-y-1 transition-all"
+              className="group flex flex-col justify-between bg-white p-7 doodle-box shadow-[6px_8px_0px_0px_#000] hover:shadow-[9px_12px_0px_0px_#000] hover:-translate-y-1 transition-all"
             >
               <div>
                 {/* Top Blueprint Header */}
-                <div className="flex items-center justify-between gap-2 mb-4 border-b-2 border-black/10 pb-3">
+                <div className="flex items-center justify-between gap-2 mb-4 border-b-2 border-black/15 pb-3">
                   <span className="px-2.5 py-0.5 bg-black text-white font-mono text-[10px] font-bold uppercase tracking-wider rounded">
                     {project.category}
                   </span>
@@ -99,7 +99,7 @@ export const DoodleBlueprints: React.FC = () => {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl font-[900] text-black tracking-tight leading-snug group-hover:underline decoration-2">
+                <h3 className="text-xl font-[1000] text-black tracking-tight leading-snug group-hover:underline decoration-2">
                   {project.title}
                 </h3>
 
@@ -137,7 +137,7 @@ export const DoodleBlueprints: React.FC = () => {
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-black text-white font-mono text-xs font-bold doodle-btn"
+                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-[#FFE600] text-black font-mono text-xs font-[1000] doodle-btn"
                       title="Launch Live Demo"
                     >
                       <span>Demo</span>
