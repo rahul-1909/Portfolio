@@ -17,9 +17,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       if (stored === 'light' || stored === 'dark') {
         return stored;
       }
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'dark'; // Default to dark aesthetic
+      return 'light'; // Default to Skiper-UI crisp white doodle aesthetic
     }
-    return 'dark';
+    return 'light';
   });
 
   useEffect(() => {
