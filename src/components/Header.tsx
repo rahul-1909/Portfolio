@@ -20,14 +20,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>('stage');
+  const [activeSection, setActiveSection] = useState<string>('studio');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      const sections = ['hero', 'story', 'workbench', 'stack', 'connect', 'crowd'];
+      const sections = ['studio', 'blueprints', 'credentials', 'connect'];
       const scrollPosition = window.scrollY + 200;
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -62,50 +62,48 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
   };
 
   const navItems = [
-    { id: 'hero', label: 'Overview' },
-    { id: 'story', label: 'The Odyssey' },
-    { id: 'workbench', label: 'Works' },
-    { id: 'stack', label: 'Tool Chest' },
-    { id: 'connect', label: 'Contact' },
-    { id: 'crowd', label: 'Crowd' },
+    { id: 'studio', label: 'Studio' },
+    { id: 'blueprints', label: 'Blueprints' },
+    { id: 'credentials', label: 'Credentials' },
+    { id: 'connect', label: 'Connect' },
   ];
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-200 ${
         isScrolled
-          ? 'bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-b-2 border-black py-2.5 shadow-sm'
-          : 'bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm py-3.5'
+          ? 'bg-white/95 backdrop-blur-md border-b-2 border-black py-2.5 shadow-sm'
+          : 'bg-white/80 backdrop-blur-sm py-3.5'
       }`}
     >
-      <div className="content-wrapper max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <div className="content-wrapper max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         
         {/* Brand Logo */}
         <button
-          onClick={() => scrollToSection('hero')}
+          onClick={() => scrollToSection('studio')}
           className="flex items-center gap-2 group text-left cursor-pointer"
           aria-label="Scroll to top"
         >
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-black text-white border-2 border-black font-mono text-xs font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform">
+          <div className="flex h-8 w-8 items-center justify-center bg-black text-white doodle-box-sm font-mono text-xs font-bold shadow-[2px_2px_0px_0px_#000] group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform">
             <span>RT</span>
           </div>
-          <div className="font-[1000] text-lg tracking-tight text-black dark:text-white uppercase">
+          <div className="font-[1000] text-lg tracking-tight text-black uppercase">
             <span>rahul teja</span>
           </div>
         </button>
 
         {/* Desktop Anchor Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1 bg-neutral-100 dark:bg-neutral-800 p-1 rounded-xl border-2 border-black">
+        <nav className="hidden md:flex items-center gap-1.5 p-1 bg-neutral-50 doodle-box-sm">
           {navItems.map((item) => {
             const isActive = activeSection === item.id;
             return (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`px-3.5 py-1 rounded-lg font-mono text-xs font-bold tracking-wider uppercase transition-all ${
+                className={`px-4 py-1 font-mono text-xs font-bold tracking-wider uppercase transition-all rounded ${
                   isActive
                     ? 'bg-black text-white shadow-sm'
-                    : 'text-black dark:text-white hover:bg-neutral-200 dark:hover:bg-neutral-700'
+                    : 'text-black hover:bg-neutral-200'
                 }`}
               >
                 {item.label}
@@ -122,7 +120,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
               href={profileData.socials.twitter}
               target="_blank"
               rel="noreferrer nofollow"
-              className="p-1.5 rounded-lg border-2 border-black bg-white hover:bg-neutral-100 transition shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+              className="p-1.5 doodle-box-sm bg-white hover:bg-neutral-100 transition shadow-[2px_2px_0px_0px_#000]"
               aria-label="Twitter / X"
             >
               <TwitterIcon className="h-3.5 w-3.5" />
@@ -132,7 +130,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
               href={profileData.socials.github}
               target="_blank"
               rel="noreferrer nofollow"
-              className="p-1.5 rounded-lg border-2 border-black bg-white hover:bg-neutral-100 transition shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+              className="p-1.5 doodle-box-sm bg-white hover:bg-neutral-100 transition shadow-[2px_2px_0px_0px_#000]"
               aria-label="GitHub"
             >
               <GithubIcon className="h-3.5 w-3.5" />
@@ -142,7 +140,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
           {/* Quick Access Button */}
           <button
             onClick={onOpenQuickAccess}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border-2 border-black bg-white font-mono text-xs font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neutral-100 transition"
+            className="flex items-center gap-1.5 px-3 py-1.5 doodle-box-sm bg-white font-mono text-xs font-bold shadow-[2px_2px_0px_0px_#000] hover:bg-neutral-100 transition"
             aria-label="Open Quick Access"
           >
             <Compass className="h-3.5 w-3.5 text-black" />
@@ -155,16 +153,16 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="p-1.5 rounded-xl border-2 border-black bg-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neutral-100 transition"
+            className="p-1.5 doodle-box-sm bg-white shadow-[2px_2px_0px_0px_#000] hover:bg-neutral-100 transition"
             aria-label="Toggle Theme"
           >
-            {theme === 'dark' ? <Sun className="h-4 w-4 text-amber-500" /> : <Moon className="h-4 w-4 text-black" />}
+            {theme === 'dark' ? <Sun className="h-3.5 w-3.5 text-amber-500" /> : <Moon className="h-3.5 w-3.5 text-black" />}
           </button>
 
           {/* Mobile Menu Trigger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden flex h-8 w-8 items-center justify-center rounded-lg border-2 border-black bg-white"
+            className="md:hidden flex h-8 w-8 items-center justify-center doodle-box-sm bg-white"
             aria-label="Toggle Menu"
           >
             {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}

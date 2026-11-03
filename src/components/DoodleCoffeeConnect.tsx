@@ -10,11 +10,11 @@ import {
 import { profileData } from '../data/profile';
 import { GithubIcon, LinkedinIcon, TwitterIcon } from './SocialIcons';
 
-interface DoodleConnectProps {
+interface DoodleCoffeeConnectProps {
   onOpenResume: () => void;
 }
 
-export const DoodleConnect: React.FC<DoodleConnectProps> = ({ onOpenResume }) => {
+export const DoodleCoffeeConnect: React.FC<DoodleCoffeeConnectProps> = ({ onOpenResume }) => {
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const handleCopyEmail = (e: React.MouseEvent) => {
@@ -25,28 +25,28 @@ export const DoodleConnect: React.FC<DoodleConnectProps> = ({ onOpenResume }) =>
   };
 
   return (
-    <section id="connect" className="pt-24 pb-8 bg-white text-black relative overflow-hidden">
-      <div className="content-wrapper max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="connect" className="py-24 bg-white text-black relative notebook-paper">
+      <div className="content-wrapper max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 bg-black text-white px-3 py-1 rounded-md font-mono text-xs font-bold uppercase tracking-widest mb-4">
-            <MessageSquare className="h-3.5 w-3.5 text-amber-300" />
-            <span>THE FINAL STOP · PULL UP A CHAIR</span>
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <div className="inline-flex items-center gap-2 bg-amber-100 border-2 border-black px-3.5 py-1 doodle-box-sm font-mono text-xs font-bold uppercase tracking-wider mb-4 shadow-[2px_2px_0px_0px_#000]">
+            <MessageSquare className="h-3.5 w-3.5" />
+            <span>PULL UP A CHAIR · DIRECT INQUIRIES</span>
           </div>
 
           <h2 className="text-4xl sm:text-6xl font-[1000] tracking-tight text-black uppercase leading-none">
             Let's Talk Shop.
           </h2>
 
-          <p className="mt-4 text-base text-black/75 max-w-xl mx-auto font-medium leading-relaxed">
-            Whether you have a high-impact engineering role, an ambitious backend architecture to solve, or want to discuss multi-agent systems.
+          <p className="mt-4 text-base text-black/75 max-w-lg mx-auto font-medium leading-relaxed">
+            Whether you have an engineering role, an ambitious backend architecture to solve, or want to discuss multi-agent AI systems.
           </p>
         </div>
 
-        {/* Central Hand-Drawn Speech Bubble Contact Card */}
-        <div className="max-w-2xl mx-auto mb-16 relative">
-          <div className="relative rounded-3xl border-2 border-black bg-white p-8 sm:p-10 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+        {/* Central Hand-Drawn Contact Card */}
+        <div className="max-w-2xl mx-auto relative">
+          <div className="bg-white p-8 sm:p-10 doodle-box shadow-[6px_8px_0px_0px_#000]">
             
             {/* Top Status */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b-2 border-black">
@@ -69,10 +69,10 @@ export const DoodleConnect: React.FC<DoodleConnectProps> = ({ onOpenResume }) =>
             </div>
 
             {/* Email Box */}
-            <div className="mt-8 rounded-2xl bg-neutral-50 p-6 border-2 border-black flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            <div className="mt-8 p-6 bg-neutral-50 doodle-box-sm border-2 border-black flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <span className="font-mono text-xs font-bold text-black/60 uppercase block">
-                  Direct Inquiries
+                <span className="font-mono text-[10px] font-bold text-black/60 uppercase block">
+                  Official Email
                 </span>
                 <a
                   href={`mailto:${profileData.email}`}
@@ -85,7 +85,7 @@ export const DoodleConnect: React.FC<DoodleConnectProps> = ({ onOpenResume }) =>
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleCopyEmail}
-                  className="px-4 py-2 rounded-xl border-2 border-black bg-white font-mono text-xs font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neutral-100 transition"
+                  className="px-4 py-2 bg-white font-mono text-xs font-bold doodle-btn"
                 >
                   {copiedEmail ? (
                     <span className="text-emerald-600 flex items-center gap-1">
@@ -100,7 +100,7 @@ export const DoodleConnect: React.FC<DoodleConnectProps> = ({ onOpenResume }) =>
 
                 <a
                   href={`mailto:${profileData.email}`}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-black text-white font-mono text-xs font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neutral-800 transition"
+                  className="px-4 py-2 bg-black text-white font-mono text-xs font-bold doodle-btn flex items-center gap-1.5"
                 >
                   <span>Compose</span>
                   <Send className="h-3.5 w-3.5" />
@@ -108,11 +108,11 @@ export const DoodleConnect: React.FC<DoodleConnectProps> = ({ onOpenResume }) =>
               </div>
             </div>
 
-            {/* Action Buttons & Socials */}
+            {/* Resume & Social Links */}
             <div className="mt-8 pt-6 border-t-2 border-black flex flex-wrap items-center justify-between gap-4">
               <button
                 onClick={onOpenResume}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-200 border-2 border-black font-mono text-xs font-bold shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:bg-amber-300 transition"
+                className="px-4 py-2 bg-yellow-200 border-2 border-black font-mono text-xs font-bold doodle-btn flex items-center gap-2"
               >
                 <FileText className="h-4 w-4" />
                 <span>Grab Official Resume</span>
@@ -123,30 +123,30 @@ export const DoodleConnect: React.FC<DoodleConnectProps> = ({ onOpenResume }) =>
                   href={profileData.socials.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl border-2 border-black bg-white font-mono text-xs font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neutral-100 transition"
+                  className="p-2 bg-white doodle-box-sm shadow-[2px_2px_0px_0px_#000] hover:bg-neutral-100 transition"
+                  aria-label="GitHub"
                 >
                   <GithubIcon className="h-4 w-4" />
-                  <span>GitHub</span>
                 </a>
 
                 <a
                   href={profileData.socials.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl border-2 border-black bg-white font-mono text-xs font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neutral-100 transition"
+                  className="p-2 bg-white doodle-box-sm shadow-[2px_2px_0px_0px_#000] hover:bg-neutral-100 transition"
+                  aria-label="LinkedIn"
                 >
                   <LinkedinIcon className="h-4 w-4" />
-                  <span>LinkedIn</span>
                 </a>
 
                 <a
                   href={profileData.socials.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl border-2 border-black bg-white font-mono text-xs font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neutral-100 transition"
+                  className="p-2 bg-white doodle-box-sm shadow-[2px_2px_0px_0px_#000] hover:bg-neutral-100 transition"
+                  aria-label="Twitter / X"
                 >
                   <TwitterIcon className="h-4 w-4" />
-                  <span>X</span>
                 </a>
               </div>
             </div>

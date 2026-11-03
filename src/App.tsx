@@ -7,7 +7,7 @@ import { ScrollToTop } from './components/ScrollToTop';
 import { QuickAccessModal } from './components/QuickAccessModal';
 import { ResumeModal } from './components/ResumeModal';
 
-// Brand New Doodle Storytelling Hub
+// Doodle Studio Portfolio
 import { Home } from './pages/Home';
 
 export function App() {
@@ -30,25 +30,24 @@ export function App() {
           <main className="relative z-10 min-h-[calc(100vh-280px)]">
             <Routes>
               <Route path="/" element={<Home onOpenResume={() => setResumeOpen(true)} />} />
-              <Route path="/stage" element={<Navigate to="/#stage" replace />} />
-              <Route path="/story" element={<Navigate to="/#story" replace />} />
-              <Route path="/odyssey" element={<Navigate to="/#story" replace />} />
-              <Route path="/workbench" element={<Navigate to="/#workbench" replace />} />
-              <Route path="/projects" element={<Navigate to="/#workbench" replace />} />
-              <Route path="/stack" element={<Navigate to="/#stack" replace />} />
-              <Route path="/skills" element={<Navigate to="/#stack" replace />} />
-              <Route path="/work/skills-and-tools" element={<Navigate to="/#stack" replace />} />
-              <Route path="/experience" element={<Navigate to="/#story" replace />} />
-              <Route path="/work/experience" element={<Navigate to="/#story" replace />} />
-              <Route path="/certifications" element={<Navigate to="/#stack" replace />} />
-              <Route path="/work/certifications" element={<Navigate to="/#stack" replace />} />
+              <Route path="/studio" element={<Navigate to="/#studio" replace />} />
+              <Route path="/blueprints" element={<Navigate to="/#blueprints" replace />} />
+              <Route path="/projects" element={<Navigate to="/#blueprints" replace />} />
+              <Route path="/credentials" element={<Navigate to="/#credentials" replace />} />
+              <Route path="/experience" element={<Navigate to="/#credentials" replace />} />
+              <Route path="/work/experience" element={<Navigate to="/#credentials" replace />} />
+              <Route path="/certifications" element={<Navigate to="/#credentials" replace />} />
+              <Route path="/work/certifications" element={<Navigate to="/#credentials" replace />} />
+              <Route path="/skills" element={<Navigate to="/#credentials" replace />} />
+              <Route path="/work/skills-and-tools" element={<Navigate to="/#credentials" replace />} />
+              <Route path="/connect" element={<Navigate to="/#connect" replace />} />
               <Route path="/contact" element={<Navigate to="/#connect" replace />} />
               <Route path="/work/contact" element={<Navigate to="/#connect" replace />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
 
-          {/* Hand-Drawn Footer */}
+          {/* Pure Full-Width Crowd Canvas Footer */}
           <Footer />
 
           {/* Action Center & Modals */}

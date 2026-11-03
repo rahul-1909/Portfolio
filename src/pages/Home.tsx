@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { DoodleHero } from '../components/DoodleHero';
-import { ComicOdyssey } from '../components/ComicOdyssey';
-import { DoodleWorkbench } from '../components/DoodleWorkbench';
-import { DoodleToolChest } from '../components/DoodleToolChest';
-import { DoodleConnect } from '../components/DoodleConnect';
+import { DoodleStudioHero } from '../components/DoodleStudioHero';
+import { DoodleBlueprints } from '../components/DoodleBlueprints';
+import { DoodleCredentialsWall } from '../components/DoodleCredentialsWall';
+import { DoodleCoffeeConnect } from '../components/DoodleCoffeeConnect';
 
 interface HomeProps {
   onOpenResume: () => void;
@@ -27,20 +26,17 @@ export const Home: React.FC<HomeProps> = ({ onOpenResume }) => {
 
   return (
     <div className="relative overflow-hidden bg-white text-black min-h-screen">
-      {/* 1. Full-Screen Skiper39 Crowd Stage (Hero) */}
-      <DoodleHero onOpenResume={onOpenResume} />
+      {/* 1. The Doodle Studio / Hero */}
+      <DoodleStudioHero onOpenResume={onOpenResume} />
 
-      {/* 2. The Comic Odyssey (4-Panel Visual Journey & Virtusa Tenure) */}
-      <ComicOdyssey />
+      {/* 2. Project Blueprints & Schematics */}
+      <DoodleBlueprints />
 
-      {/* 3. The Workbench (Selected Systems & Blueprints) */}
-      <DoodleWorkbench />
+      {/* 3. The Credentials & Commercial Experience Wall */}
+      <DoodleCredentialsWall />
 
-      {/* 4. The Tool Chest (Weapons of Choice & Verified Certifications) */}
-      <DoodleToolChest />
-
-      {/* 5. The Street Dock / Coffee Shop Connect */}
-      <DoodleConnect onOpenResume={onOpenResume} />
+      {/* 4. Coffee Stand / Direct Connect */}
+      <DoodleCoffeeConnect onOpenResume={onOpenResume} />
     </div>
   );
 };
