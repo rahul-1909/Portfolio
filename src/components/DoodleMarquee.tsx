@@ -1,23 +1,29 @@
 import React from 'react';
 
 interface DoodleMarqueeProps {
-  items: string[];
+  items?: string[];
   reverse?: boolean;
   speed?: 'normal' | 'fast';
   bgColor?: string;
   textColor?: string;
 }
 
-const DOODLE_SEPARATORS = ['★', '⚡', '✦', '☕', '☁️', '🚀', '😊'];
+const DEFAULT_ITEMS = [
+  'Grafica pubblicitaria',
+  'Illustrazione',
+  'Direzione artistica',
+  'Murales',
+  'Live painting',
+  'Pasta al sugo'
+];
 
 export const DoodleMarquee: React.FC<DoodleMarqueeProps> = ({
-  items,
+  items = DEFAULT_ITEMS,
   reverse = false,
   speed = 'normal',
   bgColor = 'bg-black',
   textColor = 'text-white',
 }) => {
-  // Repeat items to make an endless seamless loop
   const repeatedItems = [...items, ...items, ...items, ...items];
 
   const animClass = reverse 
@@ -27,21 +33,16 @@ export const DoodleMarquee: React.FC<DoodleMarqueeProps> = ({
     : 'animate-marquee';
 
   return (
-    <div className={`w-full overflow-hidden border-y-3 sm:border-y-4 border-black ${bgColor} ${textColor} py-3 sm:py-4 select-none relative z-20`}>
+    <div className={`w-full overflow-hidden border-y-4 border-black ${bgColor} ${textColor} py-4 sm:py-5 select-none relative z-20`}>
       <div className={animClass}>
-        {repeatedItems.map((item, index) => {
-          const sep = DOODLE_SEPARATORS[index % DOODLE_SEPARATORS.length];
-          return (
-            <div key={index} className="flex items-center gap-6 sm:gap-8 mx-4 sm:mx-6 shrink-0">
-              <span className="font-display text-base sm:text-xl font-bold uppercase tracking-wider whitespace-nowrap">
-                {item}
-              </span>
-              <span className="text-[#FFE600] text-lg select-none shrink-0 drop-shadow-[1px_1px_0px_#000]">
-                {sep}
-              </span>
-            </div>
-          );
-        })}
+        {repeatedItems.map((item, index) => (
+          <div key={index} className="flex items-center gap-6 sm:gap-10 mx-4 sm:mx-8 shrink-0">
+            <span className="font-display text-xl sm:text-3xl font-bold uppercase tracking-wider whitespace-nowrap">
+              {item}
+            </span>
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FFE600] border border-black shrink-0" />
+          </div>
+        ))}
       </div>
     </div>
   );

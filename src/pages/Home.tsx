@@ -1,45 +1,89 @@
-import React from 'react';
-import { CrowdCanvas } from '../components/Skiper39';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { FraDoodleHero } from '../components/FraDoodleHero';
+import { DoodleMarquee } from '../components/DoodleMarquee';
+import { FraAboutSection } from '../components/FraAboutSection';
+import { CircleClipTransition } from '../components/CircleClipTransition';
+import { FraProjectsSection } from '../components/FraProjectsSection';
+import { FraMenuWrap } from '../components/FraMenuWrap';
+import { FraChallengesSection } from '../components/FraChallengesSection';
+import { FraCrowdContactSection } from '../components/FraCrowdContactSection';
 
-interface HomeProps {
-  onOpenResume?: () => void;
-}
+export const Home: React.FC = () => {
+  const location = useLocation();
 
-export const Home: React.FC<HomeProps> = () => {
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 150);
+    }
+  }, [location.hash]);
+
+  const clientMarquee = [
+    'Vodafone',
+    'Walt Disney',
+    'Epsilon',
+    'Clipper',
+    'Nespresso',
+    'Bic',
+    'Superga',
+    'Technogym',
+    'Grazia',
+    'Everli',
+    'Ikea',
+    'Pentel',
+    'Vans',
+    'Seat',
+    'Timberland',
+    'Eon',
+    'Bombay Sapphire',
+    'Metro',
+    'Xiaomi',
+    'Moleskine'
+  ];
+
   return (
-    <div className="relative min-h-screen bg-white text-black flex flex-col justify-between overflow-hidden">
-      {/* Clean Slate Canvas Area Ready for Step-by-Step Redesign */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 py-32 text-center">
-        <div className="inline-block px-3 py-1 bg-[#FFE600] border-2 border-black rounded font-mono text-xs font-bold uppercase tracking-widest shadow-[2px_2px_0px_#000] mb-4">
-          CLEAN SLATE · READY FOR INSTRUCTIONS
-        </div>
+    <div className="relative overflow-hidden bg-white text-black min-h-screen">
+      {/* 1. Hero with Matter.js Interactive 3D Physics Canvas & Tilting Showreel */}
+      <FraDoodleHero />
 
-        <h1 className="font-display text-5xl sm:text-7xl font-bold uppercase tracking-tight text-black">
-          RAHUL TEJA
-        </h1>
+      {/* Marquee Ticker 1: Disciplines */}
+      <DoodleMarquee 
+        bgColor="bg-black" 
+        textColor="text-white" 
+      />
 
-        <p className="font-mono text-sm text-gray-500 mt-2 max-w-md">
-          All previous content, sentences, and sections have been removed. Ready to rebuild step by step.
-        </p>
+      {/* 2. Ma chi è fra? (Dark Story Section with Omino Fra) */}
+      <FraAboutSection />
+
+      {/* 3. Wave / Circle Clip Transition */}
+      <CircleClipTransition />
+
+      {/* 4. Selected Works Showcase (IKEA, WAMI, XIAOMI GUINNESS RECORD) */}
+      <FraProjectsSection />
+
+      {/* Marquee Ticker 2: Major Brand Clients */}
+      <DoodleMarquee 
+        items={clientMarquee}
+        reverse={true} 
+        bgColor="bg-[#FFE600]" 
+        textColor="text-black" 
+        speed="fast" 
+      />
+
+      {/* 5. The 11 Core Specialties Menu (menu-wrap) */}
+      <div id="services">
+        <FraMenuWrap />
       </div>
 
-      {/* Full-Screen Edge-to-Edge Skiper UI Crowd Canvas (Footer) */}
-      <footer className="relative w-full border-t-4 border-black bg-white">
-        <div className="relative w-full h-[280px] sm:h-[340px] md:h-[400px] pointer-events-none select-none overflow-hidden">
-          <CrowdCanvas
-            src="/images/peeps/all-peeps.png"
-            rows={15}
-            cols={7}
-            className="w-full h-full block"
-          />
-        </div>
+      {/* 6. Le Sfide di Fra! (The Challenges & Sfidalo CTA) */}
+      <FraChallengesSection />
 
-        <div className="w-full bg-black text-white py-4 px-6 text-center border-t-2 border-black">
-          <span className="font-mono text-xs text-gray-300">
-            © 2026 Rahul Teja
-          </span>
-        </div>
-      </footer>
+      {/* 7. Contact Hub + Edge-to-Edge Animated Crowd Canvas + Fatto a Mano Footer */}
+      <FraCrowdContactSection />
     </div>
   );
 };

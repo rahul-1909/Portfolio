@@ -21,25 +21,19 @@ export function App() {
           <ScrollToTop />
 
           {/* Single-Page Minimalist Navigation Header */}
-          <Header
-            onOpenQuickAccess={() => setQuickAccessOpen(true)}
-          />
+          <Header />
 
           {/* Page Routing */}
           <main className="relative z-10">
             <Routes>
-              <Route path="/" element={<Home onOpenResume={() => setResumeOpen(true)} />} />
+              <Route path="/" element={<Home />} />
               <Route path="/hero" element={<Navigate to="/#hero" replace />} />
-              <Route path="/about" element={<Navigate to="/#about" replace />} />
-              <Route path="/who-is-rahul" element={<Navigate to="/#about" replace />} />
+              <Route path="/about" element={<Navigate to="/#intro" replace />} />
+              <Route path="/intro" element={<Navigate to="/#intro" replace />} />
               <Route path="/projects" element={<Navigate to="/#projects" replace />} />
               <Route path="/works" element={<Navigate to="/#projects" replace />} />
-              <Route path="/experience" element={<Navigate to="/#about" replace />} />
-              <Route path="/work/experience" element={<Navigate to="/#about" replace />} />
-              <Route path="/certifications" element={<Navigate to="/#about" replace />} />
-              <Route path="/skills" element={<Navigate to="/#hero" replace />} />
+              <Route path="/services" element={<Navigate to="/#services" replace />} />
               <Route path="/contact" element={<Navigate to="/#contact" replace />} />
-              <Route path="/work/contact" element={<Navigate to="/#contact" replace />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>

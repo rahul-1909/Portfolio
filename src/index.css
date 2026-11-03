@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Tusker Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/TuskerGrotesk-Bold.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Moderat Extended';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/fonts/Moderat-Semibold.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Moderat Extended';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/Moderat-Bold.woff2') format('woff2');
+  font-display: swap;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -10,12 +34,16 @@
   body {
     background-color: #ffffff;
     color: #000000;
-    cursor: default;
+    font-family: 'Moderat Extended', sans-serif;
   }
 
   .font-display {
-    font-family: 'Bebas Neue', 'Antonio', sans-serif;
-    letter-spacing: 0.05em;
+    font-family: 'Tusker Grotesk', 'Bebas Neue', sans-serif;
+    letter-spacing: 0.02em;
+  }
+
+  .font-par {
+    font-family: 'Moderat Extended', sans-serif;
   }
 
   .font-marker {
