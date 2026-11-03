@@ -9,7 +9,6 @@ import {
 } from 'lucide-react';
 import { profileData } from '../data/profile';
 import { GithubIcon, LinkedinIcon, TwitterIcon } from './SocialIcons';
-import { CrowdCanvas } from './Skiper39';
 
 interface DoodleConnectProps {
   onOpenResume: () => void;
@@ -153,22 +152,6 @@ export const DoodleConnect: React.FC<DoodleConnectProps> = ({ onOpenResume }) =>
             </div>
 
           </div>
-        </div>
-
-        {/* Ambient Crowd Stage Running Across the Bottom Base */}
-        <div className="w-full relative overflow-hidden rounded-2xl border-2 border-black bg-white h-44 select-none">
-          <div className="absolute top-2 left-4 z-10 flex items-center gap-2 font-mono text-[10px] font-bold text-black/60 uppercase">
-            <span>Live Peeps Walking</span>
-            <span>·</span>
-            <span>OpenPeeps Engine</span>
-          </div>
-
-          <CrowdCanvas
-            src="/images/peeps/all-peeps.png"
-            rows={15}
-            cols={7}
-            className="w-full h-full"
-          />
         </div>
 
       </div>

@@ -1,126 +1,81 @@
 import React from 'react';
+import { CrowdCanvas } from './Skiper39';
 import { GithubIcon, TwitterIcon, LinkedinIcon } from './SocialIcons';
 import { profileData } from '../data/profile';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
-  const scrollToSection = (sectionId: string) => {
-    const el = document.getElementById(sectionId);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
-    <footer className="relative bg-white text-black border-t-2 border-black pt-16 pb-12">
-      <div className="content-wrapper max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between gap-12 pb-12 border-b-2 border-black">
-          
-          {/* Left: Bio / Info */}
-          <div className="max-w-md">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-black text-white font-mono text-xs font-bold border-2 border-black">
-                RT
-              </div>
-              <span className="font-[1000] text-lg uppercase tracking-tight text-black">
-                Rahul Teja
-              </span>
-            </div>
+    <footer id="crowd" className="relative w-full bg-white text-black border-t-2 border-black overflow-hidden select-none">
+      
+      {/* Top Header Tag matching the exact Skiper-UI reference */}
+      <div className="pt-12 sm:pt-16 pb-4 flex flex-col items-center justify-center text-center px-4 relative z-10">
+        <div className="font-mono text-xs sm:text-sm tracking-[0.4em] text-black font-bold uppercase">
+          <div>CROWD</div>
+          <div>CANVAS</div>
+        </div>
+        {/* Delicate vertical hairline from reference */}
+        <div className="w-[1px] h-10 bg-black/30 my-3" />
+      </div>
 
-            <p className="text-sm text-black/75 font-medium leading-relaxed mb-6">
-              Software Developer building distributed backend services, asynchronous APIs, and autonomous AI agents. Based in Hyderabad, India.
-            </p>
+      {/* The Full-Bleed Edge-to-Edge Crowd Canvas Stage */}
+      <div className="relative w-full h-[400px] sm:h-[480px] md:h-[540px] pointer-events-none">
+        <CrowdCanvas
+          src="/images/peeps/all-peeps.png"
+          rows={15}
+          cols={7}
+          className="w-full h-full"
+        />
+      </div>
 
-            <div className="flex items-center gap-2">
-              <a
-                href={profileData.socials.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-xl border-2 border-black bg-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neutral-100 transition"
-                aria-label="GitHub"
-              >
-                <GithubIcon className="h-4 w-4" />
-              </a>
-
-              <a
-                href={profileData.socials.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-xl border-2 border-black bg-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neutral-100 transition"
-                aria-label="LinkedIn"
-              >
-                <LinkedinIcon className="h-4 w-4" />
-              </a>
-
-              <a
-                href={profileData.socials.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-xl border-2 border-black bg-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neutral-100 transition"
-                aria-label="Twitter / X"
-              >
-                <TwitterIcon className="h-4 w-4" />
-              </a>
-            </div>
-          </div>
-
-          {/* Right Navigation */}
-          <div className="flex flex-wrap gap-12">
-            <div>
-              <span className="font-mono text-xs font-bold uppercase tracking-widest text-black/60 block mb-4">
-                The Canvas Navigation
-              </span>
-              <ul className="space-y-2 font-mono text-xs font-bold uppercase tracking-wider">
-                <li>
-                  <button onClick={() => scrollToSection('stage')} className="hover:underline">
-                    01. Full Crowd Stage
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => scrollToSection('story')} className="hover:underline">
-                    02. Comic Odyssey
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => scrollToSection('workbench')} className="hover:underline">
-                    03. The Workbench
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => scrollToSection('stack')} className="hover:underline">
-                    04. The Tool Chest
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => scrollToSection('connect')} className="hover:underline">
-                    05. Connect & Chat
-                  </button>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <span className="font-mono text-xs font-bold uppercase tracking-widest text-black/60 block mb-4">
-                Verified Credentials
-              </span>
-              <ul className="space-y-2 font-mono text-xs font-medium text-black/80">
-                <li>Virtusa Associate Engineer Tenure</li>
-                <li>Microsoft Certified MLOps Associate</li>
-                <li>AWS Cloud Practitioner</li>
-                <li>Anthropic Claude 101</li>
-              </ul>
-            </div>
-          </div>
-
+      {/* Clean, Professional Bottom Bar (Zero Framework/Library Credits) */}
+      <div className="border-t-2 border-black bg-white py-5 px-6 sm:px-12 flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
+        <div className="font-mono text-xs font-bold text-black uppercase tracking-wider">
+          © {currentYear} Rahul Teja · All rights reserved.
         </div>
 
-        {/* Bottom bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-black/60 font-semibold">
-          <span>© {currentYear} Rahul Teja · Hand-Drawn Doodle & Skiper39 Crowd Engine</span>
-          <span>Built with OpenPeeps · React · Vite · TypeScript</span>
+        {/* Minimal Social Links & Direct Email */}
+        <div className="flex items-center gap-4">
+          <a
+            href={profileData.socials.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-1.5 rounded-lg border-2 border-black bg-white hover:bg-neutral-100 transition shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+            aria-label="GitHub"
+          >
+            <GithubIcon className="h-4 w-4" />
+          </a>
+
+          <a
+            href={profileData.socials.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-1.5 rounded-lg border-2 border-black bg-white hover:bg-neutral-100 transition shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+            aria-label="LinkedIn"
+          >
+            <LinkedinIcon className="h-4 w-4" />
+          </a>
+
+          <a
+            href={profileData.socials.twitter}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-1.5 rounded-lg border-2 border-black bg-white hover:bg-neutral-100 transition shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+            aria-label="Twitter / X"
+          >
+            <TwitterIcon className="h-4 w-4" />
+          </a>
+
+          <a
+            href={`mailto:${profileData.email}`}
+            className="font-mono text-xs font-bold text-black hover:underline ml-2"
+          >
+            {profileData.email}
+          </a>
         </div>
       </div>
+
     </footer>
   );
 };

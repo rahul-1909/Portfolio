@@ -3,13 +3,19 @@ import {
   ArrowDown, 
   FileText, 
   FolderGit2, 
-  Layers, 
   Send, 
-  Sparkles,
-  Terminal,
-  Cpu
+  BookOpen
 } from 'lucide-react';
-import { CrowdCanvas } from './Skiper39';
+import { 
+  SiPython, 
+  SiGo, 
+  SiFastapi, 
+  SiSpringboot, 
+  SiDocker, 
+  SiPostgresql, 
+  SiRedis 
+} from 'react-icons/si';
+import { FaJava, FaAws } from 'react-icons/fa';
 
 interface DoodleHeroProps {
   onOpenResume: () => void;
@@ -23,12 +29,24 @@ export const DoodleHero: React.FC<DoodleHeroProps> = ({ onOpenResume }) => {
     }
   };
 
+  const primaryStack = [
+    { name: 'Python', icon: SiPython, tag: 'Async / Core' },
+    { name: 'Go Lang', icon: SiGo, tag: 'Concurrency' },
+    { name: 'Java', icon: FaJava, tag: 'Enterprise' },
+    { name: 'FastAPI', icon: SiFastapi, tag: 'ASGI / REST' },
+    { name: 'Spring Boot 3.5', icon: SiSpringboot, tag: 'RBAC Security' },
+    { name: 'AWS Cloud', icon: FaAws, tag: 'Infrastructure' },
+    { name: 'Docker', icon: SiDocker, tag: 'Containers' },
+    { name: 'PostgreSQL', icon: SiPostgresql, tag: 'Relational' },
+    { name: 'Redis', icon: SiRedis, tag: 'Caching / Queue' },
+  ];
+
   return (
     <section 
-      id="stage" 
-      className="relative w-full h-screen min-h-[720px] max-h-[1080px] bg-white text-black flex flex-col justify-between overflow-hidden select-none border-b-2 border-black"
+      id="hero" 
+      className="relative w-full bg-white text-black pt-28 pb-20 sm:pt-36 sm:pb-24 border-b-2 border-black overflow-hidden"
     >
-      {/* Subtle Hand-Drawn / Graph Paper Dot Grid Background */}
+      {/* Subtle Graph Paper Dot Grid Background */}
       <div 
         className="absolute inset-0 pointer-events-none opacity-40 z-0"
         style={{
@@ -37,128 +55,105 @@ export const DoodleHero: React.FC<DoodleHeroProps> = ({ onOpenResume }) => {
         }}
       />
 
-      {/* Full-Screen Skiper39 Crowd Canvas (Behind text, walking in full viewport scale) */}
-      <div className="absolute inset-0 w-full h-full z-10 pointer-events-none">
-        <CrowdCanvas
-          src="/images/peeps/all-peeps.png"
-          rows={15}
-          cols={7}
-          className="w-full h-full"
-        />
-      </div>
-
-      {/* Top Center Minimalist Branding matching Skiper-UI screenshot */}
-      <div className="relative z-20 pt-20 sm:pt-24 px-4 text-center max-w-4xl mx-auto flex flex-col items-center">
+      <div className="content-wrapper max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* CROUD CANVAS / THE STAGE minimal tag */}
-        <div className="flex flex-col items-center">
-          <span className="font-mono text-[11px] sm:text-xs tracking-[0.35em] text-black/60 uppercase font-bold">
-            STAGE 01 · CROWD CANVAS
+        {/* Availability Pill */}
+        <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full border-2 border-black bg-neutral-50 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] w-fit mb-6">
+          <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse border border-black" />
+          <span className="font-mono text-xs font-bold uppercase tracking-wider text-black">
+            Available for Software Engineering & AI Roles
           </span>
-          {/* Vertical hairline divider from screenshot */}
-          <div className="w-[1px] h-7 bg-black/30 my-2" />
         </div>
 
-        {/* Massive Editorial Name & Title */}
-        <h1 className="mt-1 text-4xl sm:text-6xl md:text-7xl font-[1000] tracking-tight text-black uppercase leading-none">
-          Rahul Teja
-        </h1>
+        {/* Hero Title & Subtitle */}
+        <div className="max-w-4xl">
+          <h1 className="text-5xl sm:text-7xl md:text-8xl font-[1000] tracking-tight text-black uppercase leading-[1.05]">
+            Rahul Teja
+          </h1>
 
-        <div className="mt-2 inline-flex items-center gap-2 px-3 py-1 bg-black text-white rounded-md font-mono text-xs sm:text-sm font-bold tracking-wider uppercase">
-          <span>Software Developer</span>
-          <span>·</span>
-          <span>Backend & AI Systems</span>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <span className="px-3.5 py-1 rounded-lg bg-black text-white font-mono text-sm sm:text-base font-bold uppercase tracking-wider">
+              Software Developer
+            </span>
+            <span className="px-3.5 py-1 rounded-lg border-2 border-black bg-white font-mono text-sm sm:text-base font-bold uppercase tracking-wider shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+              Backend & AI Systems
+            </span>
+          </div>
+
+          <p className="mt-6 text-lg sm:text-xl text-black/80 max-w-3xl font-medium leading-relaxed">
+            I engineer high-throughput <strong className="text-black font-bold underline decoration-2">ASGI microservices</strong>, distributed system architectures, and autonomous <strong className="text-black font-bold underline decoration-2">multi-agent RAG pipelines</strong>. Tested with production rigor and commercial enterprise tenure.
+          </p>
         </div>
 
-        {/* Bio / Positioning Statement */}
-        <p className="mt-4 text-sm sm:text-base md:text-lg text-black/80 max-w-2xl font-medium leading-relaxed">
-          Specializing in high-throughput <strong className="text-black font-bold underline decoration-wavy decoration-black/40">ASGI microservices</strong>, distributed system security, and autonomous <strong className="text-black font-bold underline decoration-wavy decoration-black/40">multi-agent RAG pipelines</strong>.
-        </p>
-
-        {/* Tactile Ink Neo-Brutalist Buttons */}
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5 pointer-events-auto">
+        {/* Primary Action Buttons */}
+        <div className="mt-8 flex flex-wrap items-center gap-3">
           <button
-            onClick={() => scrollTo('story')}
-            className="group flex items-center gap-2 px-4 sm:px-5 py-2.5 bg-black text-white text-xs sm:text-sm font-bold rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
+            onClick={() => scrollTo('workbench')}
+            className="group flex items-center gap-2 px-5 py-3 bg-black text-white text-xs sm:text-sm font-bold rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
           >
-            <span>The Comic Odyssey</span>
+            <FolderGit2 className="h-4 w-4" />
+            <span>Explore Selected Works</span>
             <ArrowDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
           </button>
 
           <button
-            onClick={() => scrollTo('workbench')}
-            className="flex items-center gap-2 px-4 sm:px-5 py-2.5 bg-white text-black text-xs sm:text-sm font-bold rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-white hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
+            onClick={() => scrollTo('story')}
+            className="flex items-center gap-2 px-5 py-3 bg-white text-black text-xs sm:text-sm font-bold rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-neutral-100 hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
           >
-            <FolderGit2 className="h-4 w-4" />
-            <span>The Workbench</span>
-          </button>
-
-          <button
-            onClick={() => scrollTo('stack')}
-            className="flex items-center gap-2 px-4 sm:px-5 py-2.5 bg-white text-black text-xs sm:text-sm font-bold rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-white hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
-          >
-            <Layers className="h-4 w-4" />
-            <span>Tool Chest</span>
+            <BookOpen className="h-4 w-4" />
+            <span>The Odyssey (Experience)</span>
           </button>
 
           <button
             onClick={onOpenResume}
-            className="flex items-center gap-2 px-4 sm:px-5 py-2.5 bg-amber-200 text-black text-xs sm:text-sm font-bold rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-amber-300 hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
+            className="flex items-center gap-2 px-5 py-3 bg-amber-200 text-black text-xs sm:text-sm font-bold rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-amber-300 hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
           >
             <FileText className="h-4 w-4" />
-            <span>Resume</span>
+            <span>Verified Resume</span>
           </button>
 
           <button
             onClick={() => scrollTo('connect')}
-            className="flex items-center gap-2 px-4 sm:px-5 py-2.5 bg-white text-black text-xs sm:text-sm font-bold rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-white hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
+            className="flex items-center gap-2 px-5 py-3 bg-white text-black text-xs sm:text-sm font-bold rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-neutral-100 hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
           >
             <Send className="h-4 w-4" />
-            <span>Say Hello</span>
+            <span>Get in Touch</span>
           </button>
         </div>
 
-        {/* Floating Comic Speech Bubbles perched right above the walking crowd */}
-        <div className="hidden md:flex items-center justify-between w-full max-w-3xl mt-8 pointer-events-none">
-          
-          {/* Bubble 1 */}
-          <div className="relative bg-white border-2 border-black px-3 py-1.5 rounded-xl shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transform -rotate-2">
-            <span className="font-mono text-[11px] font-bold text-black flex items-center gap-1">
-              <Terminal className="h-3 w-3" />
-              Sub-14ms P99 ASGI API
+        {/* Core Runtimes & Languages Strip */}
+        <div className="mt-14 pt-8 border-t-2 border-black">
+          <div className="flex items-center justify-between gap-4 mb-4">
+            <span className="font-mono text-xs font-bold uppercase tracking-widest text-black/60">
+              Primary Runtimes & Infrastructure Stack
             </span>
-            <div className="absolute -bottom-2 left-6 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[8px] border-t-black" />
+            <span className="font-mono text-xs font-bold text-black/40 hidden sm:inline">
+              Commercial & Production Tested
+            </span>
           </div>
 
-          {/* Bubble 2 */}
-          <div className="relative bg-white border-2 border-black px-3 py-1.5 rounded-xl shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transform rotate-1">
-            <span className="font-mono text-[11px] font-bold text-black flex items-center gap-1">
-              <Cpu className="h-3 w-3" />
-              LangGraph Multi-Agent RAG
-            </span>
-            <div className="absolute -bottom-2 right-8 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[8px] border-t-black" />
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-3">
+            {primaryStack.map((tech) => {
+              const Icon = tech.icon;
+              return (
+                <div
+                  key={tech.name}
+                  className="flex flex-col items-center justify-center p-3 rounded-xl border-2 border-black bg-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all text-center"
+                >
+                  <Icon className="h-6 w-6 text-black mb-1.5" />
+                  <span className="font-bold text-xs text-black leading-tight">
+                    {tech.name}
+                  </span>
+                  <span className="font-mono text-[9px] text-black/60 font-semibold mt-0.5">
+                    {tech.tag}
+                  </span>
+                </div>
+              );
+            })}
           </div>
-
-          {/* Bubble 3 */}
-          <div className="relative bg-white border-2 border-black px-3 py-1.5 rounded-xl shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transform -rotate-1">
-            <span className="font-mono text-[11px] font-bold text-black flex items-center gap-1">
-              <Sparkles className="h-3 w-3 text-amber-500" />
-              Virtusa Tenure Verified
-            </span>
-            <div className="absolute -bottom-2 left-8 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[8px] border-t-black" />
-          </div>
-
         </div>
 
       </div>
-
-      {/* Bottom Floating Scroll Indicator */}
-      <div className="relative z-20 pb-4 text-center pointer-events-none">
-        <span className="font-mono text-[10px] tracking-widest text-black/50 uppercase font-bold">
-          SCROLL DOWN TO ENTER THE ODYSSEY ↓
-        </span>
-      </div>
-
     </section>
   );
 };

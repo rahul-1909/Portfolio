@@ -27,7 +27,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      const sections = ['stage', 'story', 'workbench', 'stack', 'connect'];
+      const sections = ['hero', 'story', 'workbench', 'stack', 'connect', 'crowd'];
       const scrollPosition = window.scrollY + 200;
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -62,11 +62,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
   };
 
   const navItems = [
-    { id: 'stage', label: 'Stage' },
-    { id: 'story', label: 'Odyssey' },
-    { id: 'workbench', label: 'Workbench' },
+    { id: 'hero', label: 'Overview' },
+    { id: 'story', label: 'The Odyssey' },
+    { id: 'workbench', label: 'Works' },
     { id: 'stack', label: 'Tool Chest' },
-    { id: 'connect', label: 'Connect' },
+    { id: 'connect', label: 'Contact' },
+    { id: 'crowd', label: 'Crowd' },
   ];
 
   return (
@@ -81,7 +82,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
         
         {/* Brand Logo */}
         <button
-          onClick={() => scrollToSection('stage')}
+          onClick={() => scrollToSection('hero')}
           className="flex items-center gap-2 group text-left cursor-pointer"
           aria-label="Scroll to top"
         >
