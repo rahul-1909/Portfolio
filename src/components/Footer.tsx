@@ -1,17 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { GithubIcon, TwitterIcon, LinkedinIcon } from './SocialIcons';
 import { profileData } from '../data/profile';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
-  return (
-    <footer className="relative mt-24 border-t border-slate-200/60 dark:border-slate-800/60 pt-16 text-sm text-slate-900 dark:text-slate-200">
-      {/* Background Gradient */}
-      <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t from-slate-50/80 via-white to-white dark:from-[#0d1117] dark:via-[#0a0a0f] dark:to-[#0a0a0f]" />
+  const scrollToSection = (sectionId: string) => {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
-      <div className="content-wrapper relative z-10">
+  return (
+    <footer className="relative mt-24 border-t border-slate-200/60 dark:border-white/5 pt-16 text-sm text-slate-900 dark:text-slate-200">
+      {/* Background Gradient */}
+      <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t from-slate-100/50 via-white to-white dark:from-[#050508] dark:via-[#07070b] dark:to-[#07070b]" />
+
+      <div className="content-wrapper max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="py-10 font-semibold">
           <div className="flex flex-col-reverse gap-16 lg:flex-row">
             {/* About Me Column */}
@@ -73,33 +79,40 @@ export const Footer: React.FC = () => {
                 {/* Work Column */}
                 <div className="flex-1">
                   <div className="mb-3 px-2 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
-                    Work
+                    Portfolio
                   </div>
-                  <ul className="flex flex-col text-sm">
+                  <ul className="flex flex-col text-sm space-y-1">
                     <li>
-                      <Link className="footer-link px-2" to="/work/contact">
+                      <button 
+                        onClick={() => scrollToSection('contact')} 
+                        className="footer-link px-2 text-left cursor-pointer hover:text-violet-500"
+                      >
                         Contact
-                      </Link>
+                      </button>
                     </li>
                     <li>
-                      <Link className="footer-link px-2" to="/work/experience">
-                        Experience
-                      </Link>
+                      <button 
+                        onClick={() => scrollToSection('experience')} 
+                        className="footer-link px-2 text-left cursor-pointer hover:text-violet-500"
+                      >
+                        Experience & Credentials
+                      </button>
                     </li>
                     <li>
-                      <Link className="footer-link px-2" to="/work/certifications">
-                        Certifications
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="footer-link px-2" to="/work/skills-and-tools">
+                      <button 
+                        onClick={() => scrollToSection('skills')} 
+                        className="footer-link px-2 text-left cursor-pointer hover:text-violet-500"
+                      >
                         Skills and Tools
-                      </Link>
+                      </button>
                     </li>
                     <li>
-                      <Link className="footer-link px-2" to="/projects">
+                      <button 
+                        onClick={() => scrollToSection('projects')} 
+                        className="footer-link px-2 text-left cursor-pointer hover:text-violet-500"
+                      >
                         Projects
-                      </Link>
+                      </button>
                     </li>
                   </ul>
                 </div>
@@ -107,20 +120,23 @@ export const Footer: React.FC = () => {
                 {/* Learn Column */}
                 <div className="flex-1">
                   <div className="mb-3 px-2 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
-                    Learn
+                    Learn & Connect
                   </div>
-                  <ul className="flex flex-col text-sm">
+                  <ul className="flex flex-col text-sm space-y-1">
                     <li>
-                      <Link className="footer-link px-2 flex items-center gap-1.5" to="/today-i-learned">
+                      <button 
+                        onClick={() => scrollToSection('til')} 
+                        className="footer-link px-2 text-left cursor-pointer hover:text-violet-500 flex items-center gap-1.5"
+                      >
                         <span>T.I.L</span>
-                        <span className="rounded bg-accent-500/10 px-1.5 py-0.5 text-[10px] font-bold text-accent-600 dark:text-accent-400">
+                        <span className="rounded bg-violet-500/10 px-1.5 py-0.5 text-[10px] font-bold text-violet-600 dark:text-violet-400 border border-violet-500/20">
                           new
                         </span>
-                      </Link>
+                      </button>
                     </li>
                     <li>
                       <a 
-                        className="footer-link px-2" 
+                        className="footer-link px-2 hover:text-violet-500" 
                         href="https://github.com/rahul-1909?tab=repositories" 
                         target="_blank" 
                         rel="noreferrer"
@@ -130,7 +146,7 @@ export const Footer: React.FC = () => {
                     </li>
                     <li>
                       <a 
-                        className="footer-link px-2" 
+                        className="footer-link px-2 hover:text-violet-500" 
                         href={profileData.socials.linkedin} 
                         target="_blank" 
                         rel="noreferrer"
@@ -146,9 +162,9 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between border-t border-slate-200/60 py-6 text-xs dark:border-slate-800/60 gap-3">
+        <div className="flex flex-col sm:flex-row items-center justify-between border-t border-slate-200/60 py-6 text-xs dark:border-white/5 gap-3">
           <div className="font-semibold text-slate-500 dark:text-slate-500">
-            © {currentYear}, rahul-1909.github.io
+            © {currentYear}, rahul-1909.github.io · Designed for High Performance
           </div>
           <div className="text-slate-400 dark:text-slate-500">
             <a
@@ -157,7 +173,7 @@ export const Footer: React.FC = () => {
               rel="noreferrer nofollow"
               className="hover:underline flex items-center gap-1.5"
             >
-              <span>see the recent update on GitHub</span>
+              <span>Built with React + Vite + TypeScript + Tailwind</span>
             </a>
           </div>
         </div>

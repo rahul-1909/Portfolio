@@ -8,14 +8,8 @@ import { ScrollToTop } from './components/ScrollToTop';
 import { QuickAccessModal } from './components/QuickAccessModal';
 import { ResumeModal } from './components/ResumeModal';
 
-// Pages
+// Single-Page Storytelling Hub
 import { Home } from './pages/Home';
-import { ProjectsPage } from './pages/ProjectsPage';
-import { SkillsPage } from './pages/SkillsPage';
-import { ExperiencePage } from './pages/ExperiencePage';
-import { CertificationsPage } from './pages/CertificationsPage';
-import { TILPage } from './pages/TILPage';
-import { ContactPage } from './pages/ContactPage';
 
 export function App() {
   const [quickAccessOpen, setQuickAccessOpen] = useState(false);
@@ -25,13 +19,13 @@ export function App() {
     <ThemeProvider>
       <BrowserRouter>
         <div className="relative min-h-screen bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 transition-colors duration-300">
-          {/* Scroll reset on route change */}
+          {/* Scroll reset or smooth scroll to hash on route change */}
           <ScrollToTop />
 
           {/* Background Ambient Network */}
           <InteractiveCanvas />
 
-          {/* Multi-Page Navigation Header */}
+          {/* Single-Page Navigation Header with Smooth Anchor Scrolling & Section Spy */}
           <Header
             onOpenQuickAccess={() => setQuickAccessOpen(true)}
           />
@@ -40,22 +34,22 @@ export function App() {
           <main className="relative z-10 min-h-[calc(100vh-280px)]">
             <Routes>
               <Route path="/" element={<Home onOpenResume={() => setResumeOpen(true)} />} />
-              <Route path="/projects" element={<ProjectsPage />} />
-              <Route path="/today-i-learned" element={<TILPage />} />
-              <Route path="/til" element={<Navigate to="/today-i-learned" replace />} />
-              <Route path="/work/skills-and-tools" element={<SkillsPage />} />
-              <Route path="/skills" element={<Navigate to="/work/skills-and-tools" replace />} />
-              <Route path="/work/experience" element={<ExperiencePage />} />
-              <Route path="/experience" element={<Navigate to="/work/experience" replace />} />
-              <Route path="/work/certifications" element={<CertificationsPage />} />
-              <Route path="/certifications" element={<Navigate to="/work/certifications" replace />} />
-              <Route path="/work/contact" element={<ContactPage />} />
-              <Route path="/contact" element={<Navigate to="/work/contact" replace />} />
+              <Route path="/projects" element={<Navigate to="/#projects" replace />} />
+              <Route path="/today-i-learned" element={<Navigate to="/#til" replace />} />
+              <Route path="/til" element={<Navigate to="/#til" replace />} />
+              <Route path="/work/skills-and-tools" element={<Navigate to="/#skills" replace />} />
+              <Route path="/skills" element={<Navigate to="/#skills" replace />} />
+              <Route path="/work/experience" element={<Navigate to="/#experience" replace />} />
+              <Route path="/experience" element={<Navigate to="/#experience" replace />} />
+              <Route path="/work/certifications" element={<Navigate to="/#experience" replace />} />
+              <Route path="/certifications" element={<Navigate to="/#experience" replace />} />
+              <Route path="/work/contact" element={<Navigate to="/#contact" replace />} />
+              <Route path="/contact" element={<Navigate to="/#contact" replace />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
 
-          {/* Exact Arshad MQ Style Footer */}
+          {/* Footer */}
           <Footer />
 
           {/* Action Center & Modals */}
