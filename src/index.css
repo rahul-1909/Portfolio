@@ -10,6 +10,20 @@
   body {
     background-color: #ffffff;
     color: #000000;
+    cursor: default;
+  }
+
+  .font-display {
+    font-family: 'Bebas Neue', 'Antonio', sans-serif;
+    letter-spacing: 0.05em;
+  }
+
+  .font-marker {
+    font-family: 'Permanent Marker', cursive;
+  }
+
+  .font-hand {
+    font-family: 'Caveat', cursive;
   }
 
   .dark body {

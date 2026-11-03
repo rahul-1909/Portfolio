@@ -8,6 +8,8 @@ interface DoodleMarqueeProps {
   textColor?: string;
 }
 
+const DOODLE_SEPARATORS = ['★', '⚡', '✦', '☕', '☁️', '🚀', '😊'];
+
 export const DoodleMarquee: React.FC<DoodleMarqueeProps> = ({
   items,
   reverse = false,
@@ -25,16 +27,21 @@ export const DoodleMarquee: React.FC<DoodleMarqueeProps> = ({
     : 'animate-marquee';
 
   return (
-    <div className={`w-full overflow-hidden border-y-2 border-black ${bgColor} ${textColor} py-2.5 sm:py-3.5 select-none`}>
+    <div className={`w-full overflow-hidden border-y-3 sm:border-y-4 border-black ${bgColor} ${textColor} py-3 sm:py-4 select-none relative z-20`}>
       <div className={animClass}>
-        {repeatedItems.map((item, index) => (
-          <div key={index} className="flex items-center gap-6 sm:gap-8 mx-3 sm:mx-4 shrink-0">
-            <span className="font-mono text-xs sm:text-sm font-[1000] uppercase tracking-[0.2em] whitespace-nowrap">
-              {item}
-            </span>
-            <span className="text-yellow-400 text-sm sm:text-base select-none">★</span>
-          </div>
-        ))}
+        {repeatedItems.map((item, index) => {
+          const sep = DOODLE_SEPARATORS[index % DOODLE_SEPARATORS.length];
+          return (
+            <div key={index} className="flex items-center gap-6 sm:gap-8 mx-4 sm:mx-6 shrink-0">
+              <span className="font-display text-base sm:text-xl font-bold uppercase tracking-wider whitespace-nowrap">
+                {item}
+              </span>
+              <span className="text-[#FFE600] text-lg select-none shrink-0 drop-shadow-[1px_1px_0px_#000]">
+                {sep}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
