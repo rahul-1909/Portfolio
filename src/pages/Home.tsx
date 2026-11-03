@@ -1,90 +1,45 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { FraDoodleCursor } from '../components/FraDoodleCursor';
-import { FraDoodleHero } from '../components/FraDoodleHero';
-import { DoodleMarquee } from '../components/DoodleMarquee';
-import { FraAboutSection } from '../components/FraAboutSection';
-import { CircleClipTransition } from '../components/CircleClipTransition';
-import { FraProjectsSection } from '../components/FraProjectsSection';
-import { FraMenuWrap } from '../components/FraMenuWrap';
-import { FraChallengesSection } from '../components/FraChallengesSection';
-import { FraCrowdContactSection } from '../components/FraCrowdContactSection';
+import React from 'react';
+import { CrowdCanvas } from '../components/Skiper39';
 
 interface HomeProps {
-  onOpenResume: () => void;
+  onOpenResume?: () => void;
 }
 
-export const Home: React.FC<HomeProps> = ({ onOpenResume }) => {
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.hash) {
-      const id = location.hash.replace('#', '');
-      setTimeout(() => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 150);
-    }
-  }, [location.hash]);
-
+export const Home: React.FC<HomeProps> = () => {
   return (
-    <div className="relative overflow-hidden bg-white text-black min-h-screen">
-      {/* Interactive Custom Doodle Cursor (tracks and reacts on desktop) */}
-      <FraDoodleCursor />
+    <div className="relative min-h-screen bg-white text-black flex flex-col justify-between overflow-hidden">
+      {/* Clean Slate Canvas Area Ready for Step-by-Step Redesign */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-32 text-center">
+        <div className="inline-block px-3 py-1 bg-[#FFE600] border-2 border-black rounded font-mono text-xs font-bold uppercase tracking-widest shadow-[2px_2px_0px_#000] mb-4">
+          CLEAN SLATE · READY FOR INSTRUCTIONS
+        </div>
 
-      {/* 1. Fra! Doodle Hero with Matter.js Interactive 2D Physics Canvas */}
-      <FraDoodleHero onOpenResume={onOpenResume} />
+        <h1 className="font-display text-5xl sm:text-7xl font-bold uppercase tracking-tight text-black">
+          RAHUL TEJA
+        </h1>
 
-      {/* Marquee Ticker 1 (High-Contrast Black Band) */}
-      <DoodleMarquee 
-        items={[
-          'HIGH-THROUGHPUT ASGI MICROSERVICES', 
-          'LANGGRAPH MULTI-AGENT RAG', 
-          'SUB-14MS VECTOR SEARCH', 
-          'GO LANG & PYTHON', 
-          'VIRTUSA ALUMNI',
-          'DOCKER & AWS CLOUD',
-          'DISTRIBUTED REDIS CACHING'
-        ]} 
-        bgColor="bg-black" 
-        textColor="text-white" 
-      />
+        <p className="font-mono text-sm text-gray-500 mt-2 max-w-md">
+          All previous content, sentences, and sections have been removed. Ready to rebuild step by step.
+        </p>
+      </div>
 
-      {/* 2. Who is Rahul? (Ma chi è Rahul? - Dark Story & Verified Vault) */}
-      <FraAboutSection />
+      {/* Full-Screen Edge-to-Edge Skiper UI Crowd Canvas (Footer) */}
+      <footer className="relative w-full border-t-4 border-black bg-white">
+        <div className="relative w-full h-[280px] sm:h-[340px] md:h-[400px] pointer-events-none select-none overflow-hidden">
+          <CrowdCanvas
+            src="/images/peeps/all-peeps.png"
+            rows={15}
+            cols={7}
+            className="w-full h-full block"
+          />
+        </div>
 
-      {/* 3. Circle Clip / Doodle Wave Transition */}
-      <CircleClipTransition />
-
-      {/* 4. Selected Projects Packed with Lines & Logic */}
-      <FraProjectsSection />
-
-      {/* Marquee Ticker 2 (Vibrant Yellow Reverse Band) */}
-      <DoodleMarquee 
-        items={[
-          'ARCHITECTURAL BLUEPRINTS', 
-          'SUB-14MS P99 LATENCY', 
-          'AST QUERY VALIDATION', 
-          'JWT STATELESS RBAC',
-          'DISTRIBUTED MUTEX LOCKS',
-          'ZERO DOWNTIME ROLLOVERS'
-        ]} 
-        reverse={true} 
-        bgColor="bg-[#FFE600]" 
-        textColor="text-black" 
-        speed="fast" 
-      />
-
-      {/* 5. The Technical Repertoire (Interactive Capabilities Menu) */}
-      <FraMenuWrap />
-
-      {/* 6. The Engineering Challenges (Le Sfide Carousel + Challenge Him CTA) */}
-      <FraChallengesSection />
-
-      {/* 7. The Grand Crowd Contact Hub + Edge-to-Edge Animated Skiper UI Crowd Canvas */}
-      <FraCrowdContactSection onOpenResume={onOpenResume} />
+        <div className="w-full bg-black text-white py-4 px-6 text-center border-t-2 border-black">
+          <span className="font-mono text-xs text-gray-300">
+            © 2026 Rahul Teja
+          </span>
+        </div>
+      </footer>
     </div>
   );
 };

@@ -61,12 +61,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
     }
   };
 
-  const navItems = [
-    { id: 'hero', label: 'Studio' },
-    { id: 'about', label: 'Who is Rahul?' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'contact', label: 'Contact' },
-  ];
+  const navItems: { id: string; label: string }[] = [];
 
   return (
     <header
