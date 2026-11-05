@@ -27,7 +27,7 @@
     background-color: var(--color-light-grey);
     color: var(--color-light-black);
     font-size: 0.694445vw; /* Reference exact 1rem = 10px @ 1440px */
-    overflow: hidden;
+    overflow-x: hidden;
   }
 
   @media (max-width: 767px) {
@@ -37,7 +37,9 @@
   }
 
   body {
-    overflow: hidden;
+    overflow-x: hidden;
+    min-height: 100vh;
+    background-color: var(--color-light-grey);
   }
 
   /* Keyboard Focus */

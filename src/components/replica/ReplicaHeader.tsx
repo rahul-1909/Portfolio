@@ -8,8 +8,8 @@ interface ReplicaHeaderProps {
 }
 
 export const ReplicaHeader: React.FC<ReplicaHeaderProps> = ({
-  title = "Gabriel Beaugonin",
-  subtitle = "UX Designer",
+  title = "Rahul Teja",
+  subtitle = "Software Developer",
   isProject = false,
 }) => {
   return (
