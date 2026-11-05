@@ -37,7 +37,7 @@ export const ReplicaAbout: React.FC = () => {
           subtitle={personalInfo.role}
         />
 
-        {/* Back Arrow + Social Rounded Square Pills */}
+        {/* Back Arrow + Social Rounded Square Pills (only Back and Mail on section pages) */}
         <ReplicaDock />
       </div>
 
@@ -49,10 +49,10 @@ export const ReplicaAbout: React.FC = () => {
           {/* Bio Paragraph 1 */}
           <p className="text-[2.6rem] max-phone:text-[1.8rem] leading-[1.35] tracking-tight font-normal">
             <span className="text-light-black font-semibold">
-              Full-stack and AI engineer
+              Software Engineer
             </span>
             <span className="text-[#9F9F9F]">
-              {' '}building resilient systems and agentic workflows.
+              , architecting distributed backend APIs, scalable microservices, and autonomous AI systems engineered for high reliability and throughput.
             </span>
           </p>
 
@@ -67,22 +67,15 @@ export const ReplicaAbout: React.FC = () => {
 
           {/* Bio Paragraph 3 */}
           <p className="text-[2.6rem] max-phone:text-[1.8rem] leading-[1.35] tracking-tight font-normal">
-            <span className="text-[#9F9F9F]">Previously built conversational AI and retrieval systems using </span>
-            <span className="text-light-black font-semibold">LangGraph</span>
-            <span className="text-[#9F9F9F]">, </span>
-            <span className="text-light-black font-semibold">Qdrant</span>
-            <span className="text-[#9F9F9F]">, and </span>
-            <span className="text-light-black font-semibold">local SLMs</span>
-            <span className="text-[#9F9F9F]">, with a focus on low-latency tool execution and structured generation.</span>
-          </p>
-
-          {/* Bio Paragraph 4 */}
-          <p className="text-[2.6rem] max-phone:text-[1.8rem] leading-[1.35] tracking-tight font-normal">
-            <span className="text-[#9F9F9F]">Graduating </span>
-            <span className="text-light-black font-semibold">B.Tech in Computer Science and Engineering</span>
-            <span className="text-[#9F9F9F]"> from </span>
-            <span className="text-light-black font-semibold">Vardhaman College of Engineering</span>
-            <span className="text-[#9F9F9F]">, Hyderabad (2022 – 2026).</span>
+            <span className="text-[#9F9F9F]">Engineered core production systems including </span>
+            <span className="text-light-black font-semibold">Faultline</span>
+            <span className="text-[#9F9F9F]"> (discrete-event failure simulator), </span>
+            <span className="text-light-black font-semibold">Star Finance</span>
+            <span className="text-[#9F9F9F]"> (bullion collateral lending engine), </span>
+            <span className="text-light-black font-semibold">NexusAI</span>
+            <span className="text-[#9F9F9F]"> (autonomous multi-agent RAG state machine), and </span>
+            <span className="text-light-black font-semibold">ConvoLens</span>
+            <span className="text-[#9F9F9F]"> (conversational AI evaluation and failure taxonomy).</span>
           </p>
 
           {/* Footer Attribution Line */}

@@ -6,6 +6,7 @@ export interface HomeContainerItem {
   count: string;
   path: string;
   subtitle: string;
+  bgColor: string;
 }
 
 export const homeContainers: HomeContainerItem[] = [
@@ -15,13 +16,15 @@ export const homeContainers: HomeContainerItem[] = [
     count: '05',
     path: '/projects',
     subtitle: 'Selected Works',
+    bgColor: '#E3E7EB', // slate
   },
   {
     id: 'skills',
     title: 'Skills',
-    count: '32',
+    count: '12',
     path: '/skills',
     subtitle: 'Core Competencies',
+    bgColor: '#E9E8E3', // sand
   },
   {
     id: 'certifications',
@@ -29,6 +32,7 @@ export const homeContainers: HomeContainerItem[] = [
     count: '06',
     path: '/certifications',
     subtitle: 'Verified Credentials',
+    bgColor: '#E4E9E3', // sage
   },
   {
     id: 'experience',
@@ -36,5 +40,6 @@ export const homeContainers: HomeContainerItem[] = [
     count: '01',
     path: '/experience',
     subtitle: 'Work History',
+    bgColor: '#EDE7E2', // clay
   },
 ];

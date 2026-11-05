@@ -127,10 +127,10 @@ export const ReplicaDock: React.FC<ReplicaDockProps> = ({
   if (isSectionOrAbout) {
     return (
       <nav
-        aria-label="Navigation and Socials"
+        aria-label="Navigation and Contact"
         className="flex items-center gap-[1.2rem] max-phone:gap-[0.8rem] pointer-events-auto select-none"
       >
-        {/* Black Circle Back Arrow Pill: Returns to Home (/) */}
+        {/* Pill 1: Black Circle Back Arrow Pill (returns to Home) */}
         <button
           onClick={() => navigate('/')}
           aria-label="Back to home"
@@ -139,19 +139,14 @@ export const ReplicaDock: React.FC<ReplicaDockProps> = ({
           <BackChevronIcon className="w-[1.6rem] h-[1.6rem] text-white" />
         </button>
 
-        {/* Social Icons row: Mail, X, LinkedIn, GitHub */}
-        {socials.map((item) => (
-          <a
-            key={item.id}
-            href={item.href}
-            target={item.external ? '_blank' : undefined}
-            rel={item.external ? 'noopener noreferrer' : undefined}
-            aria-label={item.label}
-            className="w-[7.2rem] h-[7.2rem] max-phone:w-[5.4rem] max-phone:h-[5.4rem] rounded-[24px] max-phone:rounded-[18px] bg-white text-light-black border border-border-light/60 shadow-sm hover:border-border-dark/30 hover:scale-105 active:scale-95 flex items-center justify-center transition-all focus-visible:outline-2 focus-visible:outline-light-black"
-          >
-            {item.icon}
-          </a>
-        ))}
+        {/* Pill 2: One Extra Pill (Mail) - Keeps clear gap > 48px to right container */}
+        <a
+          href={personalInfo.socials.email}
+          aria-label="Email Rahul Teja"
+          className="w-[7.2rem] h-[7.2rem] max-phone:w-[5.4rem] max-phone:h-[5.4rem] rounded-[24px] max-phone:rounded-[18px] bg-white text-light-black border border-border-light/60 shadow-sm hover:border-border-dark/30 hover:scale-105 active:scale-95 flex items-center justify-center transition-all focus-visible:outline-2 focus-visible:outline-light-black"
+        >
+          <MailIcon className="w-[1.6rem] h-[1.6rem] text-light-black" />
+        </a>
       </nav>
     );
   }

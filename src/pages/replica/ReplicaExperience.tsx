@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { ReplicaHeader } from '../../components/replica/ReplicaHeader';
 import { ReplicaDock } from '../../components/replica/ReplicaDock';
 import { experienceData } from '../../data/experience';
@@ -52,41 +53,47 @@ export const ReplicaExperience: React.FC = () => {
         </div>
       </div>
 
-      {/* 2. Right Main Column: Virtusa Container & Responsibilities Stack (NO GLOBE) */}
+      {/* 2. Right Main Column: Soft-Tinted Virtusa Container */}
       <div className="w-full flex justify-end pt-20 pb-24 pr-[25.7rem] max-phone:pt-4 max-phone:px-4 max-phone:pr-4">
         <div className="w-[53.6rem] max-phone:w-full flex flex-col gap-[2.6rem]">
-          {/* Main Virtusa Container Card */}
-          <div className="w-full rounded-[32px] p-10 max-phone:p-6 bg-[#1A1D20] text-white shadow-sm flex flex-col justify-between">
-            <div className="flex items-center justify-between pb-6 border-b border-white/10">
-              <span className="text-[1.1rem] font-mono uppercase tracking-widest text-emerald-400">
+          {/* Main Virtusa Container Card in Soft Clay Palette */}
+          <motion.div
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full rounded-[32px] p-10 max-phone:p-6 bg-[#EDE7E2] text-light-black shadow-sm flex flex-col justify-between"
+          >
+            <div className="flex items-center justify-between pb-6 border-b border-light-black/10">
+              <span className="text-[1.1rem] font-mono uppercase tracking-widest text-[#555555]">
                 Internship · Chennai
               </span>
-              <span className="text-[1.1rem] font-mono text-white/50">
+              <span className="text-[1.1rem] font-mono text-[#777777]">
                 Aug 2025 – Jun 2026
               </span>
             </div>
 
             <div className="py-8 space-y-3">
-              <h3 className="text-[3.8rem] max-phone:text-[2.6rem] font-black tracking-tight text-white leading-none">
+              <h3 className="text-[3.8rem] max-phone:text-[2.6rem] font-black tracking-tight text-light-black leading-none">
                 Virtusa
               </h3>
-              <p className="text-[1.8rem] max-phone:text-[1.4rem] font-semibold text-white/90">
+              <p className="text-[1.8rem] max-phone:text-[1.4rem] font-semibold text-light-black">
                 Full Stack Software Intern
               </p>
-              <p className="text-[1.35rem] text-white/70 pt-2 leading-relaxed font-normal">
+              <p className="text-[1.35rem] text-[#555555] pt-2 leading-relaxed font-normal">
                 {exp.summary}
               </p>
             </div>
 
-            {/* Verified Responsibilities from src/data/experience.ts */}
-            <div className="py-6 border-t border-white/10 space-y-4">
-              <span className="text-[1.1rem] font-mono uppercase tracking-wider text-white/40 block">
+            {/* Verified Responsibilities */}
+            <div className="py-6 border-t border-light-black/10 space-y-4">
+              <span className="text-[1.1rem] font-mono uppercase tracking-wider text-[#777777] block">
                 Engineering Responsibilities
               </span>
               <div className="space-y-3">
                 {exp.responsibilities.map((resp, idx) => (
-                  <div key={idx} className="flex items-start gap-3 text-[1.3rem] text-white/80 leading-relaxed">
-                    <span className="text-emerald-400 font-mono text-[1.1rem] shrink-0 mt-1">0{idx + 1}.</span>
+                  <div key={idx} className="flex items-start gap-3 text-[1.35rem] text-[#333333] leading-relaxed">
+                    <span className="text-light-black font-mono font-semibold text-[1.1rem] shrink-0 mt-1">0{idx + 1}.</span>
                     <span>{resp}</span>
                   </div>
                 ))}
@@ -94,22 +101,22 @@ export const ReplicaExperience: React.FC = () => {
             </div>
 
             {/* Verified Technologies */}
-            <div className="pt-6 border-t border-white/10">
-              <span className="text-[1.1rem] font-mono uppercase tracking-wider text-white/40 block mb-3">
+            <div className="pt-6 border-t border-light-black/10">
+              <span className="text-[1.1rem] font-mono uppercase tracking-wider text-[#777777] block mb-3">
                 Verified Technologies
               </span>
               <div className="flex flex-wrap gap-2">
                 {exp.technologies.map((tech) => (
                   <span
                     key={tech}
-                    className="px-3 py-1 rounded-full bg-white/10 text-[1.1rem] font-mono text-white/80 border border-white/10"
+                    className="px-3 py-1 rounded-full bg-white/70 text-[1.1rem] font-mono text-light-black shadow-xs"
                   >
                     {tech}
                   </span>
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </main>

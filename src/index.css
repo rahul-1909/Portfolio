@@ -28,6 +28,8 @@
     color: var(--color-light-black);
     font-size: 0.694445vw; /* Reference exact 1rem = 10px @ 1440px */
     overflow-x: hidden;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
   }
 
   @media (max-width: 767px) {
@@ -40,22 +42,24 @@
     overflow-x: hidden;
     min-height: 100vh;
     background-color: var(--color-light-grey);
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  /* Hide visible scrollbar across all browsers while keeping scroll functional */
+  * {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
   }
 
   /* Keyboard Focus */
   :focus-visible {
     outline: 2px solid #1A1A1A;
     outline-offset: 3px;
-  }
-
-  /* Selection */
-  ::selection {
-    background-color: #1A1A1A;
-    color: #FFFFFF;
-  }
-
-  /* Safeguard against unwanted third-party or browser extensions injected outside root */
-  #root ~ * {
-    display: none !important;
   }
 }

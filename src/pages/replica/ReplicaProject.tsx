@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ReplicaHeader } from '../../components/replica/ReplicaHeader';
 import { ReplicaDock } from '../../components/replica/ReplicaDock';
 import { GitHubIcon } from '../../components/replica/ReplicaIcons';
-import { projectsDeck } from '../../data/portfolio';
+import { projectsData } from '../../data/projects';
 import { useSEO } from '../../hooks/useSEO';
 
 export const ReplicaProject: React.FC = () => {
@@ -13,7 +13,7 @@ export const ReplicaProject: React.FC = () => {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
 
   const activeId = slug || projectId;
-  const project = projectsDeck.find((p) => p.id === activeId);
+  const project = projectsData.find((p) => p.id === activeId);
 
   useSEO({
     title: project ? `${project.title} | Rahul Teja - Software Engineer` : 'Project | Rahul Teja',
@@ -39,18 +39,10 @@ export const ReplicaProject: React.FC = () => {
     return <Navigate to="/projects" replace />;
   }
 
-  // Screens list: cover image + natural desktop view
-  const projectScreens: string[] = [];
-  if (project.imageUrl) projectScreens.push(project.imageUrl);
-  if (project.id === 'gold-lending-platform') {
-    projectScreens.push('/assets/projects/gold-lending-platform-desktop.webp');
-  } else if (project.id === 'multi-agent-autonomous-rag') {
-    projectScreens.push('/assets/projects/multi-agent-autonomous-rag-desktop.webp');
-  } else if (project.id === 'linkedin-intelligence-api') {
-    projectScreens.push('/assets/projects/linkedin-intelligence-api-desktop.webp');
-  } else if (project.id === 'nl-to-sql-converter') {
-    projectScreens.push('/assets/projects/nl-to-sql-converter-desktop.webp');
-  }
+  // Pure illustrative WebP renders (no live website screenshots)
+  const screens = project.detailImages && project.detailImages.length > 0
+    ? project.detailImages
+    : [project.coverImage];
 
   return (
     <main className="relative min-h-screen w-full bg-light-grey text-light-black overflow-x-hidden select-none">
@@ -98,7 +90,7 @@ export const ReplicaProject: React.FC = () => {
               </div>
 
               <p className="text-[1.35rem] leading-relaxed text-light-black mb-4 select-text">
-                {project.summary || project.oneLineOutcome}
+                {project.description || project.oneLineOutcome}
               </p>
 
               {project.architectureDetails && project.architectureDetails.length > 0 && (
@@ -141,48 +133,27 @@ export const ReplicaProject: React.FC = () => {
         </AnimatePresence>
       </div>
 
-      {/* 2. Right Main Column: Stack of Large Full-Bleed Rounded Images (radius 32px), No Text Boxes */}
+      {/* 2. Right Main Column: Stack of Illustrative Images (radius 32px) */}
       <div className="w-full flex justify-end pt-20 pb-24 pr-[25.7rem] max-phone:pt-4 max-phone:px-4 max-phone:pr-4">
         <div className="w-[53.6rem] max-phone:w-full flex flex-col gap-[2.6rem]">
-          {projectScreens.length > 0 ? (
-            projectScreens.map((screenUrl, idx) => (
-              <div
-                key={idx}
-                className="w-full rounded-[32px] overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-[#EDEDED]"
-              >
-                <img
-                  src={screenUrl}
-                  alt={`${project.title} - View ${idx + 1}`}
-                  className="w-full h-auto block select-none"
-                  style={{ objectFit: 'contain' }}
-                  loading={idx === 0 ? 'eager' : 'lazy'}
-                />
-              </div>
-            ))
-          ) : (
-            <div
-              className="w-full h-[50rem] rounded-[32px] p-12 flex flex-col justify-between text-white shadow-sm"
-              style={{ backgroundColor: project.backgroundColor || '#1B1C20' }}
+          {screens.map((screenUrl, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full rounded-[32px] overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-[#EDEDED]"
             >
-              <div className="flex items-center justify-between">
-                <span className="text-[1.2rem] font-mono tracking-widest uppercase text-white/50">
-                  {project.category}
-                </span>
-                <span className="w-3 h-3 rounded-full bg-white/30" />
-              </div>
-              <div className="my-auto">
-                <h2 className="text-[3.6rem] font-bold text-white tracking-tight leading-tight">
-                  {project.title}
-                </h2>
-                <p className="text-[1.6rem] text-white/70 pt-4 leading-relaxed max-w-lg">
-                  {project.oneLineOutcome}
-                </p>
-              </div>
-              <p className="text-[1.3rem] font-mono text-white/40">
-                System Architecture
-              </p>
-            </div>
-          )}
+              <img
+                src={screenUrl}
+                alt={`${project.title} - View ${idx + 1}`}
+                className="w-full h-auto block select-none"
+                style={{ objectFit: 'cover' }}
+                loading={idx === 0 ? 'eager' : 'lazy'}
+              />
+            </motion.div>
+          ))}
         </div>
       </div>
     </main>
