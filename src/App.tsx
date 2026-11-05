@@ -1,14 +1,22 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
+import { SmoothScroll } from './components/SmoothScroll';
+import { CustomCursor } from './components/CustomCursor';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { ScrollToTop } from './components/ScrollToTop';
 import { QuickAccessModal } from './components/QuickAccessModal';
 import { ResumeModal } from './components/ResumeModal';
 
-// Brand New Doodle Storytelling Hub
+// Pages
 import { Home } from './pages/Home';
+import { ProjectsPage } from './pages/ProjectsPage';
+import { SkillsPage } from './pages/SkillsPage';
+import { ExperiencePage } from './pages/ExperiencePage';
+import { CertificationsPage } from './pages/CertificationsPage';
+import { TILPage } from './pages/TILPage';
+import { ContactPage } from './pages/ContactPage';
 
 export function App() {
   const [quickAccessOpen, setQuickAccessOpen] = useState(false);
@@ -17,52 +25,55 @@ export function App() {
   return (
     <ThemeProvider>
       <BrowserRouter>
-        <div className="relative min-h-screen bg-white text-black transition-colors duration-200">
-          {/* Scroll reset or smooth scroll to hash on route change */}
-          <ScrollToTop />
+        <SmoothScroll>
+          <div className="relative min-h-screen bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark font-sans transition-colors duration-300">
+            {/* Scroll reset on route change */}
+            <ScrollToTop />
 
-          {/* Single-Page Minimalist Navigation Header */}
-          <Header
-            onOpenQuickAccess={() => setQuickAccessOpen(true)}
-          />
+            {/* Custom Magnetic Cursor (Desktop) */}
+            <CustomCursor />
 
-          {/* Page Routing */}
-          <main className="relative z-10 min-h-[calc(100vh-280px)]">
-            <Routes>
-              <Route path="/" element={<Home onOpenResume={() => setResumeOpen(true)} />} />
-              <Route path="/stage" element={<Navigate to="/#stage" replace />} />
-              <Route path="/story" element={<Navigate to="/#story" replace />} />
-              <Route path="/odyssey" element={<Navigate to="/#story" replace />} />
-              <Route path="/workbench" element={<Navigate to="/#workbench" replace />} />
-              <Route path="/projects" element={<Navigate to="/#workbench" replace />} />
-              <Route path="/stack" element={<Navigate to="/#stack" replace />} />
-              <Route path="/skills" element={<Navigate to="/#stack" replace />} />
-              <Route path="/work/skills-and-tools" element={<Navigate to="/#stack" replace />} />
-              <Route path="/experience" element={<Navigate to="/#story" replace />} />
-              <Route path="/work/experience" element={<Navigate to="/#story" replace />} />
-              <Route path="/certifications" element={<Navigate to="/#stack" replace />} />
-              <Route path="/work/certifications" element={<Navigate to="/#stack" replace />} />
-              <Route path="/contact" element={<Navigate to="/#connect" replace />} />
-              <Route path="/work/contact" element={<Navigate to="/#connect" replace />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </main>
+            {/* Navigation Header */}
+            <Header
+              onOpenQuickAccess={() => setQuickAccessOpen(true)}
+              onOpenResume={() => setResumeOpen(true)}
+            />
 
-          {/* Hand-Drawn Footer */}
-          <Footer />
+            {/* Main Page Routing */}
+            <main className="relative z-10 min-h-[calc(100vh-240px)]">
+              <Routes>
+                <Route path="/" element={<Home onOpenResume={() => setResumeOpen(true)} />} />
+                <Route path="/projects" element={<ProjectsPage />} />
+                <Route path="/today-i-learned" element={<TILPage />} />
+                <Route path="/til" element={<Navigate to="/today-i-learned" replace />} />
+                <Route path="/work/skills-and-tools" element={<SkillsPage />} />
+                <Route path="/skills" element={<Navigate to="/work/skills-and-tools" replace />} />
+                <Route path="/work/experience" element={<ExperiencePage />} />
+                <Route path="/experience" element={<Navigate to="/work/experience" replace />} />
+                <Route path="/work/certifications" element={<CertificationsPage />} />
+                <Route path="/certifications" element={<Navigate to="/work/certifications" replace />} />
+                <Route path="/work/contact" element={<ContactPage />} />
+                <Route path="/contact" element={<Navigate to="/work/contact" replace />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </main>
 
-          {/* Action Center & Modals */}
-          <QuickAccessModal
-            isOpen={quickAccessOpen}
-            onClose={() => setQuickAccessOpen(false)}
-            onOpenResume={() => setResumeOpen(true)}
-          />
+            {/* Editorial Footer */}
+            <Footer />
 
-          <ResumeModal
-            isOpen={resumeOpen}
-            onClose={() => setResumeOpen(false)}
-          />
-        </div>
+            {/* Quick Access & Resume Modals */}
+            <QuickAccessModal
+              isOpen={quickAccessOpen}
+              onClose={() => setQuickAccessOpen(false)}
+              onOpenResume={() => setResumeOpen(true)}
+            />
+
+            <ResumeModal
+              isOpen={resumeOpen}
+              onClose={() => setResumeOpen(false)}
+            />
+          </div>
+        </SmoothScroll>
       </BrowserRouter>
     </ThemeProvider>
   );

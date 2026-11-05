@@ -1,173 +1,181 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Compass } from 'lucide-react';
-import { GithubIcon, TwitterIcon } from './SocialIcons';
-import { profileData } from '../data/profile';
+import { Link, useLocation } from 'react-router-dom';
+import { Sun, Moon, Menu, X, Compass, FileText } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 interface HeaderProps {
   onOpenQuickAccess: () => void;
+  onOpenResume?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
+export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess, onOpenResume }) => {
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
-  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>('stage');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
-
-      const sections = ['stage', 'story', 'workbench', 'stack', 'connect'];
-      const scrollPosition = window.scrollY + 200;
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i]);
-        if (el && el.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i]);
-          break;
-        }
-      }
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    setMobileMenuOpen(false);
-
-    if (location.pathname !== '/') {
-      navigate(`/#${sectionId}`);
-      setTimeout(() => {
-        const el = document.getElementById(sectionId);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    } else {
-      const el = document.getElementById(sectionId);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
+  const isActive = (path: string) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
   };
 
-  const navItems = [
-    { id: 'stage', label: 'Stage' },
-    { id: 'story', label: 'Odyssey' },
-    { id: 'workbench', label: 'Workbench' },
-    { id: 'stack', label: 'Tool Chest' },
-    { id: 'connect', label: 'Connect' },
+  const navLinks = [
+    { label: 'Work', path: '/projects' },
+    { label: 'Experience', path: '/work/experience' },
+    { label: 'Stack', path: '/work/skills-and-tools' },
+    { label: 'Certifications', path: '/work/certifications' },
+    { label: 'Changelog', path: '/today-i-learned' },
+    { label: 'Contact', path: '/work/contact' },
   ];
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-200 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-b-2 border-black py-2.5 shadow-sm'
-          : 'bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm py-3.5'
+          ? 'bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-border-light dark:border-border-dark py-3'
+          : 'bg-background-light/60 dark:bg-background-dark/60 backdrop-blur-sm border-b border-transparent py-4'
       }`}
     >
-      <div className="content-wrapper max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-8 flex items-center justify-between">
         {/* Brand Logo */}
-        <button
-          onClick={() => scrollToSection('stage')}
-          className="flex items-center gap-2 group text-left cursor-pointer"
-          aria-label="Scroll to top"
+        <Link
+          to="/"
+          className="flex items-center gap-2.5 font-mono text-sm tracking-wide text-text-light dark:text-text-dark group"
+          aria-label="Rahul Teja Homepage"
         >
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-black text-white border-2 border-black font-mono text-xs font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform">
-            <span>RT</span>
-          </div>
-          <div className="font-[1000] text-lg tracking-tight text-black dark:text-white uppercase">
-            <span>rahul teja</span>
-          </div>
-        </button>
+          <span className="flex h-7 w-7 items-center justify-center rounded-md bg-surface-elevatedLight dark:bg-surface-elevatedDark border border-border-light dark:border-border-dark text-accent-light dark:text-accent-dark font-bold text-xs transition-colors group-hover:border-accent-borderLight dark:group-hover:border-accent-borderDark">
+            RT
+          </span>
+          <span className="font-semibold tracking-tight text-text-light dark:text-text-dark">
+            rahulteja<span className="text-accent-light dark:text-accent-dark">.me</span>
+          </span>
+        </Link>
 
-        {/* Desktop Anchor Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1 bg-neutral-100 dark:bg-neutral-800 p-1 rounded-xl border-2 border-black">
-          {navItems.map((item) => {
-            const isActive = activeSection === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`px-3.5 py-1 rounded-lg font-mono text-xs font-bold tracking-wider uppercase transition-all ${
-                  isActive
-                    ? 'bg-black text-white shadow-sm'
-                    : 'text-black dark:text-white hover:bg-neutral-200 dark:hover:bg-neutral-700'
-                }`}
-              >
-                {item.label}
-              </button>
-            );
-          })}
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-7 text-xs font-mono" aria-label="Main Navigation">
+          {navLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className={`relative py-1 transition-colors ${
+                isActive(link.path)
+                  ? 'text-accent-light dark:text-accent-dark font-semibold'
+                  : 'text-text-mutedLight dark:text-text-mutedDark hover:text-text-light dark:hover:text-text-dark'
+              }`}
+            >
+              {link.label}
+              {isActive(link.path) && (
+                <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-accent-light dark:bg-accent-dark" />
+              )}
+            </Link>
+          ))}
         </nav>
 
-        {/* Right Action Icons: Twitter, GitHub, Quick Access, Theme Toggle */}
-        <div className="flex items-center gap-2">
-          {/* Social Icons */}
-          <div className="hidden sm:flex items-center gap-1.5">
-            <a
-              href={profileData.socials.twitter}
-              target="_blank"
-              rel="noreferrer nofollow"
-              className="p-1.5 rounded-lg border-2 border-black bg-white hover:bg-neutral-100 transition shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
-              aria-label="Twitter / X"
+        {/* Actions (Resume, Theme, Quick Access, Mobile Menu) */}
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Resume Action */}
+          {onOpenResume ? (
+            <button
+              onClick={onOpenResume}
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono rounded-md border border-border-strongLight dark:border-border-strongDark bg-surface-elevatedLight dark:bg-surface-elevatedDark text-text-light dark:text-text-dark hover:border-accent-light dark:hover:border-accent-dark hover:text-accent-light dark:hover:text-accent-dark transition-colors"
+              aria-label="View Resume"
             >
-              <TwitterIcon className="h-3.5 w-3.5" />
-            </a>
-
+              <FileText className="h-3.5 w-3.5" />
+              <span>Resume</span>
+              <span className="text-[10px]">↗</span>
+            </button>
+          ) : (
             <a
-              href={profileData.socials.github}
-              target="_blank"
-              rel="noreferrer nofollow"
-              className="p-1.5 rounded-lg border-2 border-black bg-white hover:bg-neutral-100 transition shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
-              aria-label="GitHub"
+              href="#resume"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono rounded-md border border-border-strongLight dark:border-border-strongDark bg-surface-elevatedLight dark:bg-surface-elevatedDark text-text-light dark:text-text-dark hover:border-accent-light dark:hover:border-accent-dark hover:text-accent-light dark:hover:text-accent-dark transition-colors"
+              aria-label="View Resume"
             >
-              <GithubIcon className="h-3.5 w-3.5" />
+              <FileText className="h-3.5 w-3.5" />
+              <span>Resume</span>
+              <span className="text-[10px]">↗</span>
             </a>
-          </div>
+          )}
 
-          {/* Quick Access Button */}
+          {/* Theme Toggle Button */}
+          <button
+            onClick={toggleTheme}
+            className="flex h-8 w-8 items-center justify-center rounded-md border border-border-light dark:border-border-dark bg-surface-elevatedLight dark:bg-surface-elevatedDark text-text-secondaryLight dark:text-text-secondaryDark hover:text-text-light dark:hover:text-text-dark transition-colors"
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+          >
+            {theme === 'dark' ? (
+              <Sun className="h-4 w-4 text-amber-300" />
+            ) : (
+              <Moon className="h-4 w-4 text-slate-700" />
+            )}
+          </button>
+
+          {/* Quick Access Modal Trigger */}
           <button
             onClick={onOpenQuickAccess}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border-2 border-black bg-white font-mono text-xs font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neutral-100 transition"
+            className="hidden md:flex h-8 items-center gap-1.5 px-2.5 text-xs font-mono rounded-md border border-border-light dark:border-border-dark bg-surface-elevatedLight dark:bg-surface-elevatedDark text-text-mutedLight dark:text-text-mutedDark hover:text-text-light dark:hover:text-text-dark transition-colors"
             aria-label="Open Quick Access"
+            title="Open Quick Access (Press Q)"
           >
-            <Compass className="h-3.5 w-3.5 text-black" />
-            <span className="hidden lg:inline">Find</span>
-            <kbd className="rounded border border-black/30 bg-neutral-100 px-1 font-mono text-[10px]">
+            <Compass className="h-3.5 w-3.5" />
+            <kbd className="px-1 py-0.2 rounded border border-border-strongLight dark:border-border-strongDark bg-surface-light dark:bg-surface-dark text-[10px]">
               Q
             </kbd>
           </button>
 
-          {/* Mobile Menu Trigger */}
+          {/* Mobile Menu Hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden flex h-8 w-8 items-center justify-center rounded-lg border-2 border-black bg-white"
-            aria-label="Toggle Menu"
+            className="lg:hidden flex h-8 w-8 items-center justify-center rounded-md border border-border-light dark:border-border-dark bg-surface-elevatedLight dark:bg-surface-elevatedDark text-text-light dark:text-text-dark"
+            aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b-2 border-black bg-white px-5 py-4 shadow-xl">
-          <div className="flex flex-col space-y-2">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="text-left font-mono text-sm font-bold uppercase tracking-wider py-1.5 text-black hover:opacity-70"
+        <div className="lg:hidden border-b border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark px-6 py-5 shadow-2xl transition-all">
+          <nav className="flex flex-col space-y-3 font-mono text-sm" aria-label="Mobile Navigation">
+            <Link
+              to="/"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`py-1 ${isActive('/') ? 'text-accent-light dark:text-accent-dark font-semibold' : 'text-text-secondaryLight dark:text-text-secondaryDark'}`}
+            >
+              Home
+            </Link>
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`py-1 ${isActive(link.path) ? 'text-accent-light dark:text-accent-dark font-semibold' : 'text-text-secondaryLight dark:text-text-secondaryDark'}`}
               >
-                {item.label}
-              </button>
+                {link.label}
+              </Link>
             ))}
-          </div>
+            {onOpenResume && (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenResume();
+                }}
+                className="py-1 text-left text-accent-light dark:text-accent-dark font-semibold"
+              >
+                Resume ↗
+              </button>
+            )}
+          </nav>
         </div>
       )}
     </header>

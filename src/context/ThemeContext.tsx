@@ -13,6 +13,10 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setThemeState] = useState<Theme>(() => {
     if (typeof window !== 'undefined') {
+      const queryMatch = window.location.search.match(/[?&]theme=(light|dark)/);
+      if (queryMatch && (queryMatch[1] === 'light' || queryMatch[1] === 'dark')) {
+        return queryMatch[1] as Theme;
+      }
       const stored = localStorage.getItem('theme') as Theme | null;
       if (stored === 'light' || stored === 'dark') {
         return stored;
@@ -49,6 +53,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   );
 };
 
+// oxlint-disable-next-line react/only-export-components
 export const useTheme = (): ThemeContextType => {
   const context = useContext(ThemeContext);
   if (!context) {
