@@ -7,53 +7,55 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      screens: {
+        'phone': '768px',
+        'max-phone': { 'max': '767px' },
+      },
       colors: {
+        'light-grey': '#F6F6F6',
+        'light-black': '#1A1A1A',
+        'grey': '#9F9F9F',
+        'black': '#0A0A0A',
+        'white': '#FFFFFF',
         background: {
-          light: '#f8f8fb',
-          dark: '#090a0f',
+          light: '#F6F6F6',
+          dark: '#0A0A0A',
         },
         surface: {
-          light: '#ffffff',
-          dark: '#11131c',
-          elevatedLight: '#f0f1f7',
-          elevatedDark: '#171a26',
+          light: '#FFFFFF',
+          dark: '#141414',
+          elevatedLight: '#EAEAEA',
+          elevatedDark: '#1E1E1E',
         },
         border: {
-          light: '#e2e4ee',
-          dark: '#1c1f2e',
-          strongLight: '#c8cde0',
-          strongDark: '#2a2f45',
+          light: '#E5E5E5',
+          dark: '#262626',
+          strongLight: '#D1D1D1',
+          strongDark: '#3A3A3A',
         },
         text: {
-          light: '#0d0e15',
-          dark: '#f2f3f7',
-          secondaryLight: '#3d4152',
-          secondaryDark: '#c0c3d4',
-          mutedLight: '#5e5e6e', // Strictly >= 4.5:1 on #f8f8fb (5.1:1)
-          mutedDark: '#8a8a98',  // Strictly >= 4.5:1 on #090a0f (5.4:1)
+          light: '#1A1A1A',
+          dark: '#F6F6F6',
+          secondaryLight: '#595959',
+          secondaryDark: '#A0A0A0',
+          mutedLight: '#737373',
+          mutedDark: '#8C8C8C',
         },
-        accent: {
-          light: '#007a55', // Strictly >= 4.5:1 on #f8f8fb (4.65:1)
-          dark: '#00e5a0',  // High contrast on #090a0f (12.8:1)
-          mutedLight: 'rgba(0, 122, 85, 0.12)',
-          mutedDark: 'rgba(0, 229, 160, 0.12)',
-          borderLight: 'rgba(0, 122, 85, 0.35)',
-          borderDark: 'rgba(0, 229, 160, 0.35)',
-        }
       },
       fontFamily: {
-        display: ['"Bricolage Grotesque"', 'system-ui', '-apple-system', 'sans-serif'],
-        sans: ['"Inter Tight"', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace'],
+        sans: ['"Suisse Intl"', '"Inter Tight"', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['"Suisse Intl"', '"Inter Tight"', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
       },
-      letterSpacing: {
-        display: '-0.04em',
-        tightest: '-0.03em',
+      fontSize: {
+        'h1': '3.2rem',
+        'h1-mobile': '1.8rem',
+        'h2': '2.4rem',
+        'h2-mobile': '1.8rem',
+        'h3': '1.6rem',
+        'h3-mobile': '1.4rem',
+        'h4': '1.4rem',
       },
-      lineHeight: {
-        display: '0.9',
-        tight: '1.05',
-      }
     },
   },
   plugins: [],

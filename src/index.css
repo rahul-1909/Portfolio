@@ -2,123 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url('/fonts/suisseintl-book.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   :root {
-    --font-display: "Bricolage Grotesque", system-ui, -apple-system, sans-serif;
-    --font-body: "Inter Tight", system-ui, -apple-system, sans-serif;
-    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --color-black: #0A0A0A;
+    --color-light-black: #1A1A1A;
+    --color-grey: #9F9F9F;
+    --color-light-grey: #F6F6F6;
+    --color-white: #FFFFFF;
+    --font-sans: 'Suisse Intl', 'Inter Tight', system-ui, -apple-system, sans-serif;
   }
 
   html {
-    scroll-behavior: auto; /* Handled smoothly by Lenis */
-    font-family: var(--font-body);
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: var(--color-light-grey);
+    color: var(--color-light-black);
+    font-size: 0.694445vw; /* Reference exact 1rem = 10px @ 1440px */
+    overflow: hidden;
   }
 
-  /* Keyboard Focus (High Visibility AA) */
+  @media (max-width: 767px) {
+    html {
+      font-size: 2.66667vw; /* Reference exact 1rem = 10px @ 375px */
+    }
+  }
+
+  body {
+    overflow: hidden;
+  }
+
+  /* Keyboard Focus */
   :focus-visible {
-    outline: 2px solid #00e5a0;
+    outline: 2px solid #1A1A1A;
     outline-offset: 3px;
   }
 
-  .light :focus-visible {
-    outline-color: #007a55;
-  }
-
-  /* Custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: rgba(138, 138, 152, 0.25);
-    border-radius: 9999px;
-  }
-  .dark ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.12);
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 229, 160, 0.4);
-  }
-  .light ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 122, 85, 0.4);
-  }
-}
-
-/* Custom Text Selection */
-::selection {
-  background-color: rgba(0, 229, 160, 0.2);
-  color: #00e5a0;
-}
-.light ::selection {
-  background-color: rgba(0, 122, 85, 0.2);
-  color: #007a55;
-}
-
-/* Custom Cursor (Desktop Fine Pointer Only) */
-.custom-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1.5px solid #00e5a0;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width 0.22s ease, height 0.22s ease, background-color 0.22s ease, border-color 0.22s ease;
-  will-change: transform;
-}
-
-.light .custom-cursor {
-  border-color: #007a55;
-}
-
-.custom-cursor.is-hovering {
-  width: 52px;
-  height: 52px;
-  background-color: rgba(0, 229, 160, 0.12);
-  border-color: #00e5a0;
-}
-
-.light .custom-cursor.is-hovering {
-  background-color: rgba(0, 122, 85, 0.12);
-  border-color: #007a55;
-}
-
-@media (hover: none) or (pointer: coarse) {
-  .custom-cursor {
-    display: none !important;
-  }
-}
-
-/* Terminal Cursor Pulse */
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-.animate-cursor-blink {
-  animation: blink 1s steps(2, start) infinite;
-}
-
-/* Reduced Motion Override */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  .custom-cursor {
-    display: none !important;
+  /* Selection */
+  ::selection {
+    background-color: #1A1A1A;
+    color: #FFFFFF;
   }
 }
