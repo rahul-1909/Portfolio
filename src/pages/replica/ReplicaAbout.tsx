@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReplicaHeader } from '../../components/replica/ReplicaHeader';
 import { ReplicaDock } from '../../components/replica/ReplicaDock';
-import { ReplicaGlobe } from '../../components/replica/ReplicaGlobe';
-import { personalInfo, certificationsDeck } from '../../data/portfolio';
+import { personalInfo } from '../../data/portfolio';
 import { useSEO } from '../../hooks/useSEO';
+
+const ReplicaGlobeThree = lazy(() =>
+  import('../../components/replica/ReplicaGlobeThree').then((mod) => ({ default: mod.ReplicaGlobeThree }))
+);
 
 export const ReplicaAbout: React.FC = () => {
   const navigate = useNavigate();
-  const [_currentCity, setCurrentCity] = useState<'Hyderabad' | 'Chennai'>('Hyderabad');
 
   useSEO({
     title: 'About | Rahul Teja - Software Engineer',
@@ -27,7 +29,7 @@ export const ReplicaAbout: React.FC = () => {
   }, [navigate]);
 
   return (
-    <main className="relative min-h-screen w-full bg-light-grey text-light-black pb-32 overflow-x-hidden">
+    <main className="relative min-h-screen w-full bg-light-grey text-light-black pb-28 overflow-x-hidden select-none">
       {/* 1. Header & Socials Pill Row */}
       <div className="pt-24 px-[25.7rem] max-phone:pt-10 max-phone:px-6 flex flex-col items-start gap-[2.4rem]">
         <ReplicaHeader
@@ -35,112 +37,74 @@ export const ReplicaAbout: React.FC = () => {
           subtitle={personalInfo.role}
         />
 
-        {/* Black Circle Back Arrow + Icon-Only Rounded Squares in One Row */}
+        {/* Back Arrow + Social Rounded Square Pills */}
         <ReplicaDock />
       </div>
 
-      {/* 2. Main Content Grid: Large Editorial Text on Left, 3D Rotating Globe on Right */}
-      <div className="mt-20 px-[25.7rem] max-phone:px-6 grid grid-cols-12 gap-12 max-phone:flex max-phone:flex-col-reverse">
+      {/* 2. Main Content Grid: Large Editorial Bio on Left, 3D Earth Globe on Right */}
+      <div className="mt-16 px-[25.7rem] max-phone:px-6 grid grid-cols-12 gap-12 max-phone:flex max-phone:flex-col-reverse">
         
-        {/* Left Side: Large Editorial Paragraph Typography */}
-        <div className="col-span-8 max-phone:col-span-12 flex flex-col gap-14 max-phone:gap-10">
-          
-          {/* Paragraph 1: Identity & Engineering Philosophy */}
-          <p className="text-[3rem] max-phone:text-[2rem] leading-[1.3] tracking-tight font-normal select-text">
-            <span className="text-light-black font-semibold">Software Engineer &amp; AI Systems Developer</span>
-            <span className="text-grey">, turning complex business workflows, multi-agent state machines, and high-throughput data into reliable services that feel effortless.</span>
+        {/* Left Column: Editorial Bio Typography */}
+        <div className="col-span-7 max-phone:col-span-12 flex flex-col gap-12 max-phone:gap-8 select-text">
+          {/* Bio Paragraph 1 */}
+          <p className="text-[2.6rem] max-phone:text-[1.8rem] leading-[1.35] tracking-tight font-normal">
+            <span className="text-light-black font-semibold">
+              Full-stack and AI engineer
+            </span>
+            <span className="text-[#9F9F9F]">
+              {' '}building resilient systems and agentic workflows.
+            </span>
           </p>
 
-          {/* Paragraph 2: Professional Experience & Work */}
-          <p className="text-[3rem] max-phone:text-[2rem] leading-[1.3] tracking-tight font-normal select-text">
-            <span className="text-grey">At </span>
+          {/* Bio Paragraph 2 */}
+          <p className="text-[2.6rem] max-phone:text-[1.8rem] leading-[1.35] tracking-tight font-normal">
+            <span className="text-[#9F9F9F]">Currently at </span>
             <span className="text-light-black font-semibold">Virtusa</span>
-            <span className="text-grey">, I worked alongside cross-functional engineering teams building enterprise financial microservices with </span>
-            <span className="text-light-black font-semibold">Java 17</span>
-            <span className="text-grey">, </span>
-            <span className="text-light-black font-semibold">Spring Boot 3.5</span>
-            <span className="text-grey">, and </span>
-            <span className="text-light-black font-semibold">Angular 20</span>
-            <span className="text-grey">, crafting scalable distributed architectures.</span>
+            <span className="text-[#9F9F9F]"> as a </span>
+            <span className="text-light-black font-semibold">Full Stack Software Intern</span>
+            <span className="text-[#9F9F9F]"> (Chennai, Aug 2025 – Jun 2026), focusing on backend architecture, API design, and production workflows.</span>
           </p>
 
-          {/* Paragraph 3: Running Skills Text */}
-          <p className="text-[3rem] max-phone:text-[2rem] leading-[1.3] tracking-tight font-normal select-text">
-            <span className="text-grey">Daily technical foundation includes </span>
-            <span className="text-light-black font-semibold">Python</span>
-            <span className="text-grey">, </span>
-            <span className="text-light-black font-semibold">FastAPI</span>
-            <span className="text-grey">, </span>
+          {/* Bio Paragraph 3 */}
+          <p className="text-[2.6rem] max-phone:text-[1.8rem] leading-[1.35] tracking-tight font-normal">
+            <span className="text-[#9F9F9F]">Previously built conversational AI and retrieval systems using </span>
             <span className="text-light-black font-semibold">LangGraph</span>
-            <span className="text-grey">, </span>
-            <span className="text-light-black font-semibold">Qdrant &amp; ChromaDB</span>
-            <span className="text-grey">, </span>
-            <span className="text-light-black font-semibold">PostgreSQL</span>
-            <span className="text-grey">, </span>
-            <span className="text-light-black font-semibold">Docker</span>
-            <span className="text-grey">, and </span>
-            <span className="text-light-black font-semibold">AWS / Azure Cloud</span>
-            <span className="text-grey">.</span>
+            <span className="text-[#9F9F9F]">, </span>
+            <span className="text-light-black font-semibold">Qdrant</span>
+            <span className="text-[#9F9F9F]">, and </span>
+            <span className="text-light-black font-semibold">local SLMs</span>
+            <span className="text-[#9F9F9F]">, with a focus on low-latency tool execution and structured generation.</span>
           </p>
 
-          {/* Paragraph 4: Certifications List with Direct Verification Links */}
-          <p className="text-[3rem] max-phone:text-[2rem] leading-[1.3] tracking-tight font-normal select-text">
-            <span className="text-grey">Certified by Microsoft &amp; AWS in </span>
-            <a
-              href={certificationsDeck[0]?.verificationUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-light-black font-semibold underline decoration-border-light hover:decoration-light-black transition-colors"
-            >
-              Azure MLOps
-            </a>
-            <span className="text-grey">, </span>
-            <a
-              href={certificationsDeck[1]?.verificationUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-light-black font-semibold underline decoration-border-light hover:decoration-light-black transition-colors"
-            >
-              SQL AI Development
-            </a>
-            <span className="text-grey">, </span>
-            <a
-              href={certificationsDeck[2]?.verificationUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-light-black font-semibold underline decoration-border-light hover:decoration-light-black transition-colors"
-            >
-              Azure Data Fundamentals
-            </a>
-            <span className="text-grey">, and </span>
-            <a
-              href={certificationsDeck[3]?.verificationUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-light-black font-semibold underline decoration-border-light hover:decoration-light-black transition-colors"
-            >
-              AWS Cloud Practitioner
-            </a>
-            <span className="text-grey">.</span>
+          {/* Bio Paragraph 4 */}
+          <p className="text-[2.6rem] max-phone:text-[1.8rem] leading-[1.35] tracking-tight font-normal">
+            <span className="text-[#9F9F9F]">Graduating </span>
+            <span className="text-light-black font-semibold">B.Tech in Computer Science and Engineering</span>
+            <span className="text-[#9F9F9F]"> from </span>
+            <span className="text-light-black font-semibold">Vardhaman College of Engineering</span>
+            <span className="text-[#9F9F9F]">, Hyderabad (2022 – 2026).</span>
           </p>
 
-          {/* Paragraph 5: Location & Availability */}
-          <p className="text-[3rem] max-phone:text-[2rem] leading-[1.3] tracking-tight font-normal select-text">
-            <span className="text-grey">Currently based in </span>
-            <span className="text-light-black font-semibold">Hyderabad, India</span>
-            <span className="text-grey">. Travelling, available, and </span>
-            <span className="text-light-black font-semibold">open to work</span>
-            <span className="text-grey"> for high-impact software engineering roles worldwide.</span>
-          </p>
-        </div>
-
-        {/* Right Side: Light Grey 3D Rotating Globe with Hyderabad/Chennai marker */}
-        <div className="col-span-4 max-phone:col-span-12 flex justify-center items-start pt-6">
-          <div className="sticky top-28">
-            <ReplicaGlobe onLocationChange={setCurrentCity} />
+          {/* Footer Attribution Line */}
+          <div className="pt-8 border-t border-border-light select-none">
+            <p className="text-[1.2rem] text-[#9F9F9F] font-normal">
+              Interface inspired by gabrielbeaugonin.com.
+            </p>
           </div>
         </div>
 
+        {/* Right Column: 3D Matte Grey Earth Globe with Orbiting Aircraft (Zero Text Beneath) */}
+        <div className="col-span-5 max-phone:col-span-12 flex justify-center items-start pt-2 max-phone:pb-6">
+          <div className="sticky top-28 w-full flex justify-center">
+            <Suspense
+              fallback={
+                <div className="w-[380px] h-[380px] rounded-full bg-[#E4E4E2]/50 animate-pulse mx-auto" />
+              }
+            >
+              <ReplicaGlobeThree />
+            </Suspense>
+          </div>
+        </div>
       </div>
     </main>
   );
