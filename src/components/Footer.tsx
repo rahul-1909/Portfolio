@@ -1,164 +1,106 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { GithubIcon, TwitterIcon, LinkedinIcon } from './SocialIcons';
 import { profileData } from '../data/profile';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const [timeStr, setTimeStr] = useState<string>('--:--:-- IST (HYDERABAD)');
+
+  useEffect(() => {
+    const updateTime = () => {
+      try {
+        const now = new Date();
+        const formatted = new Intl.DateTimeFormat('en-US', {
+          timeZone: 'Asia/Kolkata',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false,
+        }).format(now);
+        setTimeStr(`${formatted} IST (HYDERABAD)`);
+      } catch {
+        setTimeStr('GMT+5:30 (HYDERABAD)');
+      }
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
-    <footer className="relative mt-24 border-t border-slate-200/60 dark:border-slate-800/60 pt-16 text-sm text-slate-900 dark:text-slate-200">
-      {/* Background Gradient */}
-      <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t from-slate-50/80 via-white to-white dark:from-[#0d1117] dark:via-[#0a0a0f] dark:to-[#0a0a0f]" />
-
-      <div className="content-wrapper relative z-10">
-        <div className="py-10 font-semibold">
-          <div className="flex flex-col-reverse gap-16 lg:flex-row">
-            {/* About Me Column */}
-            <div className="flex-1">
-              <div className="max-w-[380px]">
-                <div className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
-                  About Me
-                </div>
-                <p className="mb-5 text-[15px] font-normal leading-relaxed text-slate-600 dark:text-slate-400">
-                  I'm Rahul, a{" "}
-                  <strong className="text-slate-800 dark:text-slate-200">
-                    Software Developer focused on Backend Engineering & AI/ML
-                  </strong>{" "}
-                  who loves intuitive, clean and modern technology development and design.
-                </p>
-
-                {/* Social Icons */}
-                <ul className="-ml-2 flex gap-1">
-                  <li>
-                    <a
-                      href={profileData.socials.twitter}
-                      target="_blank"
-                      rel="noreferrer nofollow"
-                      className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-500 transition-all hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
-                      aria-label="Twitter profile"
-                    >
-                      <TwitterIcon className="h-4 w-4" />
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href={profileData.socials.github}
-                      target="_blank"
-                      rel="noreferrer nofollow"
-                      className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-500 transition-all hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
-                      aria-label="GitHub profile"
-                    >
-                      <GithubIcon className="h-4 w-4" />
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href={profileData.socials.linkedin}
-                      target="_blank"
-                      rel="noreferrer nofollow"
-                      className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-500 transition-all hover:bg-slate-100 hover:text-blue-600 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-blue-400"
-                      aria-label="LinkedIn profile"
-                    >
-                      <LinkedinIcon className="h-4 w-4" />
-                    </a>
-                  </li>
-                </ul>
-              </div>
+    <footer className="border-t border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark py-12 transition-colors">
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-8">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-border-light dark:border-border-dark">
+          <div>
+            <div className="font-mono text-sm font-semibold text-text-light dark:text-text-dark">
+              Rahul Teja Nalla
             </div>
+            <p className="text-xs text-text-mutedLight dark:text-text-mutedDark mt-1">
+              Backend Engineering &amp; AI/ML Systems • Hyderabad, India
+            </p>
+          </div>
 
-            {/* Navigation Columns */}
-            <div className="-mx-2 flex flex-1 flex-col gap-8 sm:flex-row sm:gap-16 lg:mx-0">
-              <div className="flex sm:gap-16 w-full">
-                {/* Work Column */}
-                <div className="flex-1">
-                  <div className="mb-3 px-2 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
-                    Work
-                  </div>
-                  <ul className="flex flex-col text-sm">
-                    <li>
-                      <Link className="footer-link px-2" to="/work/contact">
-                        Contact
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="footer-link px-2" to="/work/experience">
-                        Experience
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="footer-link px-2" to="/work/certifications">
-                        Certifications
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="footer-link px-2" to="/work/skills-and-tools">
-                        Skills and Tools
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="footer-link px-2" to="/projects">
-                        Projects
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-
-                {/* Learn Column */}
-                <div className="flex-1">
-                  <div className="mb-3 px-2 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
-                    Learn
-                  </div>
-                  <ul className="flex flex-col text-sm">
-                    <li>
-                      <Link className="footer-link px-2 flex items-center gap-1.5" to="/today-i-learned">
-                        <span>T.I.L</span>
-                        <span className="rounded bg-accent-500/10 px-1.5 py-0.5 text-[10px] font-bold text-accent-600 dark:text-accent-400">
-                          new
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <a 
-                        className="footer-link px-2" 
-                        href="https://github.com/rahul-1909?tab=repositories" 
-                        target="_blank" 
-                        rel="noreferrer"
-                      >
-                        GitHub Repositories
-                      </a>
-                    </li>
-                    <li>
-                      <a 
-                        className="footer-link px-2" 
-                        href={profileData.socials.linkedin} 
-                        target="_blank" 
-                        rel="noreferrer"
-                      >
-                        LinkedIn Network
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          {/* Social Links */}
+          <div className="flex flex-wrap items-center gap-4 font-mono text-xs text-text-mutedLight dark:text-text-mutedDark">
+            <a
+              href={profileData.socials.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-accent-light dark:hover:text-accent-dark transition-colors"
+            >
+              GitHub ↗
+            </a>
+            <a
+              href={profileData.socials.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-accent-light dark:hover:text-accent-dark transition-colors"
+            >
+              X / Twitter ↗
+            </a>
+            <a
+              href={profileData.socials.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-accent-light dark:hover:text-accent-dark transition-colors"
+            >
+              LinkedIn ↗
+            </a>
+            <a
+              href={profileData.socials.email}
+              className="hover:text-accent-light dark:hover:text-accent-dark transition-colors"
+            >
+              Email ↗
+            </a>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between border-t border-slate-200/60 py-6 text-xs dark:border-slate-800/60 gap-3">
-          <div className="font-semibold text-slate-500 dark:text-slate-500">
-            © {currentYear}, rahul-1909.github.io
+        {/* Bottom bar with Live Hyderabad Clock */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 font-mono text-xs text-text-mutedLight dark:text-text-mutedDark">
+          <div>
+            © {currentYear} Rahul Teja. All systems operational.
           </div>
-          <div className="text-slate-400 dark:text-slate-500">
-            <a
-              href="https://github.com/rahul-1909/Portfolio"
-              target="_blank"
-              rel="noreferrer nofollow"
-              className="hover:underline flex items-center gap-1.5"
+
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent-light dark:bg-accent-dark shadow-[0_0_8px_rgba(0,229,160,0.8)]" />
+            <span>{timeStr}</span>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <Link to="/today-i-learned" className="hover:text-accent-light dark:hover:text-accent-dark transition-colors">
+              Changelog
+            </Link>
+            <button
+              onClick={scrollToTop}
+              className="hover:text-accent-light dark:hover:text-accent-dark transition-colors"
             >
-              <span>see the recent update on GitHub</span>
-            </a>
+              Back to top ↑
+            </button>
           </div>
         </div>
       </div>

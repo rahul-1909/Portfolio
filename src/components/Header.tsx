@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { 
-  Sun, 
-  Moon, 
-  Menu, 
-  X, 
-  Compass 
-} from 'lucide-react';
+import { Sun, Moon, Menu, X, Compass, FileText } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
-import { GithubIcon, TwitterIcon } from './SocialIcons';
-import { profileData } from '../data/profile';
 
 interface HeaderProps {
   onOpenQuickAccess: () => void;
+  onOpenResume?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
+export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess, onOpenResume }) => {
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -25,212 +18,164 @@ export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
+  };
+
+  const navLinks = [
+    { label: 'Work', path: '/projects' },
+    { label: 'Experience', path: '/work/experience' },
+    { label: 'Stack', path: '/work/skills-and-tools' },
+    { label: 'Certifications', path: '/work/certifications' },
+    { label: 'Changelog', path: '/today-i-learned' },
+    { label: 'Contact', path: '/work/contact' },
+  ];
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#0a0a0f]/90 dark:bg-[#0a0a0f]/90 bg-white/90 backdrop-blur-md border-b border-slate-200/60 dark:border-white/5 py-3 shadow-md'
-          : 'bg-transparent py-4 sm:py-6'
+          ? 'bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-border-light dark:border-border-dark py-3'
+          : 'bg-background-light/60 dark:bg-background-dark/60 backdrop-blur-sm border-b border-transparent py-4'
       }`}
     >
-      <div className="content-wrapper flex items-center justify-between">
-        {/* Brand Logo (RT icon logo inside square violet container + rahul.) */}
-        <Link 
-          to="/" 
-          className="flex items-center gap-2 group"
-          aria-label="Home"
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-8 flex items-center justify-between">
+        {/* Brand Logo */}
+        <Link
+          to="/"
+          className="flex items-center gap-2.5 font-mono text-sm tracking-wide text-text-light dark:text-text-dark group"
+          aria-label="Rahul Teja Homepage"
         >
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-accent-600 shadow-md shadow-accent-600/30 group-hover:scale-105 transition-transform">
-            <span className="font-[900] text-xs tracking-tight text-white select-none">RT</span>
-          </div>
-          <div className="font-extrabold text-xl tracking-tight text-slate-900 dark:text-white">
-            <span>rahul</span>
-            <span className="text-accent-500">.</span>
-          </div>
+          <span className="flex h-7 w-7 items-center justify-center rounded-md bg-surface-elevatedLight dark:bg-surface-elevatedDark border border-border-light dark:border-border-dark text-accent-light dark:text-accent-dark font-bold text-xs transition-colors group-hover:border-accent-borderLight dark:group-hover:border-accent-borderDark">
+            RT
+          </span>
+          <span className="font-semibold tracking-tight text-text-light dark:text-text-dark">
+            rahulteja<span className="text-accent-light dark:text-accent-dark">.me</span>
+          </span>
         </Link>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1.5 text-sm">
-          <Link
-            to="/projects"
-            className={`nav-link ${isActive('/projects') ? 'text-accent-500 font-semibold active' : ''}`}
-          >
-            Projects
-          </Link>
-
-          <Link
-            to="/today-i-learned"
-            className={`nav-link ${isActive('/today-i-learned') ? 'text-accent-500 font-semibold active' : ''}`}
-          >
-            T.I.L
-          </Link>
-
-          {/* Work Navigation Group matching reference */}
-          <div className="flex items-center bg-slate-100/60 dark:bg-white/[0.04] rounded-xl px-2 py-0.5 border border-slate-200/50 dark:border-white/5">
-            <span className="flex items-center gap-1 px-2 py-1 text-xs font-bold uppercase tracking-wider text-accent-600 dark:text-accent-400">
-              Work
-              <span className="text-[10px]">▶</span>
-            </span>
-
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-7 text-xs font-mono" aria-label="Main Navigation">
+          {navLinks.map((link) => (
             <Link
-              to="/work/skills-and-tools"
-              className={`nav-link text-xs ${isActive('/work/skills-and-tools') ? 'text-accent-500 font-bold active' : ''}`}
+              key={link.path}
+              to={link.path}
+              className={`relative py-1 transition-colors ${
+                isActive(link.path)
+                  ? 'text-accent-light dark:text-accent-dark font-semibold'
+                  : 'text-text-mutedLight dark:text-text-mutedDark hover:text-text-light dark:hover:text-text-dark'
+              }`}
             >
-              Skills & Tools
+              {link.label}
+              {isActive(link.path) && (
+                <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-accent-light dark:bg-accent-dark" />
+              )}
             </Link>
-            <span className="text-slate-300 dark:text-slate-700 text-xs">·</span>
-
-            <Link
-              to="/work/experience"
-              className={`nav-link text-xs ${isActive('/work/experience') ? 'text-accent-500 font-bold active' : ''}`}
-            >
-              Experience
-            </Link>
-            <span className="text-slate-300 dark:text-slate-700 text-xs">·</span>
-
-            <Link
-              to="/work/certifications"
-              className={`nav-link text-xs ${isActive('/work/certifications') ? 'text-accent-500 font-bold active' : ''}`}
-            >
-              Certifications
-            </Link>
-            <span className="text-slate-300 dark:text-slate-700 text-xs">·</span>
-
-            <Link
-              to="/work/contact"
-              className={`nav-link text-xs ${isActive('/work/contact') ? 'text-accent-500 font-bold active' : ''}`}
-            >
-              Contact
-            </Link>
-          </div>
+          ))}
         </nav>
 
-        {/* Right Action Icons: Twitter, GitHub, Divider, Quick Access, Theme Toggle */}
-        <div className="flex items-center gap-1.5 sm:gap-2">
-          {/* Social Icons */}
-          <div className="hidden sm:flex items-center gap-1">
-            <a
-              href={profileData.socials.twitter}
-              target="_blank"
-              rel="noreferrer nofollow"
-              className="flex h-9 w-9 items-center justify-center rounded-xl text-slate-500 hover:bg-slate-200/50 dark:text-slate-400 dark:hover:bg-slate-800/50 dark:hover:text-white transition"
-              aria-label="Twitter / X"
+        {/* Actions (Resume, Theme, Quick Access, Mobile Menu) */}
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Resume Action */}
+          {onOpenResume ? (
+            <button
+              onClick={onOpenResume}
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono rounded-md border border-border-strongLight dark:border-border-strongDark bg-surface-elevatedLight dark:bg-surface-elevatedDark text-text-light dark:text-text-dark hover:border-accent-light dark:hover:border-accent-dark hover:text-accent-light dark:hover:text-accent-dark transition-colors"
+              aria-label="View Resume"
             >
-              <TwitterIcon className="h-4 w-4" />
-            </a>
-
+              <FileText className="h-3.5 w-3.5" />
+              <span>Resume</span>
+              <span className="text-[10px]">↗</span>
+            </button>
+          ) : (
             <a
-              href={profileData.socials.github}
-              target="_blank"
-              rel="noreferrer nofollow"
-              className="flex h-9 w-9 items-center justify-center rounded-xl text-slate-500 hover:bg-slate-200/50 dark:text-slate-400 dark:hover:bg-slate-800/50 dark:hover:text-white transition"
-              aria-label="GitHub"
+              href="#resume"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono rounded-md border border-border-strongLight dark:border-border-strongDark bg-surface-elevatedLight dark:bg-surface-elevatedDark text-text-light dark:text-text-dark hover:border-accent-light dark:hover:border-accent-dark hover:text-accent-light dark:hover:text-accent-dark transition-colors"
+              aria-label="View Resume"
             >
-              <GithubIcon className="h-4 w-4" />
+              <FileText className="h-3.5 w-3.5" />
+              <span>Resume</span>
+              <span className="text-[10px]">↗</span>
             </a>
-
-            <div className="h-4 w-px bg-slate-200 dark:bg-slate-700 mx-1"></div>
-          </div>
+          )}
 
           {/* Theme Toggle Button */}
           <button
             onClick={toggleTheme}
-            className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-200/60 text-slate-700 hover:bg-slate-300/60 dark:bg-slate-800/60 dark:text-slate-200 dark:hover:bg-slate-700/60 transition"
-            aria-label="Toggle theme"
-            title={theme === 'dark' ? "Switch to light mode" : "Switch to dark mode"}
+            className="flex h-8 w-8 items-center justify-center rounded-md border border-border-light dark:border-border-dark bg-surface-elevatedLight dark:bg-surface-elevatedDark text-text-secondaryLight dark:text-text-secondaryDark hover:text-text-light dark:hover:text-text-dark transition-colors"
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
           >
-            {theme === 'dark' ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4 text-slate-600" />}
+            {theme === 'dark' ? (
+              <Sun className="h-4 w-4 text-amber-300" />
+            ) : (
+              <Moon className="h-4 w-4 text-slate-700" />
+            )}
           </button>
 
-          {/* Quick Access Button with Q shortcut indicator */}
+          {/* Quick Access Modal Trigger */}
           <button
             onClick={onOpenQuickAccess}
-            className="flex h-9 items-center gap-2 rounded-xl bg-slate-200/60 px-3 text-xs font-semibold text-slate-800 hover:bg-slate-300/60 dark:bg-slate-800/60 dark:text-slate-100 dark:hover:bg-slate-700/60 transition"
+            className="hidden md:flex h-8 items-center gap-1.5 px-2.5 text-xs font-mono rounded-md border border-border-light dark:border-border-dark bg-surface-elevatedLight dark:bg-surface-elevatedDark text-text-mutedLight dark:text-text-mutedDark hover:text-text-light dark:hover:text-text-dark transition-colors"
             aria-label="Open Quick Access"
             title="Open Quick Access (Press Q)"
           >
-            <Compass className="h-4 w-4" />
-            <span className="hidden xl:inline">Quick Access</span>
-            <kbd className="rounded border border-slate-400 bg-slate-300 px-1 py-0.5 font-mono text-[10px] font-bold text-slate-700 dark:border-slate-500 dark:bg-slate-900 dark:text-slate-300">
+            <Compass className="h-3.5 w-3.5" />
+            <kbd className="px-1 py-0.2 rounded border border-border-strongLight dark:border-border-strongDark bg-surface-light dark:bg-surface-dark text-[10px]">
               Q
             </kbd>
           </button>
 
-          {/* Mobile Menu Trigger */}
+          {/* Mobile Menu Hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden flex h-9 w-9 items-center justify-center rounded-xl bg-slate-200/60 text-slate-800 dark:bg-slate-800/60 dark:text-slate-200"
-            aria-label="Toggle Navigation Menu"
+            className="lg:hidden flex h-8 w-8 items-center justify-center rounded-md border border-border-light dark:border-border-dark bg-surface-elevatedLight dark:bg-surface-elevatedDark text-text-light dark:text-text-dark"
+            aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-b border-slate-200 bg-white/95 px-5 py-4 backdrop-blur-xl dark:border-white/10 dark:bg-[#0a0a0f]/95 shadow-xl transition-all">
-          <div className="flex flex-col space-y-1">
+        <div className="lg:hidden border-b border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark px-6 py-5 shadow-2xl transition-all">
+          <nav className="flex flex-col space-y-3 font-mono text-sm" aria-label="Mobile Navigation">
             <Link
               to="/"
               onClick={() => setMobileMenuOpen(false)}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/[0.05]"
+              className={`py-1 ${isActive('/') ? 'text-accent-light dark:text-accent-dark font-semibold' : 'text-text-secondaryLight dark:text-text-secondaryDark'}`}
             >
-              Home Dashboard
+              Home
             </Link>
-            <Link
-              to="/projects"
-              onClick={() => setMobileMenuOpen(false)}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/[0.05]"
-            >
-              Projects
-            </Link>
-            <Link
-              to="/today-i-learned"
-              onClick={() => setMobileMenuOpen(false)}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/[0.05]"
-            >
-              Today I Learned (T.I.L)
-            </Link>
-
-            <div className="pt-2 pb-1 text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3">
-              Work & Capabilities
-            </div>
-            <Link
-              to="/work/skills-and-tools"
-              onClick={() => setMobileMenuOpen(false)}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/[0.05]"
-            >
-              Skills & Tools
-            </Link>
-            <Link
-              to="/work/experience"
-              onClick={() => setMobileMenuOpen(false)}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/[0.05]"
-            >
-              Experience
-            </Link>
-            <Link
-              to="/work/certifications"
-              onClick={() => setMobileMenuOpen(false)}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/[0.05]"
-            >
-              Certifications
-            </Link>
-            <Link
-              to="/work/contact"
-              onClick={() => setMobileMenuOpen(false)}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/[0.05]"
-            >
-              Contact
-            </Link>
-          </div>
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`py-1 ${isActive(link.path) ? 'text-accent-light dark:text-accent-dark font-semibold' : 'text-text-secondaryLight dark:text-text-secondaryDark'}`}
+              >
+                {link.label}
+              </Link>
+            ))}
+            {onOpenResume && (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenResume();
+                }}
+                className="py-1 text-left text-accent-light dark:text-accent-dark font-semibold"
+              >
+                Resume ↗
+              </button>
+            )}
+          </nav>
         </div>
       )}
     </header>
