@@ -40,7 +40,9 @@ export const ReplicaDock: React.FC<ReplicaDockProps> = ({
     location.pathname === '/certifications' ||
     location.pathname === '/experience';
 
-  const [socialsOpen, setSocialsOpen] = useState(false);
+  const [socialsOpen, setSocialsOpen] = useState(
+    () => typeof window !== 'undefined' && new URLSearchParams(location.search).get('socials') === 'open'
+  );
 
   const socials = [
     {
