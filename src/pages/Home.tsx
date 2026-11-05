@@ -7,6 +7,8 @@ import { experienceData } from '../data/experience';
 import { certificationsData } from '../data/certifications';
 import { tilEntries } from '../data/til';
 import { profileData } from '../data/profile';
+import { Project3DWheel } from '../components/Project3DWheel';
+import { FloatingDock } from '../components/FloatingDock';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -69,21 +71,21 @@ export const Home: React.FC<HomeProps> = ({ onOpenResume }) => {
 
       // Hero Name Reveal: upward wipe
       gsap.from('.hero-name-line', {
-        yPercent: 110,
+        yPercent: 100,
         opacity: 0,
-        duration: 1.15,
+        duration: 0.85,
         stagger: 0.12,
         ease: 'power4.out',
       });
 
       // Hero Sub Elements: fade & translate
       gsap.from('.hero-sub-element', {
-        y: 24,
+        y: 16,
         opacity: 0,
-        duration: 0.8,
-        stagger: 0.08,
+        duration: 0.6,
+        stagger: 0.06,
         ease: 'power3.out',
-        delay: 0.35,
+        delay: 0.15,
       });
 
       // Subtle Section Heading Reveals
@@ -105,7 +107,6 @@ export const Home: React.FC<HomeProps> = ({ onOpenResume }) => {
     return () => ctx.revert();
   }, []);
 
-  // Map route slug for each project
   const getProjectRoute = (id: string) => {
     switch (id) {
       case 'gold-lending-platform':
@@ -125,67 +126,81 @@ export const Home: React.FC<HomeProps> = ({ onOpenResume }) => {
 
   return (
     <div ref={containerRef} className="relative overflow-hidden">
+      {/* Gabriel Beaugonin Style Floating Pill Dock (Quick Drawers for Experience, Stack, Log, Contact) */}
+      <FloatingDock onOpenResume={onOpenResume} />
+
       {/* ====================================================================
-          1. Hero Section
+          1. Hero Section (Gabriel Beaugonin 3D Perspective Stage)
           ==================================================================== */}
-      <section className="min-h-[92vh] flex flex-col justify-center pt-28 pb-20 sm:pt-36 sm:pb-28">
-        <div className="max-w-[1200px] w-full mx-auto px-5 sm:px-8">
-          {/* Live Request Trace Line */}
-          <div className="hero-sub-element inline-flex items-center gap-2 font-mono text-xs text-text-mutedLight dark:text-text-mutedDark bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded px-3 py-1.5 mb-8 max-w-full overflow-x-auto whitespace-nowrap">
-            <span className="text-accent-light dark:text-accent-dark font-semibold">&gt; trace</span>
-            <span>{traceText}</span>
-          </div>
-
-          {/* Signature Hero Name Reveal */}
-          <div className="overflow-hidden mb-2">
-            <h1 className="hero-name-line font-display font-extrabold text-[clamp(4.2rem,17vw,15rem)] leading-[0.9] tracking-display uppercase text-text-light dark:text-text-dark select-none">
-              Rahul
-            </h1>
-          </div>
-          <div className="overflow-hidden mb-8">
-            <div className="hero-name-line font-display font-extrabold text-[clamp(4.2rem,17vw,15rem)] leading-[0.9] tracking-display uppercase text-text-light dark:text-text-dark select-none">
-              Teja
-              <span className="text-accent-light dark:text-accent-dark animate-cursor-blink font-light">
-                _
-              </span>
-            </div>
-          </div>
-
-          {/* Subtitle & Role */}
-          <h2 className="hero-sub-element font-sans text-xl sm:text-2xl md:text-3xl font-medium text-text-light dark:text-text-dark max-w-3xl leading-snug mb-4">
-            Software Developer — Backend Engineering &amp; AI/ML
-          </h2>
-
-          <p className="hero-sub-element text-base sm:text-lg text-text-secondaryLight dark:text-text-secondaryDark max-w-2xl leading-relaxed mb-8">
-            {profileData.bio}
-          </p>
-
-          {/* Status & Actions */}
-          <div className="hero-sub-element flex flex-wrap items-center gap-6 pt-2">
-            <div className="inline-flex items-center gap-2 font-mono text-xs text-text-secondaryLight dark:text-text-secondaryDark">
-              <span className="h-2 w-2 rounded-full bg-accent-light dark:bg-accent-dark shadow-[0_0_8px_rgba(0,229,160,0.8)]" />
-              <span>Available for backend &amp; AI systems engineering</span>
+      <section className="relative min-h-screen lg:h-screen lg:overflow-hidden flex flex-col justify-center pt-20 pb-12 lg:pt-16 lg:pb-8">
+        <div className="max-w-[1400px] w-full mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+          {/* Left Column: Brand & Hero Identity */}
+          <div className="lg:col-span-6 flex flex-col justify-center z-10">
+            {/* Live Request Trace Line */}
+            <div className="hero-sub-element inline-flex items-center gap-2 font-mono text-xs text-text-mutedLight dark:text-text-mutedDark bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded px-3 py-1.5 mb-6 max-w-full overflow-x-auto whitespace-nowrap">
+              <span className="text-accent-light dark:text-accent-dark font-semibold">&gt; trace</span>
+              <span>{traceText}</span>
             </div>
 
-            <div className="flex items-center gap-3">
-              <a
-                href="#work"
-                className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-mono rounded-md bg-accent-light dark:bg-accent-dark text-white dark:text-black font-semibold transition hover:opacity-90"
-              >
-                <span>View Work</span>
-                <span>↓</span>
-              </a>
+            {/* Signature Hero Name Reveal */}
+            <div className="overflow-hidden py-1">
+              <h1 className="hero-name-line font-display font-extrabold text-[clamp(3.8rem,7.5vw,7.8rem)] leading-[0.88] tracking-display uppercase text-text-light dark:text-text-dark select-none">
+                Rahul
+              </h1>
+            </div>
+            <div className="overflow-hidden py-1 mb-3">
+              <div className="hero-name-line font-display font-extrabold text-[clamp(3.8rem,7.5vw,7.8rem)] leading-[0.88] tracking-display uppercase text-text-light dark:text-text-dark select-none">
+                Teja
+                <span className="text-accent-light dark:text-accent-dark animate-cursor-blink font-light">
+                  _
+                </span>
+              </div>
+            </div>
 
-              {onOpenResume && (
-                <button
-                  onClick={onOpenResume}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-mono rounded-md border border-border-strongLight dark:border-border-strongDark bg-surface-elevatedLight dark:bg-surface-elevatedDark text-text-light dark:text-text-dark hover:border-accent-light dark:hover:border-accent-dark transition-colors"
+            {/* Subtitle & Role */}
+            <div className="hero-sub-element font-mono text-xs uppercase tracking-widest text-accent-light dark:text-accent-dark font-semibold mb-3">
+              Software Developer • Distributed Systems &amp; AI
+            </div>
+
+            <p className="hero-sub-element text-xs sm:text-sm md:text-base text-text-secondaryLight dark:text-text-secondaryDark max-w-lg leading-relaxed mb-4 sm:mb-6 font-sans">
+              {profileData.bio}
+            </p>
+
+            {/* Status & Quick Actions */}
+            <div className="hero-sub-element flex flex-wrap items-center gap-4 pt-1">
+              <div className="inline-flex items-center gap-2 font-mono text-xs text-text-secondaryLight dark:text-text-secondaryDark">
+                <span className="h-2 w-2 rounded-full bg-accent-light dark:bg-accent-dark shadow-[0_0_8px_rgba(0,229,160,0.8)]" />
+                <span>Available for backend &amp; AI systems roles</span>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <Link
+                  to="/projects"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono rounded-md bg-accent-light dark:bg-accent-dark text-white dark:text-black font-semibold transition hover:opacity-90"
                 >
-                  <span>Resume</span>
+                  <span>All Projects</span>
                   <span>↗</span>
-                </button>
-              )}
+                </Link>
+                <a
+                  href="#work"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono rounded-md border border-border-strongLight dark:border-border-strongDark text-text-secondaryLight dark:text-text-secondaryDark hover:text-text-light dark:hover:text-text-dark transition-colors"
+                >
+                  <span>Specs</span>
+                  <span>↓</span>
+                </a>
+              </div>
             </div>
+
+            {/* 3D Wheel Navigation Hint */}
+            <div className="hero-sub-element hidden lg:flex items-center gap-2 mt-8 font-mono text-[11px] text-text-mutedLight dark:text-text-mutedDark">
+              <span className="text-accent-light dark:text-accent-dark">✦</span>
+              <span>Drag, scroll, or use arrows to rotate 3D showcase wheel</span>
+            </div>
+          </div>
+
+          {/* Right Column: 3D Perspective Wheel Showcase */}
+          <div className="lg:col-span-6 flex items-center justify-center relative py-6 lg:py-0">
+            <Project3DWheel projects={projectsData.slice(0, 5)} />
           </div>
         </div>
       </section>
