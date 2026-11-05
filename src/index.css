@@ -53,4 +53,9 @@
     background-color: #1A1A1A;
     color: #FFFFFF;
   }
+
+  /* Safeguard against unwanted third-party or browser extensions injected outside root */
+  #root ~ * {
+    display: none !important;
+  }
 }

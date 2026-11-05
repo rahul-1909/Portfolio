@@ -144,7 +144,7 @@ export const skillsDeck: SkillCardData[] = [
     mandate: "Architecting high-throughput distributed APIs, concurrent services, and enterprise domain systems.",
     skills: ["Python", "Java", "Go Lang", "TypeScript", "JavaScript", "SQL", "Spring Boot 3.5", "FastAPI", "Node.js", "RESTful APIs", "JWT & RBAC"],
     threeTags: ["Python · Java · Go", "Spring Boot", "FastAPI"],
-    backgroundColor: "#E6ECEB",
+    backgroundColor: "#181A22",
   },
   {
     id: "ai-ml",
@@ -153,7 +153,7 @@ export const skillsDeck: SkillCardData[] = [
     mandate: "Building multi-agent state machines, dense semantic vector retrieval, and deterministic safety guardrails.",
     skills: ["LangGraph", "LangChain", "Qdrant Vector DB", "ChromaDB", "RAG & Anti-Hallucination", "OpenAI / Mistral APIs", "Groq Whisper", "Prompt Engineering"],
     threeTags: ["LangGraph State", "Qdrant / Chroma", "Multi-Agent RAG"],
-    backgroundColor: "#ECE8F0",
+    backgroundColor: "#1E182A",
   },
   {
     id: "data",
@@ -162,7 +162,7 @@ export const skillsDeck: SkillCardData[] = [
     mandate: "Engineering relational schema integrity, low-latency in-memory caching, and automated analytical telemetry.",
     skills: ["PostgreSQL", "MySQL 9", "MongoDB", "Redis Caching", "SQLite", "Plotly Analytics", "Streamlit"],
     threeTags: ["PostgreSQL", "MySQL 9", "Redis Cache"],
-    backgroundColor: "#ECECE6",
+    backgroundColor: "#16201E",
   },
   {
     id: "cloud-and-tools",
@@ -171,7 +171,7 @@ export const skillsDeck: SkillCardData[] = [
     mandate: "Deploying containerized microservices with automated CI/CD testing pipelines and high-availability cloud infrastructure.",
     skills: ["Amazon Web Services (AWS)", "Microsoft Azure", "Google Cloud (GCP)", "Docker", "GitHub Actions & CI/CD", "Linux", "Git", "Vercel & Render"],
     threeTags: ["AWS & Azure", "Docker", "CI/CD Pipelines"],
-    backgroundColor: "#E7EAED",
+    backgroundColor: "#161E28",
   },
 ];
 
@@ -185,7 +185,7 @@ export const certificationsDeck: CertificationCardData[] = [
     verificationUrl: "https://learn.microsoft.com/api/credentials/share/en-us/rahulteja-1992/351C672DE3DD3551?sharingId=20CEC5EF6DDD8E56",
     skills: ["MLOps Pipelines", "Azure ML", "Model Deployment", "CI/CD Monitoring"],
     threeTags: ["Microsoft", "MLOps Associate", "Azure ML"],
-    backgroundColor: "#E6EDF2",
+    backgroundColor: "#15222E",
   },
   {
     id: "ms-sql-ai-developer",
@@ -195,7 +195,7 @@ export const certificationsDeck: CertificationCardData[] = [
     verificationUrl: "https://learn.microsoft.com/api/credentials/share/en-us/rahulteja-1992/B7191AAF49134FC8?sharingId=20CEC5EF6DDD8E56",
     skills: ["SQL AI", "Vector Search", "Data Pipelines", "Semantic Indexing"],
     threeTags: ["Microsoft", "SQL AI Developer", "Vector Search"],
-    backgroundColor: "#E6EDF2",
+    backgroundColor: "#16202A",
   },
   {
     id: "ms-azure-data-fundamentals",
@@ -205,7 +205,7 @@ export const certificationsDeck: CertificationCardData[] = [
     verificationUrl: "https://learn.microsoft.com/api/credentials/share/en-us/rahulteja-1992/FEDB73DCFCA7E3E0?sharingId=20CEC5EF6DDD8E56",
     skills: ["Azure Data", "Relational SQL", "Cosmos DB", "ETL / ELT"],
     threeTags: ["Microsoft", "Azure Data", "Cloud DB"],
-    backgroundColor: "#E6EDF2",
+    backgroundColor: "#182028",
   },
   {
     id: "aws-cloud-practitioner",
@@ -215,7 +215,7 @@ export const certificationsDeck: CertificationCardData[] = [
     verificationUrl: "https://www.certmetrics.com/amazon/public/verification.aspx",
     skills: ["AWS Cloud", "IAM & Security", "VPC & EC2", "High Availability"],
     threeTags: ["AWS", "Cloud Practitioner", "Infrastructure"],
-    backgroundColor: "#F2ECE4",
+    backgroundColor: "#261E14",
   },
   {
     id: "anthropic-claude-101",
@@ -225,7 +225,7 @@ export const certificationsDeck: CertificationCardData[] = [
     verificationUrl: "https://verify.skilljar.com/c/dsermfpyca5o",
     skills: ["Claude 3.5", "Prompt Engineering", "Context Windows", "Function Calling"],
     threeTags: ["Anthropic", "Claude 3.5", "Prompt Eng"],
-    backgroundColor: "#F2EDE8",
+    backgroundColor: "#241818",
   },
   {
     id: "anthropic-ai-fluency",
@@ -235,7 +235,7 @@ export const certificationsDeck: CertificationCardData[] = [
     verificationUrl: "https://verify.skilljar.com/",
     skills: ["AI Frameworks", "Multi-Modal Reasoning", "Safety Principles"],
     threeTags: ["Anthropic", "AI Fluency", "Foundations"],
-    backgroundColor: "#F2EDE8",
+    backgroundColor: "#1E221E",
   },
 ];
 

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
 import type { DeckCardItem, DeckType } from '../../data/portfolio';
 
 interface ReplicaSliderProps {
@@ -105,76 +104,69 @@ export const ReplicaSlider: React.FC<ReplicaSliderProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [nextCard, prevCard, activeIndex, cards, onSelectCard]);
 
-  // Pointer Drag Handlers (threshold 45px)
+  // Drag / Pointer Gesture support
   const handlePointerDown = (e: React.PointerEvent) => {
-    if (e.pointerType === 'mouse' && e.button !== 0) return;
-    pointerStartRef.current = { y: e.clientY, x: e.clientX, isDown: true };
+    if (prefersReducedMotion) return;
     setIsGrabbing(true);
+    pointerStartRef.current = { y: e.clientY, x: e.clientX, isDown: true };
+    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!pointerStartRef.current.isDown) return;
-    const deltaY = e.clientY - pointerStartRef.current.y;
-    const deltaX = e.clientX - pointerStartRef.current.x;
+    if (!pointerStartRef.current.isDown || prefersReducedMotion) return;
+    const dy = e.clientY - pointerStartRef.current.y;
+    const dx = e.clientX - pointerStartRef.current.x;
 
-    if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) >= 45) {
-      const now = performance.now();
-      if (now - lastStepTimeRef.current >= 170) {
-        lastStepTimeRef.current = now;
-        if (deltaY < 0) {
-          nextCard();
-        } else {
-          prevCard();
-        }
-        pointerStartRef.current.y = e.clientY;
-        pointerStartRef.current.x = e.clientX;
+    // Trigger step if dragged threshold reached
+    if (Math.abs(dy) > 42 || (isMobile && Math.abs(dx) > 42)) {
+      if (dy < -42 || (isMobile && dx < -42)) {
+        nextCard();
+      } else {
+        prevCard();
       }
+      pointerStartRef.current = { y: e.clientY, x: e.clientX, isDown: true };
     }
   };
 
-  const handlePointerUp = () => {
-    pointerStartRef.current.isDown = false;
+  const handlePointerUp = (e: React.PointerEvent) => {
     setIsGrabbing(false);
+    pointerStartRef.current.isDown = false;
+    (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
   };
 
-  // Cylindrical transformation calculation (exact reference parameters with active translateZ)
-  const calculateCardTransform = (idx: number) => {
-    let distance = idx - activeIndex;
-    if (distance < -Math.floor(total / 2)) distance += total;
-    if (distance > Math.floor(total / 2)) distance -= total;
+  /**
+   * Reference Ground Truth 3D Transform Formula:
+   * radius ~ windowHeight * 0.44
+   * theta = offset * (2 * PI / total)
+   * Y = radius * sin(theta)
+   * Z = radius * cos(theta) - radius
+   * rotX = -theta * (180 / PI)
+   */
+  const calculateCardTransform = (index: number) => {
+    if (total === 0) return { translateY: 0, translateZ: 0, rotateX: 0, scale: 1, opacity: 0, zIndex: 0, isActive: false };
 
-    const isActive = distance === 0;
-    const g = isMobile ? 0.37 : 0.4;
-    const stepK = isMobile ? 43 : 35;
-    const maxRotate = isMobile ? 93 : 98;
+    let offset = index - activeIndex;
+    if (offset > total / 2) offset -= total;
+    if (offset < -total / 2) offset += total;
 
-    let translateY = 0;
-    if (distance > 0) {
-      translateY = 1 * (windowHeight * g) + (distance > 1 ? (distance - 1) * stepK : 0);
-    } else if (distance < 0) {
-      translateY = -1 * (windowHeight * g) + (distance < -1 ? (distance + 1) * stepK : 0);
-    }
+    const isActive = offset === 0;
+    const radius = windowHeight * 0.46;
+    const angleStep = (2 * Math.PI) / Math.max(total, 5);
+    const theta = offset * angleStep;
 
-    const rotateX = isActive ? 0 : distance > 0 ? -maxRotate : maxRotate;
-    // translateZ gives active card physical 3D elevation above rotated neighbors to prevent see-through clipping
-    const translateZ = isActive ? (isMobile ? 35 : 65) : -Math.abs(distance) * 20;
-    const scale = isActive ? 1.0 : isMobile ? 0.78 : 0.82;
-    // Sharp images at lower opacity, never blurred
-    const opacity = isActive ? 1.0 : isMobile ? 0.32 : 0.35;
-    const zIndex = isActive ? 50 : 20 - Math.abs(distance);
+    const translateY = radius * Math.sin(theta);
+    const translateZ = radius * (Math.cos(theta) - 1);
+    const rotateX = -(theta * 180) / Math.PI;
 
-    return {
-      translateY,
-      translateZ,
-      rotateX,
-      scale,
-      opacity,
-      zIndex,
-      isActive,
-    };
+    // Reference Scale: Active = 1.0, Inactive = 0.76
+    const scale = isActive ? 1.0 : 0.76;
+    const opacity = Math.abs(offset) > 2 ? 0 : Math.cos(theta * 0.7);
+    const zIndex = 100 - Math.round(Math.abs(offset) * 10);
+
+    return { translateY, translateZ, rotateX, scale, opacity, zIndex, isActive };
   };
 
-  // Render Accessible Reduced-Motion Fallback List (No 3D)
+  // Accessible Fallback for prefers-reduced-motion
   if (prefersReducedMotion) {
     return (
       <div
@@ -199,13 +191,6 @@ export const ReplicaSlider: React.FC<ReplicaSliderProps> = ({
                 <span className="text-xs font-mono text-grey">0{idx + 1}</span>
               </div>
               <h3 className="text-xl font-bold text-light-black mb-2">{card.title}</h3>
-              <div className="flex flex-wrap gap-2 pt-2">
-                {card.threeTags.map((tag, i) => (
-                  <span key={i} className="px-2.5 py-1 rounded-full bg-light-grey text-xs text-light-black font-medium">
-                    {tag}
-                  </span>
-                ))}
-              </div>
             </div>
           ))}
         </div>
@@ -279,110 +264,120 @@ export const ReplicaSlider: React.FC<ReplicaSliderProps> = ({
                   }
                 }}
               >
-                {/* Card Container: Soft muted background color per card, 100% opaque */}
+                {/* Card Container: Plain pale slab (#EDEDED) by default */}
                 <div
-                  className="relative w-full h-full overflow-hidden p-5 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow"
+                  className="relative w-full h-full overflow-hidden shadow-sm"
                   style={{
-                    backgroundColor: card.backgroundColor || '#EAEAEA',
+                    backgroundColor: '#EDEDED',
                     borderRadius: 32,
                   }}
                 >
-                  {/* Top Portion: Clean Rounded Frame with Uncropped Content */}
-                  <div className="w-full h-[68%] rounded-[20px] bg-white shadow-xs border border-black/5 overflow-hidden flex flex-col relative">
-                    {/* Window Frame Bar */}
-                    <div className="h-6 px-3 bg-[#F9F9F9] border-b border-black/5 flex items-center justify-between shrink-0">
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-[#E0E0E0]" />
-                        <span className="w-2 h-2 rounded-full bg-[#E0E0E0]" />
-                        <span className="w-2 h-2 rounded-full bg-[#E0E0E0]" />
-                      </div>
-                      <span className="text-[0.9rem] font-mono text-[#A0A0A0] uppercase tracking-wider">
-                        {card.category}
-                      </span>
-                    </div>
-
-                    {/* Frame Inner Body */}
-                    <div className="flex-1 w-full h-full overflow-hidden flex items-center justify-center p-2.5 bg-white">
-                      {/* Case A: Project with live 2x uncropped screenshot */}
-                      {'hasLiveScreenshot' in card && card.hasLiveScreenshot && card.imageUrl ? (
-                        <img
-                          src={card.imageUrl}
-                          alt={card.title}
-                          className="w-full h-full object-contain object-top rounded-lg"
-                          loading="eager"
-                        />
-                      ) : 'mandate' in card ? (
-                        /* Case B: Skills Deck Card */
-                        <div className="w-full h-full p-2 flex flex-col justify-between">
-                          <p className="text-[1.2rem] max-phone:text-[1.1rem] text-grey leading-relaxed line-clamp-3">
-                            {card.mandate}
+                  {/* INACTIVE CARDS: Plain pale panels with NO visible content whatsoever (hide image and text) */}
+                  {/* ACTIVE CARD: Full-bleed image or typographic cover with title at bottom-left */}
+                  {isActive ? (
+                    <div className="relative w-full h-full overflow-hidden" style={{ borderRadius: 32 }}>
+                      {'imageUrl' in card && card.imageUrl ? (
+                        /* Case A: Project with full-bleed image (object-cover) */
+                        <>
+                          <img
+                            src={card.imageUrl}
+                            alt={card.title}
+                            className="w-full h-full object-cover select-none"
+                            loading="eager"
+                          />
+                          {/* Subtle dark gradient overlay at bottom for title contrast */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                          <p
+                            className="text-[1.5rem] max-phone:text-[1.3rem] font-semibold text-white absolute bottom-8 left-8 select-none pointer-events-none drop-shadow-md z-10"
+                            style={{ mixBlendMode: 'exclusion' }}
+                          >
+                            {card.title}
                           </p>
-                          <div className="flex flex-wrap gap-1 pt-1">
-                            {card.skills.slice(0, 7).map((skill, sI) => (
-                              <span
-                                key={sI}
-                                className="px-2 py-0.5 rounded-full bg-light-grey text-[1rem] text-light-black font-medium"
-                              >
-                                {skill}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      ) : 'issuer' in card ? (
-                        /* Case C: Certifications Deck Card */
-                        <div className="w-full h-full p-3 flex flex-col justify-between">
-                          <div className="flex flex-col gap-1.5">
-                            <span className="text-[1rem] uppercase tracking-wider font-bold text-light-black">
-                              {card.issuer}
+                        </>
+                      ) : deckType === 'projects' ? (
+                        /* Case B: Project with no live URL -> Dark editorial cover with title */
+                        <div
+                          className="relative w-full h-full overflow-hidden flex flex-col justify-between p-8 text-white select-none"
+                          style={{ backgroundColor: card.backgroundColor || '#1B1C20', borderRadius: 32 }}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="text-[1.1rem] font-mono tracking-widest uppercase text-white/50">
+                              {card.category}
                             </span>
-                            <h4 className="text-[1.5rem] max-phone:text-[1.3rem] font-bold text-light-black leading-snug">
+                            <div className="w-2.5 h-2.5 rounded-full bg-white/20" />
+                          </div>
+                          <div className="my-auto">
+                            <h3 className="text-[2.6rem] max-phone:text-[2rem] font-bold text-white tracking-tight leading-snug">
                               {card.title}
-                            </h4>
+                            </h3>
                           </div>
-                          <div className="inline-flex items-center gap-1 text-[1.1rem] font-semibold text-light-black pt-1">
-                            <span>Verify Credential</span>
-                            <ArrowUpRight className="w-3.5 h-3.5 text-grey" />
+                          <p
+                            className="text-[1.5rem] max-phone:text-[1.3rem] font-semibold text-white absolute bottom-8 left-8 select-none pointer-events-none drop-shadow-md z-10"
+                            style={{ mixBlendMode: 'exclusion' }}
+                          >
+                            {card.title}
+                          </p>
+                        </div>
+                      ) : deckType === 'skills' ? (
+                        /* Case C: Skills Deck Cover -> One large title on solid color, never truncated */
+                        <div
+                          className="relative w-full h-full overflow-hidden flex flex-col justify-between p-8 text-white select-none"
+                          style={{ backgroundColor: card.backgroundColor || '#20222B', borderRadius: 32 }}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="text-[1.1rem] font-mono tracking-widest uppercase text-white/60">
+                              {card.category}
+                            </span>
+                            <div className="w-2.5 h-2.5 rounded-full bg-white/30" />
                           </div>
+                          <div className="my-auto">
+                            <h3 className="text-[3rem] max-phone:text-[2.2rem] font-bold text-white tracking-tight leading-[1.15] break-words">
+                              {card.title}
+                            </h3>
+                          </div>
+                          <p
+                            className="text-[1.5rem] max-phone:text-[1.3rem] font-semibold text-white absolute bottom-8 left-8 select-none pointer-events-none drop-shadow-md z-10"
+                            style={{ mixBlendMode: 'exclusion' }}
+                          >
+                            {card.title}
+                          </p>
                         </div>
                       ) : (
-                        /* Case D: Project without live screen - Designed card with outcome */
-                        <div className="w-full h-full p-3 flex flex-col justify-between">
-                          <div className="flex flex-col gap-2">
-                            <span className="text-[1rem] uppercase tracking-widest text-grey font-mono">
-                              System Architecture
+                        /* Case D: Certifications Deck Cover -> Issuer + Large title on solid color */
+                        <div
+                          className="relative w-full h-full overflow-hidden flex flex-col justify-between p-8 text-white select-none"
+                          style={{ backgroundColor: card.backgroundColor || '#1E232A', borderRadius: 32 }}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="text-[1.1rem] font-mono tracking-widest uppercase text-white/60">
+                              {'issuer' in card ? (card as any).issuer : card.category}
                             </span>
-                            <p className="text-[1.25rem] max-phone:text-[1.15rem] font-medium text-light-black leading-relaxed">
-                              {'oneLineOutcome' in card ? card.oneLineOutcome : 'summary' in card ? (card as any).summary : ''}
-                            </p>
+                            <span className="text-[1.3rem] font-mono text-white/50">↗</span>
                           </div>
-                          <div className="flex items-center gap-2 text-[1rem] font-mono text-[#00A86B]">
-                            <span className="w-2 h-2 rounded-full bg-[#00A86B] animate-pulse" />
-                            <span>Production Engine</span>
+                          <div className="my-auto">
+                            <h3 className="text-[2.6rem] max-phone:text-[2rem] font-bold text-white tracking-tight leading-[1.2] break-words">
+                              {card.title}
+                            </h3>
                           </div>
+                          <p
+                            className="text-[1.5rem] max-phone:text-[1.3rem] font-semibold text-white absolute bottom-8 left-8 select-none pointer-events-none drop-shadow-md z-10"
+                            style={{ mixBlendMode: 'exclusion' }}
+                          >
+                            {card.title}
+                          </p>
                         </div>
                       )}
                     </div>
-                  </div>
-
-                  {/* Bottom Portion: Card Title & 3 Tech Tags at the Bottom */}
-                  <div className="h-[28%] flex flex-col justify-end gap-1.5 px-2 select-none">
-                    <h3 className="text-[1.8rem] max-phone:text-[1.5rem] font-bold text-light-black leading-tight tracking-tight truncate">
-                      {card.title}
-                    </h3>
-                    <p className="text-[1.15rem] max-phone:text-[1.05rem] text-[#666] font-normal truncate">
-                      {card.threeTags.join('  ·  ')}
-                    </p>
-                  </div>
+                  ) : (
+                    /* Inactive card: Clean blank pale slab, NO content */
+                    <div className="w-full h-full bg-[#EDEDED]" style={{ borderRadius: 32 }} />
+                  )}
                 </div>
               </motion.li>
             );
           })}
         </AnimatePresence>
       </ul>
-
-      {/* Top & Bottom Vignette Gradient Masks */}
-      <div className="absolute top-0 left-0 w-full h-32 pointer-events-none bg-gradient-to-b from-light-grey to-transparent z-40" />
-      <div className="absolute bottom-0 left-0 w-full h-32 pointer-events-none bg-gradient-to-t from-light-grey to-transparent z-40" />
     </div>
   );
 };
