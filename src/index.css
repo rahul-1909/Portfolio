@@ -2,30 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Tusker Grotesk';
-  font-style: normal;
-  font-weight: 700;
-  src: url('/fonts/TuskerGrotesk-Bold.woff2') format('woff2');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Moderat Extended';
-  font-style: normal;
-  font-weight: 600;
-  src: url('/fonts/Moderat-Semibold.woff2') format('woff2');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Moderat Extended';
-  font-style: normal;
-  font-weight: 700;
-  src: url('/fonts/Moderat-Bold.woff2') format('woff2');
-  font-display: swap;
-}
-
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -34,24 +10,6 @@
   body {
     background-color: #ffffff;
     color: #000000;
-    font-family: 'Moderat Extended', sans-serif;
-  }
-
-  .font-display {
-    font-family: 'Tusker Grotesk', 'Bebas Neue', sans-serif;
-    letter-spacing: 0.02em;
-  }
-
-  .font-par {
-    font-family: 'Moderat Extended', sans-serif;
-  }
-
-  .font-marker {
-    font-family: 'Permanent Marker', cursive;
-  }
-
-  .font-hand {
-    font-family: 'Caveat', cursive;
   }
 
   .dark body {
@@ -80,103 +38,6 @@
 }
 
 @layer utilities {
-  /* Hand-Drawn Doodle Utilities & Animations (Inspired by FRA! fradesign.it) */
-  @keyframes marquee {
-    0% { transform: translateX(0%); }
-    100% { transform: translateX(-50%); }
-  }
-
-  @keyframes marquee-reverse {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0%); }
-  }
-
-  @keyframes float-slow {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-12px) rotate(3deg); }
-  }
-
-  @keyframes float-reverse {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(12px) rotate(-3deg); }
-  }
-
-  @keyframes doodle-wobble {
-    0%, 100% { transform: rotate(-2deg); }
-    50% { transform: rotate(2deg); }
-  }
-
-  .animate-marquee {
-    display: flex;
-    width: max-content;
-    animation: marquee 25s linear infinite;
-  }
-
-  .animate-marquee-fast {
-    display: flex;
-    width: max-content;
-    animation: marquee 16s linear infinite;
-  }
-
-  .animate-marquee-reverse {
-    display: flex;
-    width: max-content;
-    animation: marquee-reverse 25s linear infinite;
-  }
-
-  .animate-float {
-    animation: float-slow 4s ease-in-out infinite;
-  }
-
-  .animate-float-reverse {
-    animation: float-reverse 4.5s ease-in-out infinite;
-  }
-
-  .animate-wobble {
-    animation: doodle-wobble 3s ease-in-out infinite;
-  }
-
-  .doodle-box {
-    border: 2px solid #000;
-    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-  }
-  
-  .doodle-box-sm {
-    border: 2px solid #000;
-    border-radius: 185px 12px 175px 12px/12px 175px 12px 185px;
-  }
-
-  .doodle-btn {
-    border: 2px solid #000;
-    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-    box-shadow: 3px 4px 0px #000;
-    transition: all 0.15s ease-in-out;
-  }
-
-  .doodle-btn:hover {
-    transform: translate(2px, 2px);
-    box-shadow: 1px 2px 0px #000;
-  }
-
-  .doodle-btn:active {
-    transform: translate(3px, 4px);
-    box-shadow: 0px 0px 0px #000;
-  }
-
-  .doodle-shadow {
-    box-shadow: 4px 5px 0px #000;
-  }
-
-  .doodle-shadow-lg {
-    box-shadow: 6px 8px 0px #000;
-  }
-
-  .notebook-paper {
-    background-color: #ffffff;
-    background-image: radial-gradient(#d1d5db 1px, transparent 1px);
-    background-size: 20px 20px;
-  }
-
   .background-grid {
     background-size: 28px 28px;
     background-image: 

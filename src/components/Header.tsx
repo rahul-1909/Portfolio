@@ -1,97 +1,168 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, Compass } from 'lucide-react';
+import { GithubIcon, TwitterIcon } from './SocialIcons';
+import { profileData } from '../data/profile';
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+  onOpenQuickAccess: () => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({ onOpenQuickAccess }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('stage');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+
+      const sections = ['stage', 'story', 'workbench', 'stack', 'connect'];
+      const scrollPosition = window.scrollY + 200;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i]);
+        if (el && el.offsetTop <= scrollPosition) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollTo = (id: string) => {
+  const scrollToSection = (sectionId: string) => {
     setMobileMenuOpen(false);
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+
+    if (location.pathname !== '/') {
+      navigate(`/#${sectionId}`);
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   const navItems = [
-    { id: 'intro', label: 'Chi sono' },
-    { id: 'projects', label: 'Progetti' },
-    { id: 'services', label: 'Servizi' },
-    { id: 'contact', label: 'Contatto' },
+    { id: 'stage', label: 'Stage' },
+    { id: 'story', label: 'Odyssey' },
+    { id: 'workbench', label: 'Workbench' },
+    { id: 'stack', label: 'Tool Chest' },
+    { id: 'connect', label: 'Connect' },
   ];
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-200 select-none ${
+      className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-200 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md border-b-3 border-black py-3 shadow-sm'
-          : 'bg-white/80 backdrop-blur-sm py-4'
+          ? 'bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-b-2 border-black py-2.5 shadow-sm'
+          : 'bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm py-3.5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 flex items-center justify-between">
+      <div className="content-wrapper max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         
-        {/* Brand Logo (FRA! authentic logo) */}
+        {/* Brand Logo */}
         <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="flex items-center gap-2.5 group cursor-pointer"
-          aria-label="FRA! Home"
+          onClick={() => scrollToSection('stage')}
+          className="flex items-center gap-2 group text-left cursor-pointer"
+          aria-label="Scroll to top"
         >
-          <div className="flex h-9 w-9 items-center justify-center bg-black text-[#FFE600] rounded-lg border-2 border-black font-display text-xl font-bold shadow-[2px_2px_0px_#000] group-hover:scale-105 transition-transform">
-            <span>FRA!</span>
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-black text-white border-2 border-black font-mono text-xs font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform">
+            <span>RT</span>
           </div>
-          <div className="font-display text-2xl tracking-wide text-black uppercase">
-            <span>fradesign.it</span>
+          <div className="font-[1000] text-lg tracking-tight text-black dark:text-white uppercase">
+            <span>rahul teja</span>
           </div>
         </button>
 
         {/* Desktop Anchor Navigation Links */}
-        <nav className="hidden md:flex items-center gap-2 p-1 bg-white rounded-xl border-2 border-black shadow-[2px_2px_0px_#000]">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => scrollTo(item.id)}
-              className="px-4 py-1.5 font-par text-xs font-bold uppercase tracking-wider text-black hover:bg-[#FFE600] rounded-lg transition-colors"
-            >
-              {item.label}
-            </button>
-          ))}
+        <nav className="hidden md:flex items-center gap-1 bg-neutral-100 dark:bg-neutral-800 p-1 rounded-xl border-2 border-black">
+          {navItems.map((item) => {
+            const isActive = activeSection === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`px-3.5 py-1 rounded-lg font-mono text-xs font-bold tracking-wider uppercase transition-all ${
+                  isActive
+                    ? 'bg-black text-white shadow-sm'
+                    : 'text-black dark:text-white hover:bg-neutral-200 dark:hover:bg-neutral-700'
+                }`}
+              >
+                {item.label}
+              </button>
+            );
+          })}
         </nav>
 
-        {/* Right CTA Button */}
-        <div className="flex items-center gap-3">
+        {/* Right Action Icons: Twitter, GitHub, Quick Access, Theme Toggle */}
+        <div className="flex items-center gap-2">
+          {/* Social Icons */}
+          <div className="hidden sm:flex items-center gap-1.5">
+            <a
+              href={profileData.socials.twitter}
+              target="_blank"
+              rel="noreferrer nofollow"
+              className="p-1.5 rounded-lg border-2 border-black bg-white hover:bg-neutral-100 transition shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+              aria-label="Twitter / X"
+            >
+              <TwitterIcon className="h-3.5 w-3.5" />
+            </a>
+
+            <a
+              href={profileData.socials.github}
+              target="_blank"
+              rel="noreferrer nofollow"
+              className="p-1.5 rounded-lg border-2 border-black bg-white hover:bg-neutral-100 transition shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+              aria-label="GitHub"
+            >
+              <GithubIcon className="h-3.5 w-3.5" />
+            </a>
+          </div>
+
+          {/* Quick Access Button */}
           <button
-            onClick={() => scrollTo('contact')}
-            className="hidden sm:inline-flex px-4 py-2 bg-[#FFE600] text-black font-par text-xs font-bold uppercase rounded-xl border-2 border-black shadow-[3px_3px_0px_#000] hover:bg-yellow-300 hover:shadow-[1px_1px_0px_#000] hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
+            onClick={onOpenQuickAccess}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border-2 border-black bg-white font-mono text-xs font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neutral-100 transition"
+            aria-label="Open Quick Access"
           >
-            <span>Scrivimi</span>
+            <Compass className="h-3.5 w-3.5 text-black" />
+            <span className="hidden lg:inline">Find</span>
+            <kbd className="rounded border border-black/30 bg-neutral-100 px-1 font-mono text-[10px]">
+              Q
+            </kbd>
           </button>
 
           {/* Mobile Menu Trigger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden flex h-9 w-9 items-center justify-center rounded-lg border-2 border-black bg-white shadow-[2px_2px_0px_#000]"
+            className="md:hidden flex h-8 w-8 items-center justify-center rounded-lg border-2 border-black bg-white"
             aria-label="Toggle Menu"
           >
-            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+            {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b-3 border-black bg-white px-6 py-5 shadow-xl">
-          <div className="flex flex-col space-y-3">
+        <div className="md:hidden border-b-2 border-black bg-white px-5 py-4 shadow-xl">
+          <div className="flex flex-col space-y-2">
             {navItems.map((item) => (
               <button
                 key={item.id}
-                onClick={() => scrollTo(item.id)}
-                className="text-left font-display text-xl uppercase tracking-wider py-1 text-black hover:text-[#FFE600]"
+                onClick={() => scrollToSection(item.id)}
+                className="text-left font-mono text-sm font-bold uppercase tracking-wider py-1.5 text-black hover:opacity-70"
               >
                 {item.label}
               </button>
