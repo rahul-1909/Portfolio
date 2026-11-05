@@ -3,35 +3,66 @@ import { profileData } from './profile';
 import { experienceData } from './experience';
 import { certificationsData } from './certifications';
 
-export interface FormattedProject {
+export type DeckType = 'projects' | 'skills' | 'certifications';
+
+export interface ProjectCardData {
   id: string;
   title: string;
   category: string;
   summary: string;
+  oneLineOutcome: string;
   architectureDetails: string[];
   techStack: string[];
+  threeTags: string[];
   githubUrl: string;
   liveUrl?: string;
   isLive: boolean;
   hasLiveScreenshot: boolean;
   imageUrl?: string;
+  backgroundColor: string;
   stats?: { label: string; value: string }[];
 }
 
-// 5 Selected Projects with live screenshot or clean typographic card mapping
-export const selectedProjects: FormattedProject[] = [
+export interface SkillCardData {
+  id: string;
+  title: string;
+  category: string;
+  mandate: string;
+  skills: string[];
+  threeTags: string[];
+  backgroundColor: string;
+}
+
+export interface CertificationCardData {
+  id: string;
+  title: string;
+  issuer: string;
+  category: string;
+  verificationUrl: string;
+  skills: string[];
+  threeTags: string[];
+  backgroundColor: string;
+}
+
+export type DeckCardItem = ProjectCardData | SkillCardData | CertificationCardData;
+
+// 1. Projects Deck (5 cards)
+export const projectsDeck: ProjectCardData[] = [
   {
     id: "gold-lending-platform",
     title: "Gold Lending Platform",
     category: "Fintech",
     summary: projectsData.find(p => p.id === "gold-lending-platform")?.description || "",
+    oneLineOutcome: "Automated digital bullion financing engine with live 75% LTV valuation and 15-minute instant disbursal.",
     architectureDetails: projectsData.find(p => p.id === "gold-lending-platform")?.architectureDetails || [],
     techStack: projectsData.find(p => p.id === "gold-lending-platform")?.techStack || [],
+    threeTags: ["Spring Boot 3.5", "Angular 20", "MySQL 9"],
     githubUrl: "https://github.com/rahul-1909/gold-lending-platform",
-    liveUrl: "https://starfinance-app.vercel.app/login",
+    liveUrl: "https://starfinance-app.vercel.app/customer/dashboard",
     isLive: true,
     hasLiveScreenshot: true,
     imageUrl: "/assets/projects/gold-lending-platform.webp",
+    backgroundColor: "#EBEAE5",
     stats: projectsData.find(p => p.id === "gold-lending-platform")?.stats,
   },
   {
@@ -39,13 +70,16 @@ export const selectedProjects: FormattedProject[] = [
     title: "Multi-Agent Autonomous RAG Engine",
     category: "AI & LLM",
     summary: projectsData.find(p => p.id === "multi-agent-autonomous-rag")?.description || "",
+    oneLineOutcome: "Autonomous multi-agent LangGraph state machine with self-correcting retrieval and anti-hallucination verification loops.",
     architectureDetails: projectsData.find(p => p.id === "multi-agent-autonomous-rag")?.architectureDetails || [],
     techStack: projectsData.find(p => p.id === "multi-agent-autonomous-rag")?.techStack || [],
+    threeTags: ["LangGraph", "Qdrant", "FastAPI"],
     githubUrl: "https://github.com/rahul-1909/multi-agent-autonomous-rag-engine",
     liveUrl: "https://multi-agent-autonomous-rag-engine.onrender.com/",
     isLive: true,
     hasLiveScreenshot: true,
     imageUrl: "/assets/projects/multi-agent-autonomous-rag.webp",
+    backgroundColor: "#E5E8EC",
     stats: projectsData.find(p => p.id === "multi-agent-autonomous-rag")?.stats,
   },
   {
@@ -53,13 +87,16 @@ export const selectedProjects: FormattedProject[] = [
     title: "Natural Language to SQL Analytics Copilot",
     category: "AI & LLM",
     summary: projectsData.find(p => p.id === "nl-to-sql-converter")?.description || "",
+    oneLineOutcome: "Zero-injection voice dictation Text-to-SQL copilot generating real-time interactive Plotly dashboards.",
     architectureDetails: projectsData.find(p => p.id === "nl-to-sql-converter")?.architectureDetails || [],
     techStack: projectsData.find(p => p.id === "nl-to-sql-converter")?.techStack || [],
+    threeTags: ["Groq Whisper", "FastAPI", "Plotly"],
     githubUrl: "https://github.com/rahul-1909/Natural-Language-to-SQL-Converter",
     liveUrl: "https://nl2sql-analytics.streamlit.app/",
-    isLive: false, // Streamlit live url returns 303 redirect loop; rendered as clean typographic card on #EAEAEA
+    isLive: false,
     hasLiveScreenshot: false,
     imageUrl: undefined,
+    backgroundColor: "#E4EAE8",
     stats: projectsData.find(p => p.id === "nl-to-sql-converter")?.stats,
   },
   {
@@ -67,13 +104,16 @@ export const selectedProjects: FormattedProject[] = [
     title: "LinkedIn Profile Intelligence API",
     category: "Backend & APIs",
     summary: projectsData.find(p => p.id === "linkedin-intelligence-api")?.description || "",
+    oneLineOutcome: "High-throughput asynchronous Voyager REST engine extracting verified career history into validated JSON schemas.",
     architectureDetails: projectsData.find(p => p.id === "linkedin-intelligence-api")?.architectureDetails || [],
     techStack: projectsData.find(p => p.id === "linkedin-intelligence-api")?.techStack || [],
+    threeTags: ["FastAPI", "Voyager REST", "Pydantic"],
     githubUrl: "https://github.com/rahul-1909/LinkedIn-Profile-Intelligence-API",
     liveUrl: "https://linkedin-profile-intelligence-api.vercel.app/",
     isLive: true,
     hasLiveScreenshot: true,
     imageUrl: "/assets/projects/linkedin-intelligence-api.webp",
+    backgroundColor: "#E4E6EA",
     stats: projectsData.find(p => p.id === "linkedin-intelligence-api")?.stats,
   },
   {
@@ -81,21 +121,130 @@ export const selectedProjects: FormattedProject[] = [
     title: "Production AI Support Agent (@AppleSupport)",
     category: "AI & LLM",
     summary: projectsData.find(p => p.id === "production-ai-customer-support-agent")?.description || "",
+    oneLineOutcome: "Semantic intent classifier & ChromaDB vector retriever trained on 2.81M interactions with automated safety guardrails.",
     architectureDetails: projectsData.find(p => p.id === "production-ai-customer-support-agent")?.architectureDetails || [],
     techStack: projectsData.find(p => p.id === "production-ai-customer-support-agent")?.techStack || [],
+    threeTags: ["Python", "ChromaDB", "all-MiniLM-L6-v2"],
     githubUrl: "https://github.com/rahul-1909/Hiver_Assignment",
     liveUrl: undefined,
-    isLive: false, // No live URL; rendered as clean typographic card on #EAEAEA
+    isLive: false,
     hasLiveScreenshot: false,
     imageUrl: undefined,
+    backgroundColor: "#E8E8E8",
     stats: projectsData.find(p => p.id === "production-ai-customer-support-agent")?.stats,
+  },
+];
+
+// 2. Skills Deck (4 cards: Software Engineering, AI/ML, Data, Cloud and Tools)
+export const skillsDeck: SkillCardData[] = [
+  {
+    id: "software-engineering",
+    title: "Software Engineering",
+    category: "Core Stack",
+    mandate: "Architecting high-throughput distributed APIs, concurrent services, and enterprise domain systems.",
+    skills: ["Python", "Java", "Go Lang", "TypeScript", "JavaScript", "SQL", "Spring Boot 3.5", "FastAPI", "Node.js", "RESTful APIs", "JWT & RBAC"],
+    threeTags: ["Python · Java · Go", "Spring Boot", "FastAPI"],
+    backgroundColor: "#E6ECEB",
+  },
+  {
+    id: "ai-ml",
+    title: "AI & Machine Learning",
+    category: "Autonomous Systems",
+    mandate: "Building multi-agent state machines, dense semantic vector retrieval, and deterministic safety guardrails.",
+    skills: ["LangGraph", "LangChain", "Qdrant Vector DB", "ChromaDB", "RAG & Anti-Hallucination", "OpenAI / Mistral APIs", "Groq Whisper", "Prompt Engineering"],
+    threeTags: ["LangGraph State", "Qdrant / Chroma", "Multi-Agent RAG"],
+    backgroundColor: "#ECE8F0",
+  },
+  {
+    id: "data",
+    title: "Data & Storage",
+    category: "Persistence & Analytics",
+    mandate: "Engineering relational schema integrity, low-latency in-memory caching, and automated analytical telemetry.",
+    skills: ["PostgreSQL", "MySQL 9", "MongoDB", "Redis Caching", "SQLite", "Plotly Analytics", "Streamlit"],
+    threeTags: ["PostgreSQL", "MySQL 9", "Redis Cache"],
+    backgroundColor: "#ECECE6",
+  },
+  {
+    id: "cloud-and-tools",
+    title: "Cloud and Tools",
+    category: "DevOps & Delivery",
+    mandate: "Deploying containerized microservices with automated CI/CD testing pipelines and high-availability cloud infrastructure.",
+    skills: ["Amazon Web Services (AWS)", "Microsoft Azure", "Google Cloud (GCP)", "Docker", "GitHub Actions & CI/CD", "Linux", "Git", "Vercel & Render"],
+    threeTags: ["AWS & Azure", "Docker", "CI/CD Pipelines"],
+    backgroundColor: "#E7EAED",
+  },
+];
+
+// 3. Certifications Deck (6 typographic cards)
+export const certificationsDeck: CertificationCardData[] = [
+  {
+    id: "ms-mlops-engineer",
+    title: "Machine Learning Operations Engineer Associate",
+    issuer: "Microsoft Certified",
+    category: "AI & MLOps",
+    verificationUrl: "https://learn.microsoft.com/api/credentials/share/en-us/rahulteja-1992/351C672DE3DD3551?sharingId=20CEC5EF6DDD8E56",
+    skills: ["MLOps Pipelines", "Azure ML", "Model Deployment", "CI/CD Monitoring"],
+    threeTags: ["Microsoft", "MLOps Associate", "Azure ML"],
+    backgroundColor: "#E6EDF2",
+  },
+  {
+    id: "ms-sql-ai-developer",
+    title: "SQL AI Developer Associate",
+    issuer: "Microsoft Certified",
+    category: "Data & SQL AI",
+    verificationUrl: "https://learn.microsoft.com/api/credentials/share/en-us/rahulteja-1992/B7191AAF49134FC8?sharingId=20CEC5EF6DDD8E56",
+    skills: ["SQL AI", "Vector Search", "Data Pipelines", "Semantic Indexing"],
+    threeTags: ["Microsoft", "SQL AI Developer", "Vector Search"],
+    backgroundColor: "#E6EDF2",
+  },
+  {
+    id: "ms-azure-data-fundamentals",
+    title: "Azure Data Fundamentals",
+    issuer: "Microsoft Certified",
+    category: "Cloud Data",
+    verificationUrl: "https://learn.microsoft.com/api/credentials/share/en-us/rahulteja-1992/FEDB73DCFCA7E3E0?sharingId=20CEC5EF6DDD8E56",
+    skills: ["Azure Data", "Relational SQL", "Cosmos DB", "ETL / ELT"],
+    threeTags: ["Microsoft", "Azure Data", "Cloud DB"],
+    backgroundColor: "#E6EDF2",
+  },
+  {
+    id: "aws-cloud-practitioner",
+    title: "AWS Certified Cloud Practitioner",
+    issuer: "Amazon Web Services (AWS)",
+    category: "Cloud Architecture",
+    verificationUrl: "https://www.certmetrics.com/amazon/public/verification.aspx",
+    skills: ["AWS Cloud", "IAM & Security", "VPC & EC2", "High Availability"],
+    threeTags: ["AWS", "Cloud Practitioner", "Infrastructure"],
+    backgroundColor: "#F2ECE4",
+  },
+  {
+    id: "anthropic-claude-101",
+    title: "Claude 101",
+    issuer: "Anthropic",
+    category: "LLM & Prompting",
+    verificationUrl: "https://verify.skilljar.com/c/dsermfpyca5o",
+    skills: ["Claude 3.5", "Prompt Engineering", "Context Windows", "Function Calling"],
+    threeTags: ["Anthropic", "Claude 3.5", "Prompt Eng"],
+    backgroundColor: "#F2EDE8",
+  },
+  {
+    id: "anthropic-ai-fluency",
+    title: "AI Fluency: Framework & Foundations",
+    issuer: "Anthropic",
+    category: "AI Strategy",
+    verificationUrl: "https://verify.skilljar.com/",
+    skills: ["AI Frameworks", "Multi-Modal Reasoning", "Safety Principles"],
+    threeTags: ["Anthropic", "AI Fluency", "Foundations"],
+    backgroundColor: "#F2EDE8",
   },
 ];
 
 // Profile & Socials Data
 export const personalInfo = {
   name: "Rahul Teja",
-  role: "Software Developer",
+  role: "Software Engineer",
+  headline: "Rahul Teja | Software Engineer - Backend, AI/ML & Data",
+  metaDescription: "Portfolio of Rahul Teja, a Software Engineer focused on Backend Engineering, Scalable Distributed Systems, and AI/ML architectures in Hyderabad.",
   bio: profileData.bio,
   aboutHighlights: profileData.aboutHighlights,
   location: "Hyderabad, India",
@@ -110,32 +259,28 @@ export const personalInfo = {
   },
 };
 
-// Virtusa Experience
+// Experience
 export const experience = experienceData;
 
 // Certifications
 export const certifications = certificationsData;
 
-// Skill categories grouped as: Languages, Backend, AI & ML, Databases, Cloud & Tools
+// Grouped Skills for About page
 export const groupedSkills = [
   {
-    name: "Languages",
-    skills: ["Python", "Java", "Go Lang", "JavaScript", "TypeScript", "SQL", "HTML5 & CSS3"],
-  },
-  {
-    name: "Backend",
-    skills: ["FastAPI", "Spring Boot 3.5", "Node.js & Express", "Django & Flask", "RESTful API Design", "Microservices", "JWT & RBAC"],
+    name: "Software Engineering",
+    skills: ["Python", "Java", "Go Lang", "JavaScript", "TypeScript", "SQL", "Spring Boot 3.5", "FastAPI", "Node.js", "REST APIs", "JWT & RBAC"],
   },
   {
     name: "AI & ML",
-    skills: ["LangChain & LangGraph", "Vector Databases (Qdrant, ChromaDB)", "RAG & Anti-Hallucination", "OpenAI & Mistral APIs", "Prompt Engineering", "Voice AI (Groq Whisper)"],
+    skills: ["LangGraph", "LangChain", "Qdrant Vector DB", "ChromaDB", "RAG & Anti-Hallucination", "OpenAI / Mistral APIs", "Prompt Engineering", "Voice AI (Groq Whisper)"],
   },
   {
-    name: "Databases",
-    skills: ["PostgreSQL", "MySQL 9", "MongoDB", "Redis", "SQLite"],
+    name: "Data",
+    skills: ["PostgreSQL", "MySQL 9", "MongoDB", "Redis", "SQLite", "Plotly", "Streamlit"],
   },
   {
-    name: "Cloud & Tools",
-    skills: ["Amazon Web Services (AWS)", "Microsoft Azure", "Google Cloud (GCP)", "Docker", "GitHub Actions & CI/CD", "Vercel & Render"],
+    name: "Cloud and Tools",
+    skills: ["Amazon Web Services (AWS)", "Microsoft Azure", "Google Cloud (GCP)", "Docker", "GitHub Actions & CI/CD", "Linux", "Git", "Vercel & Render"],
   },
 ];

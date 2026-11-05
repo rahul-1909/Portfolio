@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ScrollToTop } from './components/ScrollToTop';
 
-// Phase 2 Personalized Pages
+// Phase 2 Replica Pages
 import { ReplicaHome } from './pages/replica/ReplicaHome';
 import { ReplicaAbout } from './pages/replica/ReplicaAbout';
+import { ReplicaExperience } from './pages/replica/ReplicaExperience';
 import { ReplicaProject } from './pages/replica/ReplicaProject';
 
 export function App() {
@@ -18,8 +19,9 @@ export function App() {
           {/* Main Portfolio Routes */}
           <Route path="/" element={<ReplicaHome />} />
           <Route path="/about" element={<ReplicaAbout />} />
+          <Route path="/experience" element={<ReplicaExperience />} />
 
-          {/* Individual Project Routes (/work/:slug and backward compatible /project/:projectId) */}
+          {/* Individual Project Routes (/work/:slug and /project/:projectId) */}
           <Route path="/work/:slug" element={<ReplicaProject />} />
           <Route path="/project/:projectId" element={<ReplicaProject />} />
 
