@@ -77,13 +77,6 @@ export const ReplicaAbout: React.FC = () => {
             <span className="text-light-black font-semibold">ConvoLens</span>
             <span className="text-[#9F9F9F]"> (conversational AI evaluation and failure taxonomy).</span>
           </p>
-
-          {/* Footer Attribution Line */}
-          <div className="pt-8 border-t border-border-light select-none">
-            <p className="text-[1.2rem] text-[#9F9F9F] font-normal">
-              Interface inspired by gabrielbeaugonin.com.
-            </p>
-          </div>
         </div>
 
         {/* Right Column: 3D Matte Grey Earth Globe with Orbiting Aircraft (Zero Text Beneath) */}

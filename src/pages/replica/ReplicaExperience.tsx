@@ -27,7 +27,7 @@ export const ReplicaExperience: React.FC = () => {
   }, [navigate]);
 
   return (
-    <main className="relative min-h-screen w-full bg-light-grey text-light-black pb-32 overflow-x-hidden select-none">
+    <main className="relative min-h-screen w-full bg-light-grey text-light-black overflow-x-hidden select-none">
       {/* 1. Left Column: Vertically Centered Title, Subtitle, & Dock */}
       <div className="fixed top-0 left-[25.7rem] h-screen w-[42rem] flex flex-col justify-center items-start gap-[2.4rem] z-40 pointer-events-none max-phone:static max-phone:h-auto max-phone:w-full max-phone:px-6 max-phone:pt-10 max-phone:pb-6 max-phone:left-0 max-phone:items-center max-phone:text-center">
         <div className="pointer-events-auto">
@@ -53,71 +53,74 @@ export const ReplicaExperience: React.FC = () => {
         </div>
       </div>
 
-      {/* 2. Right Main Column: Soft-Tinted Virtusa Container */}
-      <div className="w-full flex justify-end pt-20 pb-24 pr-[25.7rem] max-phone:pt-4 max-phone:px-4 max-phone:pr-4">
-        <div className="w-[53.6rem] max-phone:w-full flex flex-col gap-[2.6rem]">
-          {/* Main Virtusa Container Card in Soft Clay Palette */}
-          <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full rounded-[32px] p-10 max-phone:p-6 bg-[#EDE7E2] text-light-black shadow-sm flex flex-col justify-between"
-          >
-            <div className="flex items-center justify-between pb-6 border-b border-light-black/10">
-              <span className="text-[1.1rem] font-mono uppercase tracking-widest text-[#555555]">
-                Internship · Chennai
-              </span>
-              <span className="text-[1.1rem] font-mono text-[#777777]">
-                Aug 2025 – Jun 2026
+      {/* 2. Right Main Column: Vertically Centered, Expanded Virtusa Container */}
+      <div className="fixed top-0 right-0 h-screen w-full flex items-center justify-end pr-[25.7rem] pointer-events-none z-30 max-phone:static max-phone:h-auto max-phone:px-6 max-phone:pb-16 max-phone:pt-6 max-phone:pr-6 max-phone:pointer-events-auto">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+          className="pointer-events-auto w-[62rem] max-phone:w-full rounded-[36px] p-12 max-phone:p-7 bg-[#EDE7E2] text-light-black shadow-lg flex flex-col justify-between max-h-[88vh] overflow-y-auto"
+        >
+          {/* Card Top Header */}
+          <div className="flex items-center justify-between pb-6 border-b border-light-black/10">
+            <div className="flex items-center gap-3">
+              <span className="w-3 h-3 rounded-full bg-emerald-600 animate-pulse" />
+              <span className="text-[1.2rem] font-mono uppercase tracking-widest text-[#555555] font-semibold">
+                Internship · Chennai, India
               </span>
             </div>
+            <span className="text-[1.2rem] font-mono text-[#666666] font-medium">
+              Aug 2025 – Jun 2026
+            </span>
+          </div>
 
-            <div className="py-8 space-y-3">
-              <h3 className="text-[3.8rem] max-phone:text-[2.6rem] font-black tracking-tight text-light-black leading-none">
-                Virtusa
-              </h3>
-              <p className="text-[1.8rem] max-phone:text-[1.4rem] font-semibold text-light-black">
-                Full Stack Software Intern
-              </p>
-              <p className="text-[1.35rem] text-[#555555] pt-2 leading-relaxed font-normal">
-                {exp.summary}
-              </p>
-            </div>
+          {/* Company & Role Headline */}
+          <div className="py-8 max-phone:py-6 space-y-3">
+            <h3 className="text-[4.2rem] max-phone:text-[3.0rem] font-black tracking-tight text-light-black leading-none">
+              Virtusa
+            </h3>
+            <p className="text-[2.0rem] max-phone:text-[1.6rem] font-semibold text-light-black">
+              Full Stack Software Intern
+            </p>
+            <p className="text-[1.45rem] max-phone:text-[1.25rem] text-[#444444] pt-2 leading-relaxed font-normal">
+              {exp.summary}
+            </p>
+          </div>
 
-            {/* Verified Responsibilities */}
-            <div className="py-6 border-t border-light-black/10 space-y-4">
-              <span className="text-[1.1rem] font-mono uppercase tracking-wider text-[#777777] block">
-                Engineering Responsibilities
-              </span>
-              <div className="space-y-3">
-                {exp.responsibilities.map((resp, idx) => (
-                  <div key={idx} className="flex items-start gap-3 text-[1.35rem] text-[#333333] leading-relaxed">
-                    <span className="text-light-black font-mono font-semibold text-[1.1rem] shrink-0 mt-1">0{idx + 1}.</span>
-                    <span>{resp}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Verified Technologies */}
-            <div className="pt-6 border-t border-light-black/10">
-              <span className="text-[1.1rem] font-mono uppercase tracking-wider text-[#777777] block mb-3">
-                Verified Technologies
-              </span>
-              <div className="flex flex-wrap gap-2">
-                {exp.technologies.map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-3 py-1 rounded-full bg-white/70 text-[1.1rem] font-mono text-light-black shadow-xs"
-                  >
-                    {tech}
+          {/* Verified Responsibilities */}
+          <div className="py-6 border-t border-light-black/10 space-y-4">
+            <span className="text-[1.15rem] font-mono uppercase tracking-wider text-[#666666] font-semibold block">
+              Core Engineering Responsibilities
+            </span>
+            <div className="space-y-3.5">
+              {exp.responsibilities.map((resp, idx) => (
+                <div key={idx} className="flex items-start gap-3.5 text-[1.4rem] max-phone:text-[1.2rem] text-[#222222] leading-relaxed">
+                  <span className="text-light-black font-mono font-bold text-[1.2rem] shrink-0 mt-0.5">
+                    0{idx + 1}.
                   </span>
-                ))}
-              </div>
+                  <span>{resp}</span>
+                </div>
+              ))}
             </div>
-          </motion.div>
-        </div>
+          </div>
+
+          {/* Verified Technologies */}
+          <div className="pt-6 border-t border-light-black/10">
+            <span className="text-[1.15rem] font-mono uppercase tracking-wider text-[#666666] font-semibold block mb-3">
+              Verified Production Stack
+            </span>
+            <div className="flex flex-wrap gap-2.5">
+              {exp.technologies.map((tech) => (
+                <span
+                  key={tech}
+                  className="px-3.5 py-1.5 rounded-full bg-white text-[1.15rem] max-phone:text-[1.05rem] font-mono text-light-black shadow-xs font-medium"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </main>
   );

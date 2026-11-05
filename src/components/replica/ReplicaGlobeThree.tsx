@@ -8,7 +8,6 @@ export const ReplicaGlobeThree: React.FC = () => {
     const mount = mountRef.current;
     if (!mount) return;
 
-    // Check prefers-reduced-motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // Dimensions
@@ -18,9 +17,9 @@ export const ReplicaGlobeThree: React.FC = () => {
     // Scene
     const scene = new THREE.Scene();
 
-    // Camera: positioned so globe (radius 1.0) fills the frame naturally
-    const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
-    camera.position.set(0, 0, 3.15);
+    // Camera: positioned comfortably so globe & aircraft orbit are 100% within view
+    const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 100);
+    camera.position.set(0, 0, 4.3);
 
     // Renderer
     const renderer = new THREE.WebGLRenderer({
@@ -32,131 +31,216 @@ export const ReplicaGlobeThree: React.FC = () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     mount.appendChild(renderer.domElement);
 
-    // Grazing directional light from top-left
-    const dirLight = new THREE.DirectionalLight(0xffffff, 2.0);
-    dirLight.position.set(-4.5, 5.5, 3.8);
+    // Lighting: Grazing directional key light from top-left + soft hemisphere fill
+    const dirLight = new THREE.DirectionalLight(0xffffff, 2.4);
+    dirLight.position.set(-6, 7, 5);
     scene.add(dirLight);
 
-    // Soft hemisphere fill for light grey shadows without harsh specular
-    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xd0d0cc, 1.3);
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xc8c6c0, 1.3);
     hemiLight.position.set(0, 10, 0);
     scene.add(hemiLight);
 
-    // High-res elevation bump texture
+    // Textures: High-res Earth Editorial & Bump
     const textureLoader = new THREE.TextureLoader();
+    const earthTexture = textureLoader.load('/assets/earth_editorial.jpg', (tex) => {
+      tex.needsUpdate = true;
+      if (prefersReducedMotion) renderer.render(scene, camera);
+    });
+    earthTexture.wrapS = THREE.RepeatWrapping;
+    earthTexture.wrapT = THREE.ClampToEdgeWrapping;
+
     const bumpMap = textureLoader.load('/assets/earth_bump.jpg', (tex) => {
       tex.needsUpdate = true;
-      if (prefersReducedMotion) {
-        renderer.render(scene, camera);
-      }
     });
     bumpMap.wrapS = THREE.RepeatWrapping;
     bumpMap.wrapT = THREE.ClampToEdgeWrapping;
 
-    // Globe Mesh: SphereGeometry(1, 256, 256) with displacement & bump map in #ECEBE7
+    // 1. Globe Mesh: Perfectly Smooth, Round Relief Sphere with Distinct Continents
     const globeRadius = 1.0;
-    const sphereGeo = new THREE.SphereGeometry(globeRadius, 256, 256);
+    const sphereGeo = new THREE.SphereGeometry(globeRadius, 96, 96);
     const sphereMat = new THREE.MeshStandardMaterial({
-      color: 0xECEBE7,
-      roughness: 0.92,
-      metalness: 0.02,
-      displacementMap: bumpMap,
-      displacementScale: 0.05,
+      map: earthTexture,
       bumpMap: bumpMap,
-      bumpScale: 0.15,
+      bumpScale: 0.18,
+      roughness: 0.88,
+      metalness: 0.02,
     });
     const globeMesh = new THREE.Mesh(sphereGeo, sphereMat);
     scene.add(globeMesh);
 
-    // Recognizable Airliner (#7C7C7C)
+    // 2. Beautiful Commercial Airliner Model (Twin-Engine Passenger Jet)
     const airplaneGroup = new THREE.Group();
-    const planeMat = new THREE.MeshStandardMaterial({
-      color: 0x7C7C7C,
-      roughness: 0.55,
-      metalness: 0.2,
+
+    // Aircraft Materials
+    const airframeMat = new THREE.MeshStandardMaterial({
+      color: 0xE8E7E4,
+      roughness: 0.35,
+      metalness: 0.15,
     });
-    const darkPodMat = new THREE.MeshStandardMaterial({
-      color: 0x555555,
-      roughness: 0.6,
+    const wingMat = new THREE.MeshStandardMaterial({
+      color: 0xC5C8CE,
+      roughness: 0.40,
+      metalness: 0.25,
+    });
+    const darkMat = new THREE.MeshStandardMaterial({
+      color: 0x1A1C20,
+      roughness: 0.20,
+      metalness: 0.60,
     });
 
-    // 1. Slender Fuselage
-    const fuselageGeo = new THREE.CylinderGeometry(0.022, 0.028, 0.24, 16);
-    fuselageGeo.rotateX(Math.PI / 2);
-    const fuselage = new THREE.Mesh(fuselageGeo, planeMat);
-    airplaneGroup.add(fuselage);
+    // Root Group oriented: Forward Nose = +Z, Aft Tail = -Z, Right Wing = +X, Left Wing = -X, Dorsal Fin = +Y
+    const plane = new THREE.Group();
 
-    // 2. Streamlined Nose Cone
-    const noseGeo = new THREE.ConeGeometry(0.022, 0.07, 16);
+    // A. Main Fuselage (cylindrical passenger cabin)
+    const cabinGeo = new THREE.CylinderGeometry(0.032, 0.032, 0.32, 20);
+    cabinGeo.rotateX(Math.PI / 2);
+    cabinGeo.translate(0, 0, 0);
+    const cabin = new THREE.Mesh(cabinGeo, airframeMat);
+    plane.add(cabin);
+
+    // B. Aerodynamic Streamlined Nose Cone
+    const noseGeo = new THREE.ConeGeometry(0.032, 0.11, 20);
     noseGeo.rotateX(-Math.PI / 2);
-    noseGeo.translate(0, 0, 0.155);
-    const nose = new THREE.Mesh(noseGeo, planeMat);
-    airplaneGroup.add(nose);
+    noseGeo.translate(0, 0, 0.215);
+    const nose = new THREE.Mesh(noseGeo, airframeMat);
+    plane.add(nose);
 
-    // 3. Swept Wings
-    // Left swept wing
+    // C. Cockpit Windshield Band (dark curved visor)
+    const visorGeo = new THREE.BoxGeometry(0.040, 0.016, 0.026);
+    visorGeo.translate(0, 0.023, 0.19);
+    const visor = new THREE.Mesh(visorGeo, darkMat);
+    plane.add(visor);
+
+    // D. Tapered Tail Cone
+    const tailConeGeo = new THREE.CylinderGeometry(0.032, 0.010, 0.18, 20);
+    tailConeGeo.rotateX(Math.PI / 2);
+    tailConeGeo.translate(0, 0.007, -0.25);
+    const tailCone = new THREE.Mesh(tailConeGeo, airframeMat);
+    plane.add(tailCone);
+
+    // E. Realistic Swept-Back Main Wings (Span: ~0.60, 30-deg sweep, slight dihedral)
+    const wingShape = new THREE.Shape();
+    wingShape.moveTo(0, 0.07); // root leading edge (+Z)
+    wingShape.lineTo(0.30, -0.10); // tip leading edge
+    wingShape.lineTo(0.30, -0.14); // tip trailing edge
+    wingShape.lineTo(0, -0.06); // root trailing edge (-Z)
+    wingShape.closePath();
+
+    const wingExtrude = { depth: 0.006, bevelEnabled: false };
+
+    // Right Swept Wing
+    const rightWingGeo = new THREE.ExtrudeGeometry(wingShape, wingExtrude);
+    rightWingGeo.rotateX(Math.PI / 2);
+    rightWingGeo.translate(0, -0.006, 0.02);
+    const rightWing = new THREE.Mesh(rightWingGeo, wingMat);
+    plane.add(rightWing);
+
+    // Left Swept Wing (mirrored)
     const leftWingShape = new THREE.Shape();
-    leftWingShape.moveTo(0, 0);
-    leftWingShape.lineTo(-0.16, -0.07);
-    leftWingShape.lineTo(-0.16, -0.10);
-    leftWingShape.lineTo(0, -0.04);
+    leftWingShape.moveTo(0, 0.07);
+    leftWingShape.lineTo(-0.30, -0.10);
+    leftWingShape.lineTo(-0.30, -0.14);
+    leftWingShape.lineTo(0, -0.06);
     leftWingShape.closePath();
-    const wingExtrude = { depth: 0.005, bevelEnabled: false };
+
     const leftWingGeo = new THREE.ExtrudeGeometry(leftWingShape, wingExtrude);
     leftWingGeo.rotateX(Math.PI / 2);
-    leftWingGeo.translate(0, 0.002, 0.04);
-    const leftWing = new THREE.Mesh(leftWingGeo, planeMat);
-    airplaneGroup.add(leftWing);
+    leftWingGeo.translate(0, -0.006, 0.02);
+    const leftWing = new THREE.Mesh(leftWingGeo, wingMat);
+    plane.add(leftWing);
 
-    // Right swept wing
-    const rightWingShape = new THREE.Shape();
-    rightWingShape.moveTo(0, 0);
-    rightWingShape.lineTo(0.16, -0.07);
-    rightWingShape.lineTo(0.16, -0.10);
-    rightWingShape.lineTo(0, -0.04);
-    rightWingShape.closePath();
-    const rightWingGeo = new THREE.ExtrudeGeometry(rightWingShape, wingExtrude);
-    rightWingGeo.rotateX(Math.PI / 2);
-    rightWingGeo.translate(0, 0.002, 0.04);
-    const rightWing = new THREE.Mesh(rightWingGeo, planeMat);
-    airplaneGroup.add(rightWing);
+    // Winglets (upturned tips)
+    const makeWinglet = (xPos: number) => {
+      const geo = new THREE.BoxGeometry(0.004, 0.038, 0.022);
+      geo.translate(xPos, 0.020, -0.10);
+      return new THREE.Mesh(geo, wingMat);
+    };
+    plane.add(makeWinglet(0.30));
+    plane.add(makeWinglet(-0.30));
 
-    // 4. Two Engine Pods under wings
-    const engineGeo = new THREE.CylinderGeometry(0.010, 0.010, 0.05, 12);
-    engineGeo.rotateX(Math.PI / 2);
+    // F. Twin Underwing Turbofan Jet Engines
+    const makeEnginePod = (xPos: number) => {
+      const engine = new THREE.Group();
 
-    const leftEngine = new THREE.Mesh(engineGeo, darkPodMat);
-    leftEngine.position.set(-0.075, -0.014, 0.01);
-    airplaneGroup.add(leftEngine);
+      // Nacelle body
+      const nacelleGeo = new THREE.CylinderGeometry(0.016, 0.014, 0.085, 16);
+      nacelleGeo.rotateX(Math.PI / 2);
+      const nacelle = new THREE.Mesh(nacelleGeo, airframeMat);
+      engine.add(nacelle);
 
-    const rightEngine = new THREE.Mesh(engineGeo, darkPodMat);
-    rightEngine.position.set(0.075, -0.014, 0.01);
-    airplaneGroup.add(rightEngine);
+      // Intake face (dark hollow circle)
+      const intakeGeo = new THREE.CircleGeometry(0.014, 16);
+      intakeGeo.translate(0, 0, 0.043);
+      const intake = new THREE.Mesh(intakeGeo, darkMat);
+      engine.add(intake);
 
-    // 5. Vertical Tail Fin
-    const tailFinShape = new THREE.Shape();
-    tailFinShape.moveTo(0, 0);
-    tailFinShape.lineTo(0, 0.065);
-    tailFinShape.lineTo(-0.035, 0.065);
-    tailFinShape.lineTo(-0.065, 0);
-    tailFinShape.closePath();
-    const tailFinGeo = new THREE.ExtrudeGeometry(tailFinShape, { depth: 0.004, bevelEnabled: false });
-    tailFinGeo.rotateY(Math.PI / 2);
-    tailFinGeo.translate(0.002, 0.01, -0.06);
-    const tailFin = new THREE.Mesh(tailFinGeo, planeMat);
-    airplaneGroup.add(tailFin);
+      // Exhaust cone
+      const exhaustGeo = new THREE.ConeGeometry(0.009, 0.024, 16);
+      exhaustGeo.rotateX(Math.PI / 2);
+      exhaustGeo.translate(0, 0, -0.052);
+      const exhaust = new THREE.Mesh(exhaustGeo, darkMat);
+      engine.add(exhaust);
 
-    // 6. Horizontal Stabilizers
-    const hStabGeo = new THREE.BoxGeometry(0.11, 0.004, 0.03);
-    hStabGeo.translate(0, 0.01, -0.11);
-    const hStab = new THREE.Mesh(hStabGeo, planeMat);
-    airplaneGroup.add(hStab);
+      // Pylon
+      const pylonGeo = new THREE.BoxGeometry(0.004, 0.018, 0.035);
+      pylonGeo.translate(0, 0.016, 0);
+      const pylon = new THREE.Mesh(pylonGeo, wingMat);
+      engine.add(pylon);
 
+      engine.position.set(xPos, -0.028, 0.035);
+      return engine;
+    };
+
+    plane.add(makeEnginePod(0.115));
+    plane.add(makeEnginePod(-0.115));
+
+    // G. Swept-Back Vertical Stabilizer (Tail Fin extending UP along +Y, swept toward -Z)
+    const finShape = new THREE.Shape();
+    finShape.moveTo(0, 0); // bottom forward (-Z = -0.16)
+    finShape.lineTo(-0.08, 0.13); // top forward (slanted back)
+    finShape.lineTo(-0.12, 0.13); // top aft
+    finShape.lineTo(-0.10, 0); // bottom aft
+    finShape.closePath();
+
+    const finGeo = new THREE.ExtrudeGeometry(finShape, { depth: 0.005, bevelEnabled: false });
+    // In YZ plane
+    finGeo.rotateY(Math.PI / 2);
+    finGeo.translate(0.0025, 0.025, -0.18);
+    const fin = new THREE.Mesh(finGeo, airframeMat);
+    plane.add(fin);
+
+    // H. Swept-Back Horizontal Stabilizers (Rear Wings)
+    const makeTailStab = (isRight: boolean) => {
+      const sign = isRight ? 1 : -1;
+      const sShape = new THREE.Shape();
+      sShape.moveTo(0, 0.025);
+      sShape.lineTo(sign * 0.11, -0.045);
+      sShape.lineTo(sign * 0.11, -0.070);
+      sShape.lineTo(0, -0.020);
+      sShape.closePath();
+
+      const geo = new THREE.ExtrudeGeometry(sShape, { depth: 0.004, bevelEnabled: false });
+      geo.rotateX(Math.PI / 2);
+      geo.translate(0, 0.018, -0.28);
+      return new THREE.Mesh(geo, wingMat);
+    };
+
+    plane.add(makeTailStab(true));
+    plane.add(makeTailStab(false));
+
+    // Scale airliner model for clear, prominent silhouette
+    plane.scale.set(0.92, 0.92, 0.92);
+    airplaneGroup.add(plane);
     scene.add(airplaneGroup);
 
-    // Initial orientation & orbit parameters
+    // Orbit parameters
+    const orbitRadius = globeRadius * 1.34;
+    const orbitInclination = 0.38;
+    let flightAngle = 1.35;
+
+    // Initial globe orientation
     let rotX = 0.22;
-    let rotY = 1.35;
+    let rotY = 1.60;
     let targetRotX = rotX;
     let targetRotY = rotY;
     let velX = 0;
@@ -165,11 +249,6 @@ export const ReplicaGlobeThree: React.FC = () => {
     let isDragging = false;
     let prevPointerX = 0;
     let prevPointerY = 0;
-
-    // Orbit: 1.25x radius
-    const orbitRadius = globeRadius * 1.25;
-    const orbitInclination = 0.42;
-    let flightAngle = 1.35;
 
     // Pointer Interaction Handlers
     const onPointerDown = (e: PointerEvent) => {
@@ -217,7 +296,7 @@ export const ReplicaGlobeThree: React.FC = () => {
     };
     window.addEventListener('resize', handleResize);
 
-    // Visibility / Intersection Observer for performance
+    // Performance Observer
     let isVisible = true;
     const observer = new IntersectionObserver(
       (entries) => {
@@ -234,7 +313,7 @@ export const ReplicaGlobeThree: React.FC = () => {
     };
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
-    // Update airplane position with gentle bank
+    // Smoothly update aircraft flight along circular inclined orbit
     const updateAirplane = (angle: number) => {
       const currentAngle = angle;
       const nextAngle = angle + 0.02;
@@ -248,11 +327,12 @@ export const ReplicaGlobeThree: React.FC = () => {
       const ny = orbitRadius * Math.sin(nextAngle) * Math.sin(orbitInclination);
 
       airplaneGroup.position.set(px, py, pz);
+      // lookAt aligns local +Z with velocity vector
       airplaneGroup.lookAt(nx, ny, nz);
-      airplaneGroup.rotateZ(-0.32); // gentle bank towards globe center
+      // Bank 25 degrees toward the globe center
+      airplaneGroup.rotateZ(-0.35);
     };
 
-    // Set initial position
     updateAirplane(flightAngle);
     globeMesh.rotation.x = rotX;
     globeMesh.rotation.y = rotY;
@@ -273,15 +353,13 @@ export const ReplicaGlobeThree: React.FC = () => {
           targetRotY += velY;
         }
 
-        // Smooth damping
         rotX += (targetRotX - rotX) * 0.08;
         rotY += (targetRotY - rotY) * 0.08;
 
         globeMesh.rotation.x = rotX;
         globeMesh.rotation.y = rotY;
 
-        // Orbit Airplane
-        flightAngle += 0.010;
+        flightAngle += 0.009;
         updateAirplane(flightAngle);
       }
 
@@ -308,16 +386,18 @@ export const ReplicaGlobeThree: React.FC = () => {
 
       sphereGeo.dispose();
       sphereMat.dispose();
+      earthTexture.dispose();
       bumpMap.dispose();
-      fuselageGeo.dispose();
+      cabinGeo.dispose();
       noseGeo.dispose();
-      leftWingGeo.dispose();
+      visorGeo.dispose();
+      tailConeGeo.dispose();
       rightWingGeo.dispose();
-      engineGeo.dispose();
-      tailFinGeo.dispose();
-      hStabGeo.dispose();
-      planeMat.dispose();
-      darkPodMat.dispose();
+      leftWingGeo.dispose();
+      finGeo.dispose();
+      airframeMat.dispose();
+      wingMat.dispose();
+      darkMat.dispose();
       renderer.dispose();
 
       if (renderer.domElement && mount.contains(renderer.domElement)) {
@@ -329,9 +409,9 @@ export const ReplicaGlobeThree: React.FC = () => {
   return (
     <div
       ref={mountRef}
-      className="w-full h-full min-h-[340px] max-w-[440px] max-h-[440px] aspect-square mx-auto cursor-grab active:cursor-grabbing select-none"
+      className="w-full h-full min-h-[380px] max-w-[420px] max-h-[420px] aspect-square mx-auto cursor-grab active:cursor-grabbing select-none"
       style={{ touchAction: 'none' }}
-      aria-label="Interactive 3D Earth Globe with orbiting aircraft. Drag to rotate."
+      aria-label="Interactive 3D Earth Globe with orbiting passenger airliner. Drag to rotate."
       role="img"
     />
   );

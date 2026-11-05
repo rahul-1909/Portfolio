@@ -260,8 +260,8 @@ export function ReplicaSlider<T extends SliderItem>({
       }`}
       style={{
         touchAction: 'none',
-        maskImage: 'linear-gradient(to bottom, transparent 0px, black 128px, black calc(100% - 128px), transparent 100%)',
-        WebkitMaskImage: 'linear-gradient(to bottom, transparent 0px, black 128px, black calc(100% - 128px), transparent 100%)',
+        maskImage: 'linear-gradient(to bottom, transparent 0px, black 48px, black calc(100% - 48px), transparent 100%)',
+        WebkitMaskImage: 'linear-gradient(to bottom, transparent 0px, black 48px, black calc(100% - 48px), transparent 100%)',
       }}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}

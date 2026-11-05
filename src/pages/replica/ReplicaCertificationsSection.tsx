@@ -26,6 +26,31 @@ export const ReplicaCertificationsSection: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [navigate]);
 
+  const renderIssuerIcon = (issuer: string) => {
+    if (issuer.includes('Microsoft')) {
+      return (
+        <div className="grid grid-cols-2 gap-0.5 w-4 h-4">
+          <div className="w-1.5 h-1.5 bg-[#F25022] rounded-[1px]" />
+          <div className="w-1.5 h-1.5 bg-[#7FBA00] rounded-[1px]" />
+          <div className="w-1.5 h-1.5 bg-[#00A4EF] rounded-[1px]" />
+          <div className="w-1.5 h-1.5 bg-[#FFB900] rounded-[1px]" />
+        </div>
+      );
+    }
+    if (issuer.includes('Amazon') || issuer.includes('AWS')) {
+      return (
+        <div className="w-4 h-4 rounded-full bg-[#FF9900] flex items-center justify-center text-[8px] font-bold text-white">
+          A
+        </div>
+      );
+    }
+    return (
+      <div className="w-4 h-4 rounded-full bg-[#1A1A1A] flex items-center justify-center text-[8px] font-bold text-white">
+        ✦
+      </div>
+    );
+  };
+
   return (
     <main className="relative min-h-screen w-full bg-light-grey text-light-black overflow-x-hidden select-none">
       {/* 1. Left Column: Vertically Centered Title & Dock */}
@@ -43,9 +68,9 @@ export const ReplicaCertificationsSection: React.FC = () => {
         </div>
       </div>
 
-      {/* 2. Right Main Column: Scrolling Stack of Soft-Tinted Certification Containers */}
-      <div className="w-full flex justify-end pt-20 pb-24 pr-[25.7rem] max-phone:pt-4 max-phone:px-4 max-phone:pr-4">
-        <div className="w-[53.6rem] max-phone:w-full flex flex-col gap-[2.6rem]">
+      {/* 2. Right Main Column: Upgraded Certification Containers */}
+      <div className="w-full flex justify-end pt-20 pb-28 pr-[25.7rem] max-phone:pt-4 max-phone:px-4 max-phone:pr-4">
+        <div className="w-[58rem] max-phone:w-full flex flex-col gap-[2.8rem]">
           {certificationsData.map((cert, idx) => {
             const tint = getPaletteColor(idx);
 
@@ -60,43 +85,52 @@ export const ReplicaCertificationsSection: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-                className="w-full rounded-[32px] p-10 max-phone:p-6 shadow-sm hover:shadow-xl hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 block cursor-pointer group"
+                className="w-full rounded-[36px] p-12 max-phone:p-7 shadow-sm hover:shadow-xl hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 block cursor-pointer group"
                 style={{ backgroundColor: tint }}
               >
-                {/* Header row: Issuer badge + Verify link */}
+                {/* Header Row: Issuer Badge with Brand Mark + Verify Pill */}
                 <div className="flex items-center justify-between pb-6 border-b border-light-black/10">
                   <div className="flex items-center gap-3">
-                    <span className="w-2.5 h-2.5 rounded-full bg-light-black/70 group-hover:scale-125 transition-transform" />
-                    <span className="text-[1.2rem] font-mono uppercase tracking-widest text-[#555555]">
-                      {cert.issuer}
-                    </span>
+                    <div className="p-2 rounded-xl bg-white/80 shadow-2xs flex items-center justify-center">
+                      {renderIssuerIcon(cert.issuer)}
+                    </div>
+                    <div>
+                      <span className="text-[1.25rem] font-mono uppercase tracking-widest text-light-black font-semibold block">
+                        {cert.issuer}
+                      </span>
+                      <span className="text-[1.05rem] font-mono text-[#666666]">
+                        {cert.category}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1.5 text-[1.2rem] font-mono text-[#555555] group-hover:text-light-black transition-colors">
+
+                  {/* Verify Action Pill */}
+                  <div className="px-4 py-2 rounded-full bg-white shadow-xs group-hover:shadow-md flex items-center gap-2 text-[1.2rem] font-mono font-medium text-light-black group-hover:text-black transition-all">
                     <span>Verify</span>
-                    <span className="text-[1.4rem]">↗</span>
+                    <span className="text-[1.3rem] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
                   </div>
                 </div>
 
                 {/* Body: Title and Description */}
                 <div className="py-8">
-                  <span className="text-[1.1rem] font-mono uppercase tracking-wider text-[#777777] block mb-2">
-                    Credential 0{idx + 1} · {cert.category}
+                  <span className="text-[1.1rem] font-mono uppercase tracking-wider text-[#666666] font-semibold block mb-2">
+                    Credential 0{idx + 1}
                   </span>
-                  <h3 className="text-[2.4rem] max-phone:text-[1.8rem] font-bold text-light-black tracking-tight leading-tight">
+                  <h3 className="text-[2.6rem] max-phone:text-[2.0rem] font-bold text-light-black tracking-tight leading-tight">
                     {cert.title}
                   </h3>
-                  <p className="text-[1.35rem] text-[#555555] pt-4 leading-relaxed font-normal">
+                  <p className="text-[1.4rem] max-phone:text-[1.2rem] text-[#444444] pt-4 leading-relaxed font-normal">
                     {cert.description}
                   </p>
                 </div>
 
-                {/* Skills Tags */}
+                {/* Skills Badges */}
                 {cert.skills && cert.skills.length > 0 && (
-                  <div className="flex flex-wrap gap-2 pb-6">
+                  <div className="flex flex-wrap gap-2.5 pb-6">
                     {cert.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="px-3 py-1 rounded-full bg-white/70 text-[1.1rem] font-mono text-light-black shadow-xs"
+                        className="px-3.5 py-1.5 rounded-full bg-white text-[1.15rem] max-phone:text-[1.05rem] font-mono text-light-black shadow-xs font-medium"
                       >
                         {skill}
                       </span>
@@ -104,9 +138,9 @@ export const ReplicaCertificationsSection: React.FC = () => {
                   </div>
                 )}
 
-                {/* Footer row */}
-                <div className="pt-4 border-t border-light-black/10 flex items-center justify-between text-[1.1rem] font-mono text-[#777777]">
-                  <span>{cert.credentialId ? `ID: ${cert.credentialId.slice(0, 16)}...` : 'Official Certificate'}</span>
+                {/* Footer Metadata */}
+                <div className="pt-5 border-t border-light-black/10 flex items-center justify-between text-[1.15rem] font-mono text-[#666666]">
+                  <span>{cert.credentialId ? `ID: ${cert.credentialId.slice(0, 20)}...` : 'Official Certificate'}</span>
                   <span>{cert.issueDate ? `Issued: ${cert.issueDate}` : 'Permanent Record'}</span>
                 </div>
               </motion.a>
