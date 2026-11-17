@@ -1,6 +1,6 @@
 # Rahul Teja - Portfolio
 
-Personal portfolio showcasing AI engineering, autonomous agent systems, full-stack architectures, and production projects.
+Personal portfolio showcasing AI engineering, autonomous agent systems, full-stack architectures and production projects.
 
 ## 🌐 Live Website
 [https://www.nrahulteja.me/](https://www.nrahulteja.me/)
