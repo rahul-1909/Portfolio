@@ -113,10 +113,10 @@ export const ProjectCardView: React.FC<ProjectCardViewProps> = ({
   const isLiveDemo = !isExploreRepos && !!section.live_url && !section.live_url.includes('github.com');
 
   return (
-    <div className="w-full h-full relative select-none flex flex-col justify-between overflow-hidden rounded-[32px] md:rounded-[64px]">
+    <div className="w-full h-auto md:h-full relative select-none flex flex-col justify-between overflow-hidden rounded-[32px] md:rounded-[64px]">
       {/* Front Card Surface */}
       <div
-        className={`w-full h-full p-[2.8rem] md:p-[5.4rem] flex flex-col justify-between bg-gradient-to-br ${theme.gradient} text-white relative overflow-hidden rounded-[32px] md:rounded-[64px]`}
+        className={`w-full h-auto md:h-full p-[2.4rem] md:p-[5.4rem] flex flex-col justify-between bg-gradient-to-br ${theme.gradient} text-white relative overflow-hidden rounded-[32px] md:rounded-[64px] gap-[2rem] md:gap-0`}
       >
         {/* Subtle decorative mesh glow */}
         <div

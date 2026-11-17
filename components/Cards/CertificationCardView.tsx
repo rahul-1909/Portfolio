@@ -111,11 +111,11 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
 
   return (
     <div
-      className="w-full h-full relative select-none flex flex-col justify-between overflow-hidden rounded-[32px] md:rounded-[64px]"
+      className="w-full h-auto md:h-full relative select-none flex flex-col justify-between overflow-hidden rounded-[32px] md:rounded-[64px]"
     >
       {/* Front Card Surface */}
       <div
-        className={`w-full h-full p-[2.8rem] md:p-[4.4rem] flex flex-col justify-between bg-gradient-to-br ${theme.gradient} text-white relative overflow-hidden rounded-[32px] md:rounded-[64px]`}
+        className={`w-full h-auto md:h-full p-[2.4rem] md:p-[4.4rem] flex flex-col justify-between bg-gradient-to-br ${theme.gradient} text-white relative overflow-hidden rounded-[32px] md:rounded-[64px] gap-[2rem] md:gap-0`}
       >
         {/* Subtle decorative ambient mesh glow */}
         <div
@@ -124,7 +124,7 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
         />
 
         {/* Top Header: Issuer Logo Badge + Category Badge + Verified Status */}
-        <div className="flex items-center justify-between w-full relative z-10 gap-[1.2rem] flex-wrap">
+        <div className="flex items-center justify-between w-full relative z-10 gap-[1rem] flex-wrap">
           <div className="flex items-center gap-[1.2rem]">
             {/* Tactile Issuer Brand Logo */}
             <div className="p-[0.8rem] rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15 flex items-center justify-center shrink-0 shadow-sm">
@@ -160,7 +160,7 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
 
           <div className="flex items-center gap-[0.8rem]">
             <span
-              className="text-[1.1rem] max-phone:text-[0.95rem] font-mono font-bold tracking-wider uppercase px-[1.1rem] py-[0.4rem] rounded-full border"
+              className="text-[1.05rem] md:text-[1.1rem] font-mono font-bold tracking-wider uppercase px-[1.1rem] py-[0.4rem] rounded-full border"
               style={{
                 color: theme.accentColor,
                 backgroundColor: theme.accentBg,
@@ -172,7 +172,7 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
 
             <div className="flex items-center gap-[0.5rem] bg-white/[0.06] border border-white/10 px-[1.1rem] py-[0.4rem] rounded-full">
               <span className="w-[0.65rem] h-[0.65rem] rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-[1.05rem] max-phone:text-[0.9rem] font-mono text-white/80 font-medium">
+              <span className="text-[1rem] md:text-[1.05rem] font-mono text-white/80 font-medium">
                 VERIFIED
               </span>
             </div>
@@ -180,31 +180,31 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
         </div>
 
         {/* Main Content Area */}
-        <div className="my-auto py-[1.8rem] relative z-10 flex flex-col gap-[1.4rem]">
+        <div className="my-auto py-[1.2rem] md:py-[1.8rem] relative z-10 flex flex-col gap-[1.4rem]">
           <div>
-            <h2 className="text-[3.2rem] max-phone:text-[2.2rem] font-bold tracking-tight text-white leading-[1.15] mb-[0.8rem]">
+            <h2 className="text-[2.2rem] md:text-[3.2rem] font-bold tracking-tight text-white leading-[1.2] mb-[0.8rem]">
               {section.section_title}
             </h2>
-            <p className="text-[1.5rem] max-phone:text-[1.3rem] font-normal text-white/70 tracking-tight leading-relaxed max-w-[50rem]">
+            <p className="text-[1.35rem] md:text-[1.5rem] font-normal text-white/70 tracking-tight leading-relaxed max-w-[50rem]">
               {section.body.split('\n\n')[0]}
             </p>
           </div>
 
           {/* Interactive Feature Architecture Box */}
-          <div className="p-[1.8rem] max-phone:p-[1.4rem] rounded-[20px] bg-white/[0.04] border border-white/10 backdrop-blur-md flex flex-col gap-[1.2rem]">
-            <div className="flex items-center justify-between text-[1.15rem] font-mono text-white/50 border-b border-white/10 pb-[0.8rem]">
+          <div className="p-[1.6rem] md:p-[1.8rem] rounded-[20px] bg-white/[0.04] border border-white/10 backdrop-blur-md flex flex-col gap-[1.2rem]">
+            <div className="flex items-center justify-between text-[1.1rem] md:text-[1.15rem] font-mono text-white/50 border-b border-white/10 pb-[0.8rem] flex-wrap gap-[0.4rem]">
               <span>VALIDATED COMPETENCIES</span>
               <span style={{ color: theme.accentColor }}>{theme.metric}</span>
             </div>
 
-            <div className="grid grid-cols-2 max-phone:grid-cols-1 gap-[0.8rem]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[0.8rem]">
               {theme.highlights.map((highlight, idx) => (
-                <div key={idx} className="flex items-center gap-[0.7rem] text-[1.2rem] max-phone:text-[1.1rem] text-white/85">
+                <div key={idx} className="flex items-center gap-[0.7rem] text-[1.15rem] md:text-[1.2rem] text-white/85">
                   <span
                     className="w-[0.5rem] h-[0.5rem] rounded-full shrink-0"
                     style={{ backgroundColor: theme.accentColor }}
                   />
-                  <span className="font-medium tracking-tight truncate">{highlight}</span>
+                  <span className="font-medium tracking-tight">{highlight}</span>
                 </div>
               ))}
             </div>
@@ -212,13 +212,13 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
         </div>
 
         {/* Bottom Footer: Skills Tags & Direct Verification CTA */}
-        <div className="flex items-end justify-between pt-[1.8rem] border-t border-white/10 relative z-10 gap-[1.4rem] flex-wrap">
+        <div className="flex items-center justify-between pt-[1.6rem] md:pt-[1.8rem] border-t border-white/10 relative z-10 gap-[1.2rem] flex-wrap">
           {/* Skill Pills */}
-          <div className="flex items-center gap-[0.7rem] flex-wrap max-w-[58%] max-phone:max-w-full">
+          <div className="flex items-center gap-[0.6rem] flex-wrap max-w-full">
             {skillsList.slice(0, 3).map((skill, idx) => (
               <span
                 key={idx}
-                className="text-[1.1rem] max-phone:text-[0.95rem] font-mono px-[1rem] py-[0.35rem] rounded-full bg-white/[0.08] text-white/90 font-medium"
+                className="text-[1.05rem] md:text-[1.1rem] font-mono px-[1rem] py-[0.35rem] rounded-full bg-white/[0.08] text-white/90 font-medium"
               >
                 {skill}
               </span>
@@ -233,12 +233,12 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
             onClick={(e) => {
               e.stopPropagation();
             }}
-            className="group/btn flex items-center gap-[0.8rem] text-[1.3rem] max-phone:text-[1.1rem] font-mono font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 px-[1.8rem] py-[0.8rem] rounded-full transition-all shrink-0 shadow-[0_4px_24px_rgba(0,0,0,0.35)] hover:shadow-[0_6px_32px_rgba(0,0,0,0.5)] cursor-pointer"
+            className="group/btn flex items-center gap-[0.8rem] text-[1.2rem] md:text-[1.3rem] font-mono font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 px-[1.6rem] md:px-[1.8rem] py-[0.8rem] rounded-full transition-all shrink-0 shadow-[0_4px_24px_rgba(0,0,0,0.35)] hover:shadow-[0_6px_32px_rgba(0,0,0,0.5)] cursor-pointer"
           >
             <span>Verify Credential</span>
             <span
               style={{ color: theme.accentColor }}
-              className="font-bold text-[1.5rem] group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform"
+              className="font-bold text-[1.4rem] md:text-[1.5rem] group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform"
             >
               ↗
             </span>
@@ -254,8 +254,7 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
             animate={{ opacity: 1, backdropFilter: 'blur(20px)' }}
             exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute inset-0 bg-white/95 backdrop-blur-xl p-[5.4rem] max-phone:p-[3.2rem] flex flex-col justify-between z-30 select-text overflow-y-auto"
-            style={{ borderRadius: 64 }}
+            className="absolute inset-0 bg-white/95 backdrop-blur-xl p-[5.4rem] max-phone:p-[3.2rem] flex flex-col justify-between z-30 select-text overflow-y-auto rounded-[32px] md:rounded-[64px]"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex flex-col justify-between h-full gap-[2.4rem]">

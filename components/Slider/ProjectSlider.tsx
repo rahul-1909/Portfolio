@@ -1435,12 +1435,15 @@ export const ProjectSlider: React.FC = () => {
                       }
                     }}
                     className={`w-full ${
-                      selectedProject.id === 'experience' || selectedProject.id === 'certifications' || isFirstCard
+                      selectedProject.id === 'certifications'
+                        ? 'h-auto md:aspect-[33.5/34.4]'
+                        : selectedProject.id === 'projects'
+                        ? 'h-auto md:aspect-square'
+                        : selectedProject.id === 'experience' || isFirstCard
                         ? 'aspect-[33.5/34.4]'
                         : 'aspect-square'
-                    } !rounded-[64px] max-phone:!rounded-[32px] overflow-hidden relative shrink-0 cursor-pointer group bg-[#EAEAEA]`}
+                    } rounded-[32px] md:rounded-[64px] overflow-hidden relative shrink-0 cursor-pointer group bg-[#EAEAEA]`}
                     style={{
-                      borderRadius: 64,
                       overflow: 'hidden',
                       boxShadow: 'none',
                       border: 'none',

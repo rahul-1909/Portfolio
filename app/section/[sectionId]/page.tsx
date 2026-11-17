@@ -623,10 +623,15 @@ export default function SectionPage() {
                     }
                   }}
                   className={`w-full ${
-                    project.id === 'certifications' || idx === 0 ? 'aspect-[33.5/34.4]' : 'aspect-square'
-                  } !rounded-[64px] max-phone:!rounded-[32px] overflow-hidden relative shrink-0 cursor-pointer group bg-[#18191c]`}
+                    project.id === 'certifications'
+                      ? 'h-auto md:aspect-[33.5/34.4]'
+                      : project.id === 'projects'
+                      ? 'h-auto md:aspect-square'
+                      : idx === 0
+                      ? 'aspect-[33.5/34.4]'
+                      : 'aspect-square'
+                  } rounded-[32px] md:rounded-[64px] overflow-hidden relative shrink-0 cursor-pointer group bg-[#18191c]`}
                   style={{
-                    borderRadius: 64,
                     overflow: 'hidden',
                     boxShadow: 'none',
                     border: 'none',
