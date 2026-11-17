@@ -1,62 +1,44 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  darkMode: 'class',
   theme: {
+    screens: {
+      phone: '769px',
+      tablet: '1025px',
+      desktop: '1920px',
+    },
     extend: {
-      screens: {
-        'phone': '768px',
-        'max-phone': { 'max': '767px' },
-      },
       colors: {
-        'light-grey': '#F6F6F6',
-        'light-black': '#1A1A1A',
-        'grey': '#9F9F9F',
-        'black': '#0A0A0A',
-        'white': '#FFFFFF',
-        background: {
-          light: '#F6F6F6',
-          dark: '#0A0A0A',
-        },
-        surface: {
-          light: '#FFFFFF',
-          dark: '#141414',
-          elevatedLight: '#EAEAEA',
-          elevatedDark: '#1E1E1E',
-        },
-        border: {
-          light: '#E5E5E5',
-          dark: '#262626',
-          strongLight: '#D1D1D1',
-          strongDark: '#3A3A3A',
-        },
-        text: {
-          light: '#1A1A1A',
-          dark: '#F6F6F6',
-          secondaryLight: '#595959',
-          secondaryDark: '#A0A0A0',
-          mutedLight: '#737373',
-          mutedDark: '#8C8C8C',
-        },
+        black: '#0a0a0a',
+        'light-black': '#1a1a1a',
+        grey: '#9f9f9f',
+        'light-grey': '#f6f6f6',
+        white: '#ffffff',
       },
       fontFamily: {
-        sans: ['"Suisse Intl"', '"Inter Tight"', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['"Suisse Intl"', '"Inter Tight"', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['"Suisse Intl"', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
       },
+      letterSpacing: {
+        tight: '-0.025em',
+      },
       fontSize: {
-        'h1': '3.2rem',
-        'h1-mobile': '1.8rem',
-        'h2': '2.4rem',
-        'h2-mobile': '1.8rem',
-        'h3': '1.6rem',
-        'h3-mobile': '1.4rem',
-        'h4': '1.4rem',
+        h1: ['3.2rem', { lineHeight: '1' }],
+        'h1-mobile': ['1.8rem', { lineHeight: '1' }],
+        h2: ['2.4rem', { lineHeight: '1.24' }],
+        'h2-mobile': ['1.8rem', { lineHeight: '1.24' }],
+        h3: ['1.6rem', { lineHeight: '1' }],
+        'h3-mobile': ['1.4rem', { lineHeight: '1' }],
+        h4: ['1.4rem', { lineHeight: 'normal' }],
+      },
+      borderRadius: {
+        '32': '3.2rem',
       },
     },
   },
   plugins: [],
-}
+};
