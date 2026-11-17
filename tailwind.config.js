@@ -7,9 +7,15 @@ module.exports = {
   ],
   theme: {
     screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
       phone: '769px',
       tablet: '1025px',
       desktop: '1920px',
+      'max-phone': { max: '768px' },
+      'max-tablet': { max: '1024px' },
     },
     extend: {
       colors: {

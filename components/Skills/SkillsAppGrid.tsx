@@ -445,7 +445,7 @@ export const SkillsAppGrid: React.FC<SkillsAppGridProps> = () => {
   return (
     <div className="w-full relative select-none py-[2rem]">
       {/* 3 Columns Grid with 3 Apps per row for all 37 skills */}
-      <div className="grid grid-cols-3 gap-x-[5.2rem] gap-y-[5.2rem] max-phone:gap-x-[2.2rem] max-phone:gap-y-[3.6rem] items-center justify-items-center w-full">
+      <div className="grid grid-cols-3 gap-x-[2rem] gap-y-[3.2rem] md:gap-x-[5.2rem] md:gap-y-[5.2rem] items-center justify-items-center w-full max-w-[34rem] md:max-w-none mx-auto">
         {skillsList.map((skill, idx) => {
           const isHovered = hoveredSkill === skill.id;
           const isAnyHovered = hoveredSkill !== null;
@@ -475,15 +475,20 @@ export const SkillsAppGrid: React.FC<SkillsAppGridProps> = () => {
               style={{ zIndex: isHovered ? 40 : 10 }}
             >
               {/* Clean App Icon — NO white background container, NO border */}
-              <div className="w-[8.0rem] h-[8.0rem] max-phone:w-[6.0rem] max-phone:h-[6.0rem] flex items-center justify-center relative">
+              <div className="w-[5.4rem] h-[5.4rem] md:w-[8.0rem] md:h-[8.0rem] flex items-center justify-center relative">
                 <img
                   src={skill.icon}
                   alt={skill.name}
-                  className="w-[7.0rem] h-[7.0rem] max-phone:w-[5.2rem] max-phone:h-[5.2rem] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.06)] select-none pointer-events-none transition-transform duration-300 group-hover:scale-105"
+                  className="w-[4.6rem] h-[4.6rem] md:w-[7.0rem] md:h-[7.0rem] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.06)] select-none pointer-events-none transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
 
-              {/* Title text appears below icon on hover — NO background container, NO pill box */}
+              {/* Title text for mobile (always visible under icon like iOS home screen) */}
+              <span className="text-[1.2rem] font-medium text-light-black tracking-tight text-center block md:hidden mt-[0.6rem] select-none whitespace-nowrap">
+                {skill.name}
+              </span>
+
+              {/* Title text appears below icon on hover for desktop */}
               <AnimatePresence>
                 {isHovered && (
                   <motion.div
@@ -491,9 +496,9 @@ export const SkillsAppGrid: React.FC<SkillsAppGridProps> = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -4 }}
                     transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
-                    className="absolute top-[102%] left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none z-40"
+                    className="hidden md:block absolute top-[102%] left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none z-40"
                   >
-                    <span className="text-[1.45rem] max-phone:text-[1.2rem] font-semibold text-light-black tracking-tight text-center block select-none">
+                    <span className="text-[1.45rem] font-semibold text-light-black tracking-tight text-center block select-none">
                       {skill.name}
                     </span>
                   </motion.div>

@@ -248,7 +248,7 @@ export default function SectionPage() {
     <div className="w-full h-screen overflow-hidden flex max-phone:flex-col bg-[#f6f6f6] select-none relative">
       {/* DESKTOP FLOATING UNEXPAND BUTTON: Moves vertically with cursor */}
       <motion.div
-        className="fixed top-0 z-50 max-phone:hidden"
+        className="fixed top-0 z-50 hidden md:block"
         style={{
           right:
             project.id === 'experience' || project.id === 'skills' || project.id === 'certifications'
@@ -277,24 +277,88 @@ export default function SectionPage() {
         </motion.div>
       </motion.div>
 
-      {/* MOBILE UNEXPAND BUTTON: Fixed at bottom right */}
-      <div className="fixed right-[3.2rem] bottom-[3.2rem] z-50 hidden max-phone:block">
+      {/* MOBILE HEADER: Pinned at top center with frosted blur */}
+      <div className="flex md:hidden fixed top-0 left-0 w-full pt-[2.2rem] pb-[1.4rem] bg-[#f6f6f6]/90 backdrop-blur-md flex-col items-center justify-center text-center z-40 pointer-events-none select-none px-4 border-b border-black/[0.03]">
+        <h1 className="text-[2.2rem] font-normal text-light-black leading-none m-0 tracking-tight">
+          {project.id === 'experience' && showInfo ? 'Virtusa' : project.title}
+        </h1>
+        <p className="text-[2.2rem] font-normal text-grey leading-none m-0 tracking-tight mt-[0.4rem]">
+          {project.id === 'experience' && showInfo
+            ? activeDescTab === 0
+              ? 'Mandate & Overview'
+              : activeDescTab === 1
+              ? 'Core Responsibilities'
+              : 'Verified Production Stack'
+            : project.id === 'projects' || project.id === 'skills' || project.id === 'certifications'
+            ? project.sections[activeSectionIndex]?.section_title || project.sections[0]?.section_title
+            : project.date}
+        </p>
+      </div>
+
+      {/* MOBILE BOTTOM DOCK: Info + Live Site on left, Single Unexpand on right */}
+      <div className="flex md:hidden fixed bottom-[2.4rem] left-0 w-full px-[2rem] items-center justify-between z-50 pointer-events-none select-none">
+        <div className="flex items-center gap-[0.6rem] pointer-events-auto">
+          {/* Info Button (if not skills) */}
+          {project.id !== 'skills' && (
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setShowInfo(!showInfo)}
+              animate={{
+                rotate: showInfo ? -90 : 0,
+                borderRadius: showInfo ? '50%' : '1.4rem',
+                backgroundColor: showInfo ? '#1A1A1A' : '#ffffff',
+                color: showInfo ? '#ffffff' : '#1a1a1a',
+              }}
+              transition={{
+                rotate: { type: 'spring', stiffness: 200, damping: 17 },
+                duration: 0.3,
+              }}
+              className="w-[4.8rem] h-[4.8rem] flex items-center justify-center cursor-pointer shrink-0 shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
+              aria-label="Toggle Project Info"
+            >
+              <InfoIcon width="1.4rem" height="1.4rem" color={showInfo ? '#FFFFFF' : '#1A1A1A'} />
+            </motion.button>
+          )}
+
+          {/* See Live button */}
+          {currentExternalUrl && (
+            <motion.a
+              whileTap={{ scale: 0.95 }}
+              href={currentExternalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              animate={{
+                borderRadius: showInfo ? '100px' : '1.4rem',
+                paddingLeft: showInfo ? '1.6rem' : '0px',
+                paddingRight: showInfo ? '1.6rem' : '0px',
+                width: showInfo ? 'auto' : '4.8rem',
+              }}
+              className="h-[4.8rem] bg-white text-light-black flex items-center justify-center cursor-pointer shrink-0 gap-[0.6rem] shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
+              aria-label="Visit project website"
+            >
+              <ExternalLinkIcon width="1.4rem" height="1.4rem" color="#1A1A1A" />
+              {showInfo && (
+                <span className="text-[1.3rem] font-semibold tracking-tight whitespace-nowrap">
+                  See Live
+                </span>
+              )}
+            </motion.a>
+          )}
+        </div>
+
+        {/* Single Mobile Unexpand Button on the right */}
         <Link
           href="/"
-          className="social-button w-[5.4rem] h-[5.4rem] min-w-[5.4rem] rounded-[1.5rem] bg-white text-light-black flex items-center justify-center cursor-pointer shrink-0 shadow-none"
-          style={{
-            borderRadius: 15,
-            boxShadow: 'none',
-          }}
+          className="pointer-events-auto w-[4.8rem] h-[4.8rem] rounded-[1.4rem] bg-white text-light-black flex items-center justify-center cursor-pointer shrink-0 shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
           aria-label="Back to home"
         >
-          <CompressIcon className="w-[1.4rem] h-[1.4rem]" />
+          <CompressIcon className="w-[1.6rem] h-[1.6rem]" />
         </Link>
       </div>
 
-      {/* LEFT COLUMN: Pinned with responsive clamp, vertically centered (Strict symmetry, zero collision) */}
+      {/* DESKTOP LEFT COLUMN: Pinned with responsive clamp, vertically centered */}
       <div
-        className="flex flex-col items-start justify-center h-screen fixed gap-[5rem] z-50 max-phone:fixed max-phone:inset-0 max-phone:h-auto max-phone:w-full max-phone:left-0 max-phone:items-center max-phone:justify-between max-phone:pt-[2rem] max-phone:pb-[4rem] max-phone:gap-0 pointer-events-none transition-all duration-500 ease-out"
+        className="hidden md:flex flex-col items-start justify-center h-screen fixed gap-[5rem] z-50 pointer-events-none transition-all duration-500 ease-out"
         style={{
           left: 'clamp(3.2rem, calc(100vw - 110rem), 25.7rem)',
         }}
@@ -303,16 +367,16 @@ export default function SectionPage() {
           initial={{ opacity: 0, x: -30, filter: 'blur(6px)' }}
           animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col gap-[5rem] max-phone:gap-0 max-phone:h-full max-phone:justify-between max-phone:w-full max-phone:items-center"
+          className="flex flex-col gap-[5rem]"
         >
           {/* Header Row: Title & Subtitle */}
-          <div className="flex flex-col gap-2 max-phone:items-center">
-            <div className="overflow-hidden pb-1 relative w-[40rem] max-phone:w-auto max-phone:whitespace-nowrap">
-              <h1 className="text-[3.2rem] max-phone:text-[1.8rem] font-normal text-light-black leading-none m-0 tracking-normal">
+          <div className="flex flex-col gap-2">
+            <div className="overflow-hidden pb-1 relative w-[40rem]">
+              <h1 className="text-[3.2rem] font-normal text-light-black leading-none m-0 tracking-normal">
                 {project.id === 'experience' && showInfo ? 'Virtusa' : project.title}
               </h1>
             </div>
-            <div className="overflow-hidden pb-2 relative w-[40rem] max-phone:w-auto max-phone:whitespace-nowrap">
+            <div className="overflow-hidden pb-2 relative w-[40rem]">
               <AnimatePresence mode="wait">
                 <motion.p
                   key={
@@ -326,7 +390,7 @@ export default function SectionPage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -14 }}
                   transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-[3.2rem] max-phone:text-[1.8rem] font-normal text-grey leading-none m-0 tracking-normal"
+                  className="text-[3.2rem] font-normal text-grey leading-none m-0 tracking-normal"
                 >
                   {project.id === 'experience' && showInfo
                     ? activeDescTab === 0
@@ -344,15 +408,6 @@ export default function SectionPage() {
 
           {/* Action Buttons: Info Toggle & External Website Link */}
           <div className="relative flex gap-[0.4rem] items-center pointer-events-auto">
-            {/* Mobile Unexpand Button */}
-            <Link
-              href="/"
-              className="w-[5.4rem] h-[5.4rem] rounded-[1.5rem] bg-white text-light-black items-center justify-center shrink-0 hidden max-phone:flex cursor-pointer"
-              style={{ boxShadow: 'none' }}
-              aria-label="Back to home"
-            >
-              <CompressIcon className="w-[1.8rem] h-[1.8rem]" />
-            </Link>
             {/* Info Button — hidden in skills section */}
             {project.id !== 'skills' && (
               <motion.button
@@ -430,7 +485,7 @@ export default function SectionPage() {
       <div
         ref={rightScrollRef}
         onScroll={updateActiveSectionIndex}
-        className="absolute top-0 right-0 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none flex justify-end px-8 max-phone:px-[2rem] max-phone:pt-[8rem] max-phone:pb-[13rem] z-10"
+        className="absolute top-0 right-0 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none flex justify-center md:justify-end px-4 md:px-8 pt-[7.5rem] md:pt-0 pb-[12rem] md:pb-0 z-10"
         style={{
           paddingTop:
             project.id === 'skills'
@@ -453,9 +508,9 @@ export default function SectionPage() {
         <div
           className={`flex flex-col gap-8 max-md:gap-[2rem] ${
             project.id === 'experience' || project.id === 'skills' || project.id === 'certifications'
-              ? 'w-[59rem] max-md:w-[33.5rem]'
-              : 'w-[69rem] max-md:w-[33.5rem]'
-          } shrink-0 items-end`}
+              ? 'w-full max-w-[35.5rem] md:w-[59rem] md:max-w-none'
+              : 'w-full max-w-[35.5rem] md:w-[69rem] md:max-w-none'
+          } shrink-0 items-center md:items-end mx-auto md:mx-0`}
         >
           {project.id === 'skills' ? (
             <motion.div

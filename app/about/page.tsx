@@ -50,32 +50,105 @@ export default function AboutPage() {
 
   return (
     <div className="w-full h-screen overflow-hidden flex max-phone:flex-col bg-[#f6f6f6] select-none relative">
+      {/* MOBILE TOP HEADER: Pinned at top center with frosted blur */}
+      <div className="flex md:hidden fixed top-0 left-0 w-full pt-[2.2rem] pb-[1.4rem] bg-[#f6f6f6]/90 backdrop-blur-md flex-col items-center justify-center text-center z-40 pointer-events-none select-none px-4 border-b border-black/[0.03]">
+        <h1 className="text-[2.2rem] font-normal text-light-black leading-none m-0 tracking-tight">
+          Rahul Teja
+        </h1>
+        <p className="text-[2.2rem] font-normal text-grey leading-none m-0 tracking-tight mt-[0.4rem]">
+          Software Engineer
+        </p>
+      </div>
+
+      {/* MOBILE BOTTOM DOCK: Back button + 4 Socials centered at bottom */}
+      <div className="flex md:hidden fixed bottom-[2.4rem] left-1/2 -translate-x-1/2 z-40 items-center justify-center gap-[0.6rem] pointer-events-auto select-none">
+        {/* Back Button */}
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          onClick={() => router.push('/')}
+          className="w-[4.6rem] h-[4.6rem] rounded-full bg-black text-white flex items-center justify-center cursor-pointer shrink-0 shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
+          aria-label="Back to Home"
+        >
+          <BackArrowIcon width="1.4rem" height="1.4rem" color="#F6F6F6" />
+        </motion.button>
+
+        {/* Mail Button */}
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          onClick={handleCopyEmail}
+          className="w-[4.4rem] h-[4.4rem] rounded-[1.3rem] bg-white text-light-black flex items-center justify-center cursor-pointer shrink-0 shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
+          style={{ borderRadius: 13 }}
+          aria-label="Copy email"
+        >
+          <MailIcon width="1.4rem" height="1.4rem" color="#1A1A1A" />
+        </motion.button>
+
+        {/* X / Twitter */}
+        <motion.a
+          whileTap={{ scale: 0.95 }}
+          href="https://x.com/Knightswatch__"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-[4.4rem] h-[4.4rem] rounded-[1.3rem] bg-white text-light-black flex items-center justify-center cursor-pointer shrink-0 shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
+          style={{ borderRadius: 13 }}
+          aria-label="X (Twitter)"
+        >
+          <XIcon width="1.3rem" height="1.2rem" color="#1A1A1A" />
+        </motion.a>
+
+        {/* LinkedIn */}
+        <motion.a
+          whileTap={{ scale: 0.95 }}
+          href="https://www.linkedin.com/in/nallarahulteja/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-[4.4rem] h-[4.4rem] rounded-[1.3rem] bg-white text-light-black flex items-center justify-center cursor-pointer shrink-0 shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
+          style={{ borderRadius: 13 }}
+          aria-label="LinkedIn"
+        >
+          <LinkedinIcon width="1.3rem" height="1.3rem" color="#1A1A1A" />
+        </motion.a>
+
+        {/* GitHub */}
+        <motion.a
+          whileTap={{ scale: 0.95 }}
+          href="https://github.com/rahul-1909"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-[4.4rem] h-[4.4rem] rounded-[1.3rem] bg-white text-light-black flex items-center justify-center cursor-pointer shrink-0 shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
+          style={{ borderRadius: 13 }}
+          aria-label="GitHub Profile"
+        >
+          <GitHubIcon width="1.4rem" height="1.4rem" color="#1A1A1A" />
+        </motion.a>
+      </div>
+
       {/* LEFT COLUMN: Scrollable Story, Recognitions, Info */}
       <div
         ref={scrollContainerRef}
-        className="w-[58%] max-phone:w-full h-full overflow-y-auto scrollbar-none px-[12vw] max-phone:px-[6vw] pt-[15vh] max-phone:pt-[10vh] pb-[20vh] relative z-10"
+        className="w-[58%] max-phone:w-full h-full overflow-y-auto scrollbar-none px-[12vw] max-phone:px-[6vw] pt-[15vh] max-phone:pt-[8rem] pb-[20vh] max-phone:pb-[14rem] relative z-10"
       >
-        {/* Header: Title & Subtitle */}
+        {/* Desktop Header: Title & Subtitle */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-[2.4rem]"
+          className="mb-[2.4rem] hidden md:block"
         >
-          <h1 className="text-[3.2rem] max-phone:text-[2.6rem] font-normal text-light-black tracking-[-0.025em] leading-none mb-[0.6rem]">
+          <h1 className="text-[3.2rem] font-normal text-light-black tracking-[-0.025em] leading-none mb-[0.6rem]">
             Rahul Teja
           </h1>
-          <p className="text-[3.2rem] max-phone:text-[2.6rem] font-normal text-grey tracking-[-0.025em] leading-none">
+          <p className="text-[3.2rem] font-normal text-grey tracking-[-0.025em] leading-none">
             Software Engineer
           </p>
         </motion.div>
 
-        {/* 4 Action Buttons: Back, Mail, X, LinkedIn */}
+        {/* Desktop 4 Action Buttons: Back, Mail, X, LinkedIn, GitHub */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="flex items-center gap-[0.4rem] mb-[5.8rem]"
+          className="hidden md:flex items-center gap-[0.4rem] mb-[5.8rem]"
         >
           {/* Back Button (Circular container matching size 5.4rem x 5.4rem, no shadow) */}
           <motion.button
@@ -191,7 +264,7 @@ export default function AboutPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="w-[11.2rem] text-[1.86rem] max-phone:text-[1.5rem] font-normal text-grey tracking-[-0.01em] -mt-[3.6rem] mb-[5.2rem] select-none whitespace-nowrap"
+          className="w-[11.2rem] text-[1.86rem] max-phone:text-[1.5rem] font-normal text-grey tracking-[-0.01em] md:-mt-[3.6rem] mt-[1.2rem] md:mt-0 mb-[3.6rem] md:mb-[5.2rem] select-none whitespace-nowrap"
         >
           Open to work
         </motion.p>
@@ -261,6 +334,13 @@ export default function AboutPage() {
           </p>
         </motion.div>
 
+        {/* MOBILE 3D GLOBE (In-flow beneath biography, exactly like Gabriel's mobile site) */}
+        <div className="flex md:hidden w-full items-center justify-center my-[3.2rem] pointer-events-none select-none">
+          <div className="w-[28rem] h-[28rem] flex items-center justify-center">
+            <TravelGlobe className="w-full h-full" />
+          </div>
+        </div>
+
         {/* Credits */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -276,8 +356,8 @@ export default function AboutPage() {
         <div className="fixed bottom-0 left-0 w-[58%] max-phone:w-full h-[12rem] pointer-events-none bg-gradient-to-t from-[#f6f6f6] to-transparent z-20" />
       </div>
 
-      {/* FIXED 3D EARTH GLOBE & FLYING AIRPLANE (Exact Gabriel Beaugonin positioning & coordinates) */}
-      <div className="fixed right-[8rem] desktop:right-[10rem] top-1/2 -translate-y-1/2 z-20 w-[40rem] h-[40rem] desktop:w-[42rem] desktop:h-[42rem] max-phone:hidden pointer-events-none select-none flex items-center justify-center">
+      {/* FIXED 3D EARTH GLOBE & FLYING AIRPLANE (Desktop only) */}
+      <div className="fixed right-[8rem] desktop:right-[10rem] top-1/2 -translate-y-1/2 z-20 w-[40rem] h-[40rem] desktop:w-[42rem] desktop:h-[42rem] hidden md:flex pointer-events-none select-none items-center justify-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}

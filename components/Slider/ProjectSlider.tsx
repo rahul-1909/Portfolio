@@ -85,6 +85,7 @@ export const ProjectSlider: React.FC = () => {
   };
 
   const [windowHeight, setWindowHeight] = useState(800);
+  const [isMobile, setIsMobile] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [showInfo, setShowInfo] = useState(false);
   const [activeDescTab, setActiveDescTab] = useState(0);
@@ -314,7 +315,11 @@ export const ProjectSlider: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setWindowHeight(window.innerHeight);
-      const handleResize = () => setWindowHeight(window.innerHeight);
+      setIsMobile(window.innerWidth < 768);
+      const handleResize = () => {
+        setWindowHeight(window.innerHeight);
+        setIsMobile(window.innerWidth < 768);
+      };
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize);
     }
@@ -488,7 +493,7 @@ export const ProjectSlider: React.FC = () => {
         {selectedProject && (
           <motion.div
             key="desktop-unexpand-button"
-            className="fixed top-0 z-50 max-phone:hidden"
+            className="fixed top-0 z-50 hidden md:block"
             style={{
               right:
                 selectedProject.id === 'experience' || selectedProject.id === 'skills' || selectedProject.id === 'certifications'
@@ -522,7 +527,7 @@ export const ProjectSlider: React.FC = () => {
       {/* MOBILE UNEXPAND BUTTON: Fixed at bottom right */}
       <AnimatePresence>
         {selectedProject && (
-          <div className="fixed right-[3.2rem] bottom-[3.2rem] z-50 hidden max-phone:block">
+          <div className="fixed right-[2rem] bottom-[2.4rem] z-50 block md:hidden">
             <motion.button
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -531,7 +536,7 @@ export const ProjectSlider: React.FC = () => {
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.97 }}
               onClick={handleCloseProject}
-              className="social-button w-[5.4rem] h-[5.4rem] min-w-[5.4rem] rounded-[1.5rem] bg-white text-light-black flex items-center justify-center cursor-pointer shrink-0 shadow-none"
+              className="social-button w-[5rem] h-[5rem] min-w-[5rem] rounded-[1.5rem] bg-white text-light-black flex items-center justify-center cursor-pointer shrink-0 shadow-none"
               style={{
                 borderRadius: 15,
                 boxShadow: 'none',
@@ -544,9 +549,244 @@ export const ProjectSlider: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* LEFT COLUMN: Pinned with responsive clamp, vertically centered (Strict symmetry, zero collision) */}
+      {/* MOBILE HEADER: Fixed at top center with frosted blur */}
+      <div className="flex md:hidden fixed top-0 left-0 w-full pt-[2.2rem] pb-[1.4rem] bg-[#f6f6f6]/90 backdrop-blur-md flex-col items-center justify-center text-center z-40 pointer-events-none select-none px-4 border-b border-black/[0.03]">
+        <AnimatePresence mode="wait">
+          {!selectedProject ? (
+            <motion.div
+              key="mobile-home-header"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="flex flex-col items-center"
+            >
+              <h1 className="text-[2.2rem] font-normal text-light-black leading-none m-0 tracking-tight">
+                Rahul Teja
+              </h1>
+              <p className="text-[2.2rem] font-normal text-grey leading-none m-0 tracking-tight mt-[0.4rem]">
+                Software Engineer
+              </p>
+            </motion.div>
+          ) : (
+            <motion.div
+              key={`mobile-project-header-${selectedProject.id}`}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="flex flex-col items-center"
+            >
+              <h1 className="text-[2.2rem] font-normal text-light-black leading-none m-0 tracking-tight">
+                {selectedProject.id === 'experience' && showInfo ? 'Virtusa' : selectedProject.title}
+              </h1>
+              <p className="text-[2.2rem] font-normal text-grey leading-none m-0 tracking-tight mt-[0.4rem]">
+                {selectedProject.id === 'experience' && showInfo
+                  ? activeDescTab === 0
+                    ? 'Mandate & Overview'
+                    : activeDescTab === 1
+                    ? 'Core Responsibilities'
+                    : 'Verified Production Stack'
+                  : selectedProject.id === 'projects' || selectedProject.id === 'skills' || selectedProject.id === 'certifications'
+                  ? selectedProject.sections[activeSectionIndex]?.section_title || selectedProject.sections[0]?.section_title
+                  : selectedProject.date}
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* MOBILE BOTTOM DOCK (Home View): Centered bottom action bar */}
+      {!selectedProject && (
+        <div className="flex md:hidden fixed bottom-[2.4rem] left-1/2 -translate-x-1/2 z-40 items-center justify-center gap-[0.6rem] pointer-events-auto select-none">
+          {/* About Button */}
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            onClick={() => router.push('/about')}
+            className="social-button w-[4.6rem] h-[4.6rem] rounded-[1.4rem] bg-white flex shrink-0 items-center justify-center text-light-black cursor-pointer shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
+            style={{ borderRadius: 14 }}
+            aria-label="Open About Page"
+          >
+            <UserIcon width="1.4rem" height="1.4rem" color="#1A1A1A" />
+          </motion.button>
+
+          {/* Contact Button / Close Morph */}
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setShowSocials(!showSocials)}
+            className="social-button w-[4.6rem] h-[4.6rem] rounded-[1.4rem] flex shrink-0 items-center justify-center cursor-pointer shadow-[0_4px_16px_rgba(0,0,0,0.06)] relative overflow-hidden"
+            animate={{
+              rotate: showSocials ? -90 : 0,
+              borderRadius: showSocials ? '50%' : '1.4rem',
+              backgroundColor: showSocials ? '#000000' : '#FFFFFF',
+            }}
+            transition={{
+              rotate: { type: 'spring', stiffness: 220, damping: 20 },
+              borderRadius: { duration: 0.28, ease: [0.785, 0.135, 0.15, 0.86] },
+              backgroundColor: { duration: 0.28, ease: [0.785, 0.135, 0.15, 0.86] },
+            }}
+            aria-label={showSocials ? 'Close Social Links' : 'Open Social Links'}
+          >
+            <motion.div
+              className="absolute flex items-center justify-center pointer-events-none"
+              animate={{ opacity: showSocials ? 0 : 1, scale: showSocials ? 0.4 : 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ChatIcon width="1.4rem" height="1.4rem" color="#1A1A1A" />
+            </motion.div>
+            <motion.div
+              className="absolute flex items-center justify-center pointer-events-none"
+              animate={{ opacity: showSocials ? 1 : 0, scale: showSocials ? 1 : 0.4 }}
+              transition={{ duration: 0.2 }}
+            >
+              <svg width="1.4rem" height="1.4rem" viewBox="0 0 14 14" fill="none">
+                <path d="M2.5 2.5L11.5 11.5M11.5 2.5L2.5 11.5" stroke="#FFFFFF" strokeWidth="1.6" strokeLinecap="round" />
+              </svg>
+            </motion.div>
+          </motion.button>
+
+          {/* When showSocials is open, reveal social buttons in the same centered row */}
+          <AnimatePresence>
+            {showSocials && (
+              <>
+                {/* Mail Button */}
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.8, x: -6 }}
+                  animate={{ opacity: 1, scale: 1, x: 0 }}
+                  exit={{ opacity: 0, scale: 0.8, x: -6 }}
+                  transition={{ duration: 0.22 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleCopyEmail}
+                  className="social-button w-[4.4rem] h-[4.4rem] rounded-[1.3rem] bg-white text-light-black flex items-center justify-center cursor-pointer shadow-[0_4px_16px_rgba(0,0,0,0.06)] shrink-0"
+                  style={{ borderRadius: 13 }}
+                  aria-label="Copy email"
+                >
+                  <MailIcon width="1.4rem" height="1.4rem" color="#1A1A1A" />
+                </motion.button>
+
+                {/* X / Twitter */}
+                <motion.a
+                  initial={{ opacity: 0, scale: 0.8, x: -6 }}
+                  animate={{ opacity: 1, scale: 1, x: 0 }}
+                  exit={{ opacity: 0, scale: 0.8, x: -6 }}
+                  transition={{ duration: 0.22, delay: 0.03 }}
+                  whileTap={{ scale: 0.95 }}
+                  href="https://x.com/Knightswatch__"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-button w-[4.4rem] h-[4.4rem] rounded-[1.3rem] bg-white text-light-black flex items-center justify-center cursor-pointer shadow-[0_4px_16px_rgba(0,0,0,0.06)] shrink-0"
+                  style={{ borderRadius: 13 }}
+                  aria-label="X (Twitter)"
+                >
+                  <XIcon width="1.3rem" height="1.2rem" color="#1A1A1A" />
+                </motion.a>
+
+                {/* LinkedIn */}
+                <motion.a
+                  initial={{ opacity: 0, scale: 0.8, x: -6 }}
+                  animate={{ opacity: 1, scale: 1, x: 0 }}
+                  exit={{ opacity: 0, scale: 0.8, x: -6 }}
+                  transition={{ duration: 0.22, delay: 0.06 }}
+                  whileTap={{ scale: 0.95 }}
+                  href="https://www.linkedin.com/in/nallarahulteja/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-button w-[4.4rem] h-[4.4rem] rounded-[1.3rem] bg-white text-light-black flex items-center justify-center cursor-pointer shadow-[0_4px_16px_rgba(0,0,0,0.06)] shrink-0"
+                  style={{ borderRadius: 13 }}
+                  aria-label="LinkedIn"
+                >
+                  <LinkedinIcon width="1.3rem" height="1.3rem" color="#1A1A1A" />
+                </motion.a>
+
+                {/* GitHub */}
+                <motion.a
+                  initial={{ opacity: 0, scale: 0.8, x: -6 }}
+                  animate={{ opacity: 1, scale: 1, x: 0 }}
+                  exit={{ opacity: 0, scale: 0.8, x: -6 }}
+                  transition={{ duration: 0.22, delay: 0.09 }}
+                  whileTap={{ scale: 0.95 }}
+                  href="https://github.com/rahul-1909"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-button w-[4.4rem] h-[4.4rem] rounded-[1.3rem] bg-white text-light-black flex items-center justify-center cursor-pointer shadow-[0_4px_16px_rgba(0,0,0,0.06)] shrink-0"
+                  style={{ borderRadius: 13 }}
+                  aria-label="GitHub Profile"
+                >
+                  <GitHubIcon width="1.4rem" height="1.4rem" color="#1A1A1A" />
+                </motion.a>
+              </>
+            )}
+          </AnimatePresence>
+        </div>
+      )}
+
+      {/* MOBILE BOTTOM DOCK (Project View): Info + Live Site on left, Unexpand on right */}
+      {selectedProject && (
+        <div className="flex md:hidden fixed bottom-[2.4rem] left-0 w-full px-[2rem] items-center justify-between z-50 pointer-events-none select-none">
+          <div className="flex items-center gap-[0.6rem] pointer-events-auto">
+            {/* Info Button (if not skills) */}
+            {selectedProject.id !== 'skills' && (
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setShowInfo(!showInfo)}
+                animate={{
+                  rotate: showInfo ? -90 : 0,
+                  borderRadius: showInfo ? '50%' : '1.4rem',
+                  backgroundColor: showInfo ? '#1A1A1A' : '#ffffff',
+                  color: showInfo ? '#ffffff' : '#1a1a1a',
+                }}
+                transition={{
+                  rotate: { type: 'spring', stiffness: 200, damping: 17 },
+                  duration: 0.3,
+                }}
+                className="w-[4.8rem] h-[4.8rem] flex items-center justify-center cursor-pointer shrink-0 shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
+                aria-label="Toggle Project Info"
+              >
+                <InfoIcon width="1.4rem" height="1.4rem" color={showInfo ? '#FFFFFF' : '#1A1A1A'} />
+              </motion.button>
+            )}
+
+            {/* See Live button */}
+            {currentExternalUrl && (
+              <motion.a
+                whileTap={{ scale: 0.95 }}
+                href={currentExternalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                animate={{
+                  borderRadius: showInfo ? '100px' : '1.4rem',
+                  paddingLeft: showInfo ? '1.6rem' : '0px',
+                  paddingRight: showInfo ? '1.6rem' : '0px',
+                  width: showInfo ? 'auto' : '4.8rem',
+                }}
+                className="h-[4.8rem] bg-white text-light-black flex items-center justify-center cursor-pointer shrink-0 gap-[0.6rem] shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
+                aria-label="Visit project website"
+              >
+                <ExternalLinkIcon width="1.4rem" height="1.4rem" color="#1A1A1A" />
+                {showInfo && (
+                  <span className="text-[1.3rem] font-semibold tracking-tight whitespace-nowrap">
+                    See Live
+                  </span>
+                )}
+              </motion.a>
+            )}
+          </div>
+
+          {/* Single Mobile Unexpand Button on the right */}
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            onClick={handleCloseProject}
+            className="pointer-events-auto w-[4.8rem] h-[4.8rem] rounded-[1.4rem] bg-white text-light-black flex items-center justify-center cursor-pointer shrink-0 shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
+            aria-label="Back to home"
+          >
+            <CompressIcon className="w-[1.6rem] h-[1.6rem]" />
+          </motion.button>
+        </div>
+      )}
+
+      {/* DESKTOP LEFT COLUMN: Pinned with responsive clamp, vertically centered */}
       <div
-        className="flex flex-col items-start justify-center h-screen fixed gap-[5rem] z-50 max-phone:fixed max-phone:inset-0 max-phone:h-auto max-phone:w-full max-phone:left-0 max-phone:items-center max-phone:justify-between max-phone:pt-[2rem] max-phone:pb-[4rem] max-phone:gap-0 pointer-events-none transition-all duration-500 ease-out"
+        className="hidden md:flex flex-col items-start justify-center h-screen fixed gap-[5rem] z-50 pointer-events-none transition-all duration-500 ease-out"
         style={{
           left: 'clamp(3.2rem, calc(100vw - 110rem), 25.7rem)',
         }}
@@ -898,44 +1138,45 @@ export const ProjectSlider: React.FC = () => {
       {/* RIGHT COLUMN: Either 3D Card Slider OR 4-Box Scroll Container */}
       <AnimatePresence>
         {!selectedProject ? (
-          /* 3D Horizontal-to-Vertical Card Carousel */
-          <motion.div
-            key="home-slider"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.06, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } }}
-            role="region"
-            aria-label="3D Project Card Slider"
-            className="absolute right-[25.7rem] top-0 h-screen w-[33.5rem] select-none max-phone:right-auto max-phone:left-1/2 max-phone:-translate-x-1/2 max-phone:w-[26.9rem] cursor-grab active:cursor-grabbing"
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}
-          >
-            <ul
-              className="w-full h-full flex perspective-normal transform-3d flex-col"
-              style={{
-                perspective: '1500px',
-                transformStyle: 'preserve-3d',
-              }}
+          /* 3D Horizontal-to-Vertical Card Carousel Container */
+          <div className="absolute inset-0 w-full h-full pointer-events-none flex items-center justify-center md:justify-end md:pr-[25.7rem] z-20 overflow-hidden">
+            <motion.div
+              key="home-slider"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.06, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } }}
+              role="region"
+              aria-label="3D Project Card Slider"
+              className="relative w-[27rem] h-[27rem] md:w-[33.5rem] md:h-[34.4rem] select-none cursor-grab active:cursor-grabbing pointer-events-auto"
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
             >
-              {windowOffsets.map((offset) => {
-                const cardIndex = virtualIndex + offset;
-                const projectIndex = ((cardIndex % total) + total) % total;
-                const project = projects[projectIndex];
-                const isCenter = offset === 0;
-                const theme = projectThemes[project.id] || { bg: '#141414', text: '#ffffff' };
-                const style = getCardTransforms(offset);
+              <ul
+                className="w-full h-full flex perspective-normal transform-3d flex-col"
+                style={{
+                  perspective: '1500px',
+                  transformStyle: 'preserve-3d',
+                }}
+              >
+                {windowOffsets.map((offset) => {
+                  const cardIndex = virtualIndex + offset;
+                  const projectIndex = ((cardIndex % total) + total) % total;
+                  const project = projects[projectIndex];
+                  const isCenter = offset === 0;
+                  const theme = projectThemes[project.id] || { bg: '#141414', text: '#ffffff' };
+                  const style = getCardTransforms(offset);
 
-                return (
-                  <motion.li
-                    key={`card-view-${cardIndex}`}
-                    className="absolute top-[calc(50%-17.2rem)] max-phone:top-[calc(50%-13.45rem)] left-0 w-[33.5rem] h-[34.4rem] max-phone:w-[26.9rem] max-phone:h-[26.9rem] will-change-transform cursor-pointer shadow-none"
-                    style={{
-                      borderRadius: 32,
-                      transformStyle: 'preserve-3d',
-                      transformOrigin: 'center center',
-                      zIndex: style.zIndex,
-                    }}
+                  return (
+                    <motion.li
+                      key={`card-view-${cardIndex}`}
+                      className="absolute inset-0 w-full h-full will-change-transform cursor-pointer shadow-none"
+                      style={{
+                        borderRadius: 32,
+                        transformStyle: 'preserve-3d',
+                        transformOrigin: 'center center',
+                        zIndex: style.zIndex,
+                      }}
                     initial={false}
                     animate={{
                       y: style.y,
@@ -1035,6 +1276,7 @@ export const ProjectSlider: React.FC = () => {
               })}
             </ul>
           </motion.div>
+          </div>
         ) : (
           /* Project View: Stack Pinned to Right Edge. If single card (e.g. Experience, Skills), center vertically with equal top/bottom space. If multi-card, scrollable stack */
           <motion.div
@@ -1045,7 +1287,7 @@ export const ProjectSlider: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="absolute top-0 right-0 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none flex justify-end px-8 max-phone:px-[2rem] max-phone:pt-[8rem] max-phone:pb-[13rem] z-10"
+            className="absolute top-0 right-0 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none flex justify-center md:justify-end px-4 md:px-8 pt-[7.5rem] md:pt-0 pb-[12rem] md:pb-0 z-10"
             style={{
               paddingTop:
                 selectedProject.id === 'skills'
@@ -1068,9 +1310,9 @@ export const ProjectSlider: React.FC = () => {
             <div
               className={`flex flex-col gap-8 max-md:gap-[2rem] ${
                 selectedProject.id === 'experience' || selectedProject.id === 'skills' || selectedProject.id === 'certifications'
-                  ? 'w-[59rem] max-md:w-[33.5rem]'
-                  : 'w-[69rem] max-md:w-[33.5rem]'
-              } shrink-0 items-end`}
+                  ? 'w-full max-w-[35.5rem] md:w-[59rem] md:max-w-none'
+                  : 'w-full max-w-[35.5rem] md:w-[69rem] md:max-w-none'
+              } shrink-0 items-center md:items-end mx-auto md:mx-0`}
             >
               {selectedProject.id === 'skills' ? (
                 <motion.div

@@ -24,8 +24,7 @@ export const VirtusaDescriptionCards: React.FC<VirtusaDescriptionCardsProps> = (
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full min-h-[60.6rem] h-auto !rounded-[64px] max-phone:!rounded-[32px] relative shrink-0 bg-[#fafafa] text-[#141414] border border-black/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.04)] p-[4.6rem] max-phone:p-[2.6rem] flex flex-col justify-between"
-        style={{ borderRadius: 64 }}
+        className="w-full min-h-[60.6rem] h-auto rounded-[32px] md:rounded-[64px] relative shrink-0 bg-[#fafafa] text-[#141414] border border-black/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.04)] p-[2.6rem] md:p-[4.6rem] flex flex-col justify-between"
       >
         <div className="flex flex-col gap-[2rem] h-full justify-between">
           <div>
@@ -133,8 +132,7 @@ export const VirtusaDescriptionCards: React.FC<VirtusaDescriptionCardsProps> = (
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full min-h-[60.6rem] h-auto !rounded-[64px] max-phone:!rounded-[32px] relative shrink-0 bg-[#fafafa] text-[#141414] border border-black/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.04)] p-[4.6rem] max-phone:p-[2.6rem] flex flex-col justify-between"
-        style={{ borderRadius: 64 }}
+        className="w-full min-h-[60.6rem] h-auto rounded-[32px] md:rounded-[64px] relative shrink-0 bg-[#fafafa] text-[#141414] border border-black/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.04)] p-[2.6rem] md:p-[4.6rem] flex flex-col justify-between"
       >
         <div className="flex flex-col gap-[2rem] h-full justify-between">
           <div>
@@ -227,8 +225,7 @@ export const VirtusaDescriptionCards: React.FC<VirtusaDescriptionCardsProps> = (
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full min-h-[60.6rem] h-auto !rounded-[64px] max-phone:!rounded-[32px] relative shrink-0 bg-[#fafafa] text-[#141414] border border-black/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.04)] p-[4.6rem] max-phone:p-[2.6rem] flex flex-col justify-between"
-        style={{ borderRadius: 64 }}
+        className="w-full min-h-[60.6rem] h-auto rounded-[32px] md:rounded-[64px] relative shrink-0 bg-[#fafafa] text-[#141414] border border-black/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.04)] p-[2.6rem] md:p-[4.6rem] flex flex-col justify-between"
       >
         <div className="flex flex-col gap-[2rem] h-full justify-between">
           <div>

@@ -111,13 +111,11 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
 
   return (
     <div
-      className="w-full h-full relative select-none flex flex-col justify-between overflow-hidden"
-      style={{ borderRadius: 64 }}
+      className="w-full h-full relative select-none flex flex-col justify-between overflow-hidden rounded-[32px] md:rounded-[64px]"
     >
       {/* Front Card Surface */}
       <div
-        className={`w-full h-full p-[4.4rem] max-phone:p-[2.4rem] flex flex-col justify-between bg-gradient-to-br ${theme.gradient} text-white relative overflow-hidden`}
-        style={{ borderRadius: 64 }}
+        className={`w-full h-full p-[2.8rem] md:p-[4.4rem] flex flex-col justify-between bg-gradient-to-br ${theme.gradient} text-white relative overflow-hidden rounded-[32px] md:rounded-[64px]`}
       >
         {/* Subtle decorative ambient mesh glow */}
         <div
