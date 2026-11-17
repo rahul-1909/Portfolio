@@ -2,7 +2,6 @@
   "name": "portfolio",
   "version": "1.0.0",
   "description": "Rahul Teja - AI Engineer & Software Developer Portfolio",
-  "main": "app_slice.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,7 +10,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
     "@types/three": "^0.187.0",
     "clsx": "^2.1.1",
@@ -24,9 +22,9 @@
     "three": "^0.187.0"
   },
   "devDependencies": {
-    "@types/node": "^26.6.6",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
+    "@types/node": "^20.14.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "autoprefixer": "^10.6.2",
     "postcss": "^8.5.32",
     "tailwindcss": "^3.4.19",
