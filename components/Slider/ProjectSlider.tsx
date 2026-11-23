@@ -496,8 +496,10 @@ export const ProjectSlider: React.FC = () => {
             className="fixed top-0 z-50 hidden md:block"
             style={{
               right:
-                selectedProject.id === 'experience' || selectedProject.id === 'skills' || selectedProject.id === 'certifications'
+                selectedProject.id === 'experience' || selectedProject.id === 'skills'
                   ? 'calc(59rem + 4rem)'
+                  : selectedProject.id === 'certifications'
+                  ? 'calc(74rem + 4rem)'
                   : 'calc(69rem + 4rem)',
               y: smoothButtonY,
             }}
@@ -1290,27 +1292,27 @@ export const ProjectSlider: React.FC = () => {
             className="absolute top-0 right-0 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none flex justify-center md:justify-end px-4 md:px-8 pt-[7.5rem] md:pt-0 pb-[12rem] md:pb-0 z-10"
             style={{
               paddingTop:
-                selectedProject.id === 'skills'
+                selectedProject.id === 'skills' || selectedProject.id === 'certifications'
                   ? 'clamp(6rem, 10vh, 12rem)'
-                  : selectedProject.id === 'experience' || selectedProject.id === 'certifications'
+                  : selectedProject.id === 'experience'
                   ? 'max(2rem, calc((100vh - 60.58rem) / 2))'
                   : 'max(2rem, calc((100vh - 70.85rem) / 2))',
               paddingBottom:
-                selectedProject.id === 'skills'
+                selectedProject.id === 'skills' || selectedProject.id === 'certifications'
                   ? '24rem'
                   : selectedProject.id === 'experience'
                   ? showInfo
                     ? '24rem'
                     : 'max(2rem, calc((100vh - 60.58rem) / 2))'
-                  : selectedProject.id === 'certifications'
-                  ? '24rem'
                   : 'max(2rem, calc((100vh - 70.85rem) / 2))',
             }}
           >
             <div
               className={`flex flex-col gap-8 max-md:gap-[2rem] ${
-                selectedProject.id === 'experience' || selectedProject.id === 'skills' || selectedProject.id === 'certifications'
+                selectedProject.id === 'experience' || selectedProject.id === 'skills'
                   ? 'w-full max-w-[35.5rem] md:w-[59rem] md:max-w-none'
+                  : selectedProject.id === 'certifications'
+                  ? 'w-full max-w-[38rem] md:w-[74rem] md:max-w-none'
                   : 'w-full max-w-[35.5rem] md:w-[69rem] md:max-w-none'
               } shrink-0 items-center md:items-end mx-auto md:mx-0`}
             >
@@ -1436,13 +1438,13 @@ export const ProjectSlider: React.FC = () => {
                     }}
                     className={`w-full ${
                       selectedProject.id === 'certifications'
-                        ? 'h-auto md:aspect-[33.5/34.4]'
+                        ? 'h-auto rounded-[16px] md:rounded-[24px] bg-transparent'
                         : selectedProject.id === 'projects'
-                        ? 'h-auto md:aspect-square'
+                        ? 'h-auto md:aspect-square rounded-[32px] md:rounded-[64px] bg-[#EAEAEA]'
                         : selectedProject.id === 'experience' || isFirstCard
-                        ? 'aspect-[33.5/34.4]'
-                        : 'aspect-square'
-                    } rounded-[32px] md:rounded-[64px] overflow-hidden relative shrink-0 cursor-pointer group bg-[#EAEAEA]`}
+                        ? 'aspect-[33.5/34.4] rounded-[32px] md:rounded-[64px] bg-[#EAEAEA]'
+                        : 'aspect-square rounded-[32px] md:rounded-[64px] bg-[#EAEAEA]'
+                    } overflow-hidden relative shrink-0 cursor-pointer group`}
                     style={{
                       overflow: 'hidden',
                       boxShadow: 'none',

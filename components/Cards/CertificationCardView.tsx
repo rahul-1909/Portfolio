@@ -4,7 +4,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ProjectSection } from '@/data/portfolioData';
 
-// TOGGLE FLAG: Set to true for original certificates; set to false to instantly revert to previous UI card view.
+// TOGGLE FLAG: Set to true for full-size original certificates; set to false to revert to synthetic UI cards.
 export const USE_ORIGINAL_CERTIFICATES = true;
 
 interface CertificationCardViewProps {
@@ -14,13 +14,13 @@ interface CertificationCardViewProps {
   onToggleInfo?: () => void;
 }
 
-// Visual styling metadata for both original certificates and fallback synthetic cards
+// Visual styling metadata for certificates & fallback cards
 const certThemes = [
   // 0: Microsoft MLOps Associate
   {
     gradient: 'from-[#0b172a] via-[#07101e] to-[#040810]',
-    cardBg: '#121721',
-    certFile: 'cert_ms_mlops.png',
+    cardBg: '#ffffff',
+    certFile: 'cert_ms_mlops_master.png',
     accentColor: '#00a4ef',
     accentBg: 'rgba(0, 164, 239, 0.12)',
     accentBorder: 'rgba(0, 164, 239, 0.28)',
@@ -30,16 +30,13 @@ const certThemes = [
     status: 'VERIFIED CREDENTIAL',
     metric: 'Credential ID: 351C672DE3DD3551',
     logoType: 'microsoft',
-    ctaBg: 'rgba(255, 255, 255, 0.12)',
-    ctaText: '#ffffff',
-    ctaBorder: '1px solid rgba(255, 255, 255, 0.2)',
     highlights: ['Production ML Pipelines', 'Azure ML Workspaces', 'Model Deployment', 'CI/CD & Monitoring'],
   },
   // 1: Microsoft SQL AI Developer
   {
     gradient: 'from-[#061c1a] via-[#041211] to-[#020908]',
-    cardBg: '#121721',
-    certFile: 'cert_ms_sql_ai.png',
+    cardBg: '#ffffff',
+    certFile: 'cert_ms_sql_ai_master.png',
     accentColor: '#10b981',
     accentBg: 'rgba(16, 185, 129, 0.12)',
     accentBorder: 'rgba(16, 185, 129, 0.28)',
@@ -49,16 +46,13 @@ const certThemes = [
     status: 'VERIFIED CREDENTIAL',
     metric: 'Credential ID: B7191AAF49134FC8',
     logoType: 'microsoft',
-    ctaBg: 'rgba(255, 255, 255, 0.12)',
-    ctaText: '#ffffff',
-    ctaBorder: '1px solid rgba(255, 255, 255, 0.2)',
     highlights: ['Semantic Search Workflows', 'Vector Embeddings', 'AI Data Pipelines', 'T-SQL Query Optimization'],
   },
   // 2: Microsoft Azure Data
   {
     gradient: 'from-[#0d1c33] via-[#091424] to-[#050a12]',
-    cardBg: '#121721',
-    certFile: 'cert_ms_azure_data.png',
+    cardBg: '#ffffff',
+    certFile: 'cert_ms_azure_data_master.png',
     accentColor: '#38bdf8',
     accentBg: 'rgba(56, 189, 248, 0.12)',
     accentBorder: 'rgba(56, 189, 248, 0.28)',
@@ -68,16 +62,29 @@ const certThemes = [
     status: 'VERIFIED CREDENTIAL',
     metric: 'Credential ID: FEDB73DCFCA7E3E0',
     logoType: 'microsoft',
-    ctaBg: 'rgba(255, 255, 255, 0.12)',
-    ctaText: '#ffffff',
-    ctaBorder: '1px solid rgba(255, 255, 255, 0.2)',
     highlights: ['Azure Data Architecture', 'Cosmos DB NoSQL Modeling', 'Relational SQL Analytics', 'Modern Lakehouse & ETL'],
   },
-  // 3: AWS Certified Cloud Practitioner
+  // 3: Microsoft Azure AI Fundamentals
+  {
+    gradient: 'from-[#0a1633] via-[#060e24] to-[#040814]',
+    cardBg: '#ffffff',
+    certFile: 'cert_ms_azure_ai_master.png',
+    accentColor: '#0078d4',
+    accentBg: 'rgba(0, 120, 212, 0.12)',
+    accentBorder: 'rgba(0, 120, 212, 0.28)',
+    category: 'AI FUNDAMENTALS',
+    issuer: 'Microsoft',
+    recordType: 'OFFICIAL RECORD',
+    status: 'VERIFIED CREDENTIAL',
+    metric: 'Certiport: SrMn-uScT',
+    logoType: 'microsoft',
+    highlights: ['Azure AI Services', 'Computer Vision Workloads', 'Natural Language Processing', 'Conversational AI'],
+  },
+  // 4: AWS Certified Cloud Practitioner
   {
     gradient: 'from-[#1c1408] via-[#140e05] to-[#0a0702]',
-    cardBg: '#232f3e',
-    certFile: 'cert_aws_cloud_practitioner.png',
+    cardBg: '#ffffff',
+    certFile: 'cert_aws_practitioner_master.png',
     accentColor: '#ff9900',
     accentBg: 'rgba(255, 153, 0, 0.14)',
     accentBorder: 'rgba(255, 153, 0, 0.3)',
@@ -87,15 +94,12 @@ const certThemes = [
     status: 'VERIFIED CREDENTIAL',
     metric: 'Issued: August 4, 2024',
     logoType: 'aws',
-    ctaBg: 'rgba(255, 153, 0, 0.2)',
-    ctaText: '#ffffff',
-    ctaBorder: '1px solid rgba(255, 153, 0, 0.4)',
     highlights: ['AWS Core Infrastructure', 'IAM & Zero-Trust Security', 'High Availability Design', 'Cloud Cost Optimization'],
   },
-  // 4: Anthropic Claude 101
+  // 5: Anthropic Claude 101
   {
     gradient: 'from-[#1c1214] via-[#140c0e] to-[#0a0607]',
-    cardBg: '#e3dacb',
+    cardBg: '#ffffff',
     certFile: 'cert_anthropic_claude_101.png',
     accentColor: '#cc785c',
     accentBg: 'rgba(204, 120, 92, 0.15)',
@@ -106,15 +110,12 @@ const certThemes = [
     status: 'VERIFIED CREDENTIAL',
     metric: 'Credential: dsermfpyca5o',
     logoType: 'anthropic',
-    ctaBg: 'rgba(26, 26, 26, 0.88)',
-    ctaText: '#ffffff',
-    ctaBorder: '1px solid rgba(26, 26, 26, 0.25)',
     highlights: ['Claude 3.5 Architecture', 'Prompt Engineering Principles', 'Long-Context Optimization', 'Tool Use & Function Calling'],
   },
-  // 5: Anthropic AI Fluency
+  // 6: Anthropic AI Fluency
   {
     gradient: 'from-[#170e28] via-[#100a1c] to-[#08050e]',
-    cardBg: '#798c5e',
+    cardBg: '#ffffff',
     certFile: 'cert_anthropic_ai_fluency.png',
     accentColor: '#a855f7',
     accentBg: 'rgba(168, 85, 247, 0.14)',
@@ -125,9 +126,6 @@ const certThemes = [
     status: 'VERIFIED CREDENTIAL',
     metric: 'Credential: g59ydrrtrryt',
     logoType: 'anthropic',
-    ctaBg: 'rgba(18, 30, 15, 0.88)',
-    ctaText: '#ffffff',
-    ctaBorder: '1px solid rgba(255, 255, 255, 0.25)',
     highlights: ['Frontier Model Foundations', 'Autonomous Agentic Systems', 'AI Safety & Alignment', 'Rigorous Model Evaluation'],
   },
 ];
@@ -145,21 +143,20 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
 
   return (
     <div
-      className="w-full h-auto md:h-full relative select-none flex flex-col justify-between overflow-hidden rounded-[32px] md:rounded-[64px]"
-      style={{ backgroundColor: USE_ORIGINAL_CERTIFICATES ? theme.cardBg : undefined }}
+      className="w-full h-auto relative select-none flex flex-col justify-center items-center overflow-hidden rounded-[16px] md:rounded-[24px]"
     >
       {USE_ORIGINAL_CERTIFICATES ? (
-        /* ================= ORIGINAL MASTER CERTIFICATE VIEW ================= */
-        <div className="w-full h-auto md:h-full relative flex items-center justify-center overflow-hidden rounded-[32px] md:rounded-[64px] group/cert">
-          {/* High-Resolution Certificate Image */}
+        /* ================= FULL-SIZE ORIGINAL MASTER CERTIFICATE VIEW ================= */
+        <div className="w-full h-auto relative flex items-center justify-center overflow-hidden rounded-[16px] md:rounded-[24px] shadow-[0_16px_40px_rgba(0,0,0,0.14)] hover:shadow-[0_24px_60px_rgba(0,0,0,0.22)] transition-all duration-300 border border-black/10 bg-white group/cert">
+          {/* Natural Full-Length Certificate Image */}
           <img
             src={certImageSrc}
             alt={section.section_title}
-            className="w-full h-auto md:h-full object-contain pointer-events-none select-none transition-transform duration-500 ease-out group-hover:scale-[1.018]"
+            className="w-full h-auto object-contain block select-none pointer-events-none transition-transform duration-500 ease-out group-hover/cert:scale-[1.01]"
             loading="eager"
           />
 
-          {/* Interactive Floating Verification CTA at Bottom Right */}
+          {/* Dedicated Floating Verification CTA at Bottom Right */}
           <a
             href={verifyUrl}
             target="_blank"
@@ -167,12 +164,7 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
             onClick={(e) => {
               e.stopPropagation();
             }}
-            className="absolute bottom-[2rem] right-[2rem] md:bottom-[3rem] md:right-[3rem] z-20 flex items-center gap-[0.8rem] text-[1.2rem] md:text-[1.3rem] font-mono font-semibold px-[1.6rem] md:px-[2rem] py-[0.8rem] md:py-[1rem] rounded-full backdrop-blur-md transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.35)] hover:shadow-[0_6px_32px_rgba(0,0,0,0.5)] cursor-pointer group/cta"
-            style={{
-              backgroundColor: theme.ctaBg,
-              color: theme.ctaText,
-              border: theme.ctaBorder,
-            }}
+            className="absolute bottom-[1.4rem] right-[1.4rem] md:bottom-[2.2rem] md:right-[2.2rem] z-20 flex items-center gap-[0.8rem] text-[1.2rem] md:text-[1.3rem] font-mono font-semibold px-[1.6rem] md:px-[2rem] py-[0.8rem] md:py-[1rem] rounded-full bg-black/80 hover:bg-black text-white backdrop-blur-md transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.35)] hover:shadow-[0_6px_32px_rgba(0,0,0,0.5)] cursor-pointer group/cta"
           >
             <span>Verify Credential</span>
             <span className="font-bold text-[1.4rem] md:text-[1.5rem] group-hover/cta:translate-x-1 group-hover/cta:-translate-y-1 transition-transform">
@@ -185,13 +177,11 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
         <div
           className={`w-full h-auto md:h-full p-[2.4rem] md:p-[4.4rem] flex flex-col justify-between bg-gradient-to-br ${theme.gradient} text-white relative overflow-hidden rounded-[32px] md:rounded-[64px] gap-[2rem] md:gap-0`}
         >
-          {/* Subtle decorative ambient mesh glow */}
           <div
             className="absolute -top-[20%] -right-[20%] w-[38rem] h-[38rem] rounded-full blur-[110px] pointer-events-none opacity-25"
             style={{ backgroundColor: theme.accentColor }}
           />
 
-          {/* Top Header: Issuer Logo Badge + Category Badge + Verified Status */}
           <div className="flex items-center justify-between w-full relative z-10 gap-[1rem] flex-wrap">
             <div className="flex items-center gap-[1.2rem]">
               <div className="p-[0.8rem] rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15 flex items-center justify-center shrink-0 shadow-sm">
@@ -246,7 +236,6 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
             </div>
           </div>
 
-          {/* Main Content Area */}
           <div className="my-auto py-[1.2rem] md:py-[1.8rem] relative z-10 flex flex-col gap-[1.4rem]">
             <div>
               <h2 className="text-[2.2rem] md:text-[3.2rem] font-bold tracking-tight text-white leading-[1.2] mb-[0.8rem]">
@@ -257,7 +246,6 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
               </p>
             </div>
 
-            {/* Interactive Feature Architecture Box */}
             <div className="p-[1.6rem] md:p-[1.8rem] rounded-[20px] bg-white/[0.04] border border-white/10 backdrop-blur-md flex flex-col gap-[1.2rem]">
               <div className="flex items-center justify-between text-[1.1rem] md:text-[1.15rem] font-mono text-white/50 border-b border-white/10 pb-[0.8rem] flex-wrap gap-[0.4rem]">
                 <span>VALIDATED COMPETENCIES</span>
@@ -278,7 +266,6 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
             </div>
           </div>
 
-          {/* Bottom Footer: Skills Tags & Direct Verification CTA */}
           <div className="flex items-center justify-between pt-[1.6rem] md:pt-[1.8rem] border-t border-white/10 relative z-10 gap-[1.2rem] flex-wrap">
             <div className="flex items-center gap-[0.6rem] flex-wrap max-w-full">
               {skillsList.slice(0, 3).map((skill, idx) => (
@@ -312,7 +299,7 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
         </div>
       )}
 
-      {/* Description Overlay: Opens on Eye Button Click (Works for both views) */}
+      {/* Description Overlay: Opens on Eye Button Click */}
       <AnimatePresence>
         {showInfo && (
           <motion.div
@@ -320,7 +307,7 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
             animate={{ opacity: 1, backdropFilter: 'blur(20px)' }}
             exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute inset-0 bg-white/95 backdrop-blur-xl p-[5.4rem] max-phone:p-[3.2rem] flex flex-col justify-between z-30 select-text overflow-y-auto rounded-[32px] md:rounded-[64px]"
+            className="absolute inset-0 bg-white/95 backdrop-blur-xl p-[5.4rem] max-phone:p-[3.2rem] flex flex-col justify-between z-30 select-text overflow-y-auto rounded-[16px] md:rounded-[24px]"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex flex-col justify-between h-full gap-[2.4rem]">
@@ -330,7 +317,6 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.5, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
               >
-                {/* Header: Category & Issuer */}
                 <div className="flex items-center justify-between mb-[1.4rem] flex-wrap gap-[1rem]">
                   <span
                     className="text-[1.3rem] font-mono font-bold uppercase tracking-wider px-[1.2rem] py-[0.4rem] rounded-full"
@@ -346,7 +332,6 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
                   </span>
                 </div>
 
-                {/* Title */}
                 <h2 className="text-[3.4rem] max-phone:text-[2.4rem] font-bold text-light-black tracking-tight leading-tight mb-[0.6rem]">
                   {section.section_title}
                 </h2>
@@ -354,7 +339,6 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
                   {section.subtitle}
                 </p>
 
-                {/* Structured Body */}
                 <div className="text-[1.6rem] max-phone:text-[1.35rem] leading-[1.65] text-[#333333] space-y-[1.6rem] font-normal">
                   {section.body.split('\n\n').map((paragraph, pIdx) => {
                     if (paragraph.startsWith('VALIDATED CAPABILITIES')) {
@@ -386,7 +370,6 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
                 </div>
               </motion.div>
 
-              {/* Bottom Actions: Official Verification Link */}
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
