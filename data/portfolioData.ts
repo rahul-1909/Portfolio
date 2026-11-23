@@ -209,7 +209,7 @@ export const projects: Project[] = [
     id: "certifications",
     title: "Certifications",
     date: "Credentials & Honors",
-    websiteUrl: "https://learn.microsoft.com/api/credentials/share/en-us/rahulteja-1992/351C672DE3DD3551?sharingId=20CEC5EF6DDD8E56",
+    websiteUrl: "https://learn.microsoft.com/en-us/users/rahulteja-1992/credentials/351c672de3dd3551",
     thumbnail: "/images/projet01.f4282e02.png",
     sections: [
       {
@@ -219,10 +219,10 @@ export const projects: Project[] = [
         role: "Microsoft",
         timeline: "Permanent Record",
         tech: "MLOps · Azure ML · Model Deployment · CI/CD Pipelines · Monitoring",
-        live_url: "https://learn.microsoft.com/api/credentials/share/en-us/rahulteja-1992/351C672DE3DD3551?sharingId=20CEC5EF6DDD8E56",
-        repo_url: "https://learn.microsoft.com/api/credentials/share/en-us/rahulteja-1992/351C672DE3DD3551?sharingId=20CEC5EF6DDD8E56",
+        live_url: "https://learn.microsoft.com/en-us/users/rahulteja-1992/credentials/351c672de3dd3551",
+        repo_url: "https://learn.microsoft.com/en-us/users/rahulteja-1992/credentials/351c672de3dd3551",
         body: "Validates specialized capabilities in building, operating, and monitoring automated production ML pipelines, feature stores, and scalable model deployment architectures.\n\nVALIDATED CAPABILITIES\n\n1. End-to-end MLOps pipeline automation and lifecycle governance.\n2. Scalable feature store architectures and real-time model serving.\n3. Automated CI/CD integration with Azure Machine Learning workspaces.\n4. Production telemetry, model drift detection, and automated retraining triggers.",
-        image: null,
+        image: "/certificates/cert_ms_mlops.png",
         video_url: null,
         mobile_video_url: null
       },
@@ -233,10 +233,10 @@ export const projects: Project[] = [
         role: "Microsoft",
         timeline: "Permanent Record",
         tech: "SQL AI · Vector Search · Data Pipelines · T-SQL · Semantic Indexing",
-        live_url: "https://learn.microsoft.com/api/credentials/share/en-us/rahulteja-1992/B7191AAF49134FC8?sharingId=20CEC5EF6DDD8E56",
-        repo_url: "https://learn.microsoft.com/api/credentials/share/en-us/rahulteja-1992/B7191AAF49134FC8?sharingId=20CEC5EF6DDD8E56",
+        live_url: "https://learn.microsoft.com/en-us/users/rahulteja-1992/credentials/b7191aaf49134fc8",
+        repo_url: "https://learn.microsoft.com/en-us/users/rahulteja-1992/credentials/b7191aaf49134fc8",
         body: "Demonstrates expertise in architecting intelligent data solutions, semantic search, vector embeddings, query optimization, and AI-augmented SQL databases.\n\nVALIDATED CAPABILITIES\n\n1. Semantic search implementation and dense vector embedding pipelines.\n2. AI-augmented T-SQL query generation, tuning, and indexing strategies.\n3. High-throughput data ingestion, transformation, and storage patterns.\n4. Integration of intelligent LLM reasoning layers with relational data stores.",
-        image: null,
+        image: "/certificates/cert_ms_sql_ai.png",
         video_url: null,
         mobile_video_url: null
       },
@@ -247,10 +247,10 @@ export const projects: Project[] = [
         role: "Microsoft",
         timeline: "Permanent Record",
         tech: "Azure Data · Cosmos DB · Relational SQL · Data Warehousing · ETL / ELT",
-        live_url: "https://learn.microsoft.com/api/credentials/share/en-us/rahulteja-1992/FEDB73DCFCA7E3E0?sharingId=20CEC5EF6DDD8E56",
-        repo_url: "https://learn.microsoft.com/api/credentials/share/en-us/rahulteja-1992/FEDB73DCFCA7E3E0?sharingId=20CEC5EF6DDD8E56",
+        live_url: "https://learn.microsoft.com/en-us/users/rahulteja-1992/credentials/fedb73dcfca7e3e0",
+        repo_url: "https://learn.microsoft.com/en-us/users/rahulteja-1992/credentials/fedb73dcfca7e3e0",
         body: "Demonstrates foundational knowledge of core cloud data concepts, relational & non-relational database services, and enterprise analytical workloads on Azure.\n\nVALIDATED CAPABILITIES\n\n1. Relational database architectures and managed SQL instance administration.\n2. Non-relational NoSQL database modeling with Azure Cosmos DB.\n3. Enterprise analytical workloads, modern data warehousing, and lakehouses.\n4. Scalable batch and streaming ETL / ELT data movement pipelines.",
-        image: null,
+        image: "/certificates/cert_ms_azure_data.png",
         video_url: null,
         mobile_video_url: null
       },
@@ -261,10 +261,10 @@ export const projects: Project[] = [
         role: "Amazon Web Services (AWS)",
         timeline: "Issued: August 4, 2024",
         tech: "AWS Cloud · Core Services · IAM & Security · High Availability · Cloud Architecture",
-        live_url: "https://www.certmetrics.com/amazon/public/verification.aspx",
-        repo_url: "https://www.certmetrics.com/amazon/public/verification.aspx",
+        live_url: "https://aws.amazon.com/verification",
+        repo_url: "https://aws.amazon.com/verification",
         body: "Validates overall understanding of AWS Cloud infrastructure, security architecture, core services (EC2, S3, IAM, VPC), and enterprise cloud migration strategies.\n\nVALIDATED CAPABILITIES\n\n1. Comprehensive mastery of AWS core computing, storage, and networking.\n2. Zero-trust security paradigms, IAM role policies, and encryption compliance.\n3. Fault-tolerant multi-AZ high availability and disaster recovery patterns.\n4. Well-Architected Framework design principles and cost optimization.",
-        image: null,
+        image: "/certificates/cert_aws_cloud_practitioner.png",
         video_url: null,
         mobile_video_url: null
       },
@@ -278,7 +278,7 @@ export const projects: Project[] = [
         live_url: "https://verify.skilljar.com/c/dsermfpyca5o",
         repo_url: "https://verify.skilljar.com/c/dsermfpyca5o",
         body: "In-depth certification covering Claude model architecture, multi-modal reasoning, prompt engineering principles, long-context window optimization, and structured output generation.\n\nVALIDATED CAPABILITIES\n\n1. Advanced Claude 3.5 Sonnet / Opus reasoning patterns and system design.\n2. Chain-of-Thought (CoT) and few-shot prompt optimization methodologies.\n3. 200k+ token context window exploitation and needle-in-a-haystack retrieval.\n4. Strict structured JSON output schemas, tool use, and function calling.",
-        image: null,
+        image: "/certificates/cert_anthropic_claude_101.png",
         video_url: null,
         mobile_video_url: null
       },
@@ -292,7 +292,7 @@ export const projects: Project[] = [
         live_url: "https://verify.skilljar.com/c/g59ydrrtrryt",
         repo_url: "https://verify.skilljar.com/c/g59ydrrtrryt",
         body: "Foundational mastery in frontier AI models, evaluation frameworks, autonomous agentic workflows, prompt alignment, and ethical AI deployment best practices.\n\nVALIDATED CAPABILITIES\n\n1. Frontier model paradigms, latent capabilities, and architectural limits.\n2. Autonomous agentic systems, tool loops, and human-in-the-loop controls.\n3. Rigorous model evaluation rubrics, benchmark interpretation, and QA.\n4. AI safety guardrails, red-teaming methodologies, and alignment protocols.",
-        image: null,
+        image: "/certificates/cert_anthropic_ai_fluency.png",
         video_url: null,
         mobile_video_url: null
       }

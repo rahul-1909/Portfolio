@@ -4,6 +4,9 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ProjectSection } from '@/data/portfolioData';
 
+// TOGGLE FLAG: Set to true for original certificates; set to false to instantly revert to previous UI card view.
+export const USE_ORIGINAL_CERTIFICATES = true;
+
 interface CertificationCardViewProps {
   section: ProjectSection;
   index: number;
@@ -11,11 +14,13 @@ interface CertificationCardViewProps {
   onToggleInfo?: () => void;
 }
 
-// Bespoke visual styling for each of the 6 certificates
+// Visual styling metadata for both original certificates and fallback synthetic cards
 const certThemes = [
-  // 0: Microsoft MLOps Associate - Azure Cyan & Slate
+  // 0: Microsoft MLOps Associate
   {
     gradient: 'from-[#0b172a] via-[#07101e] to-[#040810]',
+    cardBg: '#121721',
+    certFile: 'cert_ms_mlops.png',
     accentColor: '#00a4ef',
     accentBg: 'rgba(0, 164, 239, 0.12)',
     accentBorder: 'rgba(0, 164, 239, 0.28)',
@@ -25,11 +30,16 @@ const certThemes = [
     status: 'VERIFIED CREDENTIAL',
     metric: 'Credential ID: 351C672DE3DD3551',
     logoType: 'microsoft',
+    ctaBg: 'rgba(255, 255, 255, 0.12)',
+    ctaText: '#ffffff',
+    ctaBorder: '1px solid rgba(255, 255, 255, 0.2)',
     highlights: ['Production ML Pipelines', 'Azure ML Workspaces', 'Model Deployment', 'CI/CD & Monitoring'],
   },
-  // 1: Microsoft SQL AI Developer - Emerald & Dark Graphite
+  // 1: Microsoft SQL AI Developer
   {
     gradient: 'from-[#061c1a] via-[#041211] to-[#020908]',
+    cardBg: '#121721',
+    certFile: 'cert_ms_sql_ai.png',
     accentColor: '#10b981',
     accentBg: 'rgba(16, 185, 129, 0.12)',
     accentBorder: 'rgba(16, 185, 129, 0.28)',
@@ -39,11 +49,16 @@ const certThemes = [
     status: 'VERIFIED CREDENTIAL',
     metric: 'Credential ID: B7191AAF49134FC8',
     logoType: 'microsoft',
+    ctaBg: 'rgba(255, 255, 255, 0.12)',
+    ctaText: '#ffffff',
+    ctaBorder: '1px solid rgba(255, 255, 255, 0.2)',
     highlights: ['Semantic Search Workflows', 'Vector Embeddings', 'AI Data Pipelines', 'T-SQL Query Optimization'],
   },
-  // 2: Microsoft Azure Data - Sapphire & Cobalt
+  // 2: Microsoft Azure Data
   {
     gradient: 'from-[#0d1c33] via-[#091424] to-[#050a12]',
+    cardBg: '#121721',
+    certFile: 'cert_ms_azure_data.png',
     accentColor: '#38bdf8',
     accentBg: 'rgba(56, 189, 248, 0.12)',
     accentBorder: 'rgba(56, 189, 248, 0.28)',
@@ -53,11 +68,16 @@ const certThemes = [
     status: 'VERIFIED CREDENTIAL',
     metric: 'Credential ID: FEDB73DCFCA7E3E0',
     logoType: 'microsoft',
+    ctaBg: 'rgba(255, 255, 255, 0.12)',
+    ctaText: '#ffffff',
+    ctaBorder: '1px solid rgba(255, 255, 255, 0.2)',
     highlights: ['Azure Data Architecture', 'Cosmos DB NoSQL Modeling', 'Relational SQL Analytics', 'Modern Lakehouse & ETL'],
   },
-  // 3: AWS Certified Cloud Practitioner - Obsidian & Amber Gold
+  // 3: AWS Certified Cloud Practitioner
   {
     gradient: 'from-[#1c1408] via-[#140e05] to-[#0a0702]',
+    cardBg: '#232f3e',
+    certFile: 'cert_aws_cloud_practitioner.png',
     accentColor: '#ff9900',
     accentBg: 'rgba(255, 153, 0, 0.14)',
     accentBorder: 'rgba(255, 153, 0, 0.3)',
@@ -67,11 +87,16 @@ const certThemes = [
     status: 'VERIFIED CREDENTIAL',
     metric: 'Issued: August 4, 2024',
     logoType: 'aws',
+    ctaBg: 'rgba(255, 153, 0, 0.2)',
+    ctaText: '#ffffff',
+    ctaBorder: '1px solid rgba(255, 153, 0, 0.4)',
     highlights: ['AWS Core Infrastructure', 'IAM & Zero-Trust Security', 'High Availability Design', 'Cloud Cost Optimization'],
   },
-  // 4: Anthropic Claude 101 - Terracotta & Deep Charcoal
+  // 4: Anthropic Claude 101
   {
     gradient: 'from-[#1c1214] via-[#140c0e] to-[#0a0607]',
+    cardBg: '#e3dacb',
+    certFile: 'cert_anthropic_claude_101.png',
     accentColor: '#cc785c',
     accentBg: 'rgba(204, 120, 92, 0.15)',
     accentBorder: 'rgba(204, 120, 92, 0.35)',
@@ -81,11 +106,16 @@ const certThemes = [
     status: 'VERIFIED CREDENTIAL',
     metric: 'Credential: dsermfpyca5o',
     logoType: 'anthropic',
+    ctaBg: 'rgba(26, 26, 26, 0.88)',
+    ctaText: '#ffffff',
+    ctaBorder: '1px solid rgba(26, 26, 26, 0.25)',
     highlights: ['Claude 3.5 Architecture', 'Prompt Engineering Principles', 'Long-Context Optimization', 'Tool Use & Function Calling'],
   },
-  // 5: Anthropic AI Fluency - Violet Nebula & Dark Onyx
+  // 5: Anthropic AI Fluency
   {
     gradient: 'from-[#170e28] via-[#100a1c] to-[#08050e]',
+    cardBg: '#798c5e',
+    certFile: 'cert_anthropic_ai_fluency.png',
     accentColor: '#a855f7',
     accentBg: 'rgba(168, 85, 247, 0.14)',
     accentBorder: 'rgba(168, 85, 247, 0.32)',
@@ -95,6 +125,9 @@ const certThemes = [
     status: 'VERIFIED CREDENTIAL',
     metric: 'Credential: g59ydrrtrryt',
     logoType: 'anthropic',
+    ctaBg: 'rgba(18, 30, 15, 0.88)',
+    ctaText: '#ffffff',
+    ctaBorder: '1px solid rgba(255, 255, 255, 0.25)',
     highlights: ['Frontier Model Foundations', 'Autonomous Agentic Systems', 'AI Safety & Alignment', 'Rigorous Model Evaluation'],
   },
 ];
@@ -108,124 +141,25 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
   const theme = certThemes[index % certThemes.length];
   const skillsList = section.tech ? section.tech.split('·').map((t) => t.trim()) : [];
   const verifyUrl = section.live_url || section.repo_url || '#';
+  const certImageSrc = section.image || `/certificates/${theme.certFile}`;
 
   return (
     <div
       className="w-full h-auto md:h-full relative select-none flex flex-col justify-between overflow-hidden rounded-[32px] md:rounded-[64px]"
+      style={{ backgroundColor: USE_ORIGINAL_CERTIFICATES ? theme.cardBg : undefined }}
     >
-      {/* Front Card Surface */}
-      <div
-        className={`w-full h-auto md:h-full p-[2.4rem] md:p-[4.4rem] flex flex-col justify-between bg-gradient-to-br ${theme.gradient} text-white relative overflow-hidden rounded-[32px] md:rounded-[64px] gap-[2rem] md:gap-0`}
-      >
-        {/* Subtle decorative ambient mesh glow */}
-        <div
-          className="absolute -top-[20%] -right-[20%] w-[38rem] h-[38rem] rounded-full blur-[110px] pointer-events-none opacity-25"
-          style={{ backgroundColor: theme.accentColor }}
-        />
+      {USE_ORIGINAL_CERTIFICATES ? (
+        /* ================= ORIGINAL MASTER CERTIFICATE VIEW ================= */
+        <div className="w-full h-auto md:h-full relative flex items-center justify-center overflow-hidden rounded-[32px] md:rounded-[64px] group/cert">
+          {/* High-Resolution Certificate Image */}
+          <img
+            src={certImageSrc}
+            alt={section.section_title}
+            className="w-full h-auto md:h-full object-contain pointer-events-none select-none transition-transform duration-500 ease-out group-hover:scale-[1.018]"
+            loading="eager"
+          />
 
-        {/* Top Header: Issuer Logo Badge + Category Badge + Verified Status */}
-        <div className="flex items-center justify-between w-full relative z-10 gap-[1rem] flex-wrap">
-          <div className="flex items-center gap-[1.2rem]">
-            {/* Tactile Issuer Brand Logo */}
-            <div className="p-[0.8rem] rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15 flex items-center justify-center shrink-0 shadow-sm">
-              {theme.logoType === 'microsoft' && (
-                <div className="grid grid-cols-2 gap-[2px] w-[1.7rem] h-[1.7rem]">
-                  <div className="w-[0.75rem] h-[0.75rem] bg-[#F25022] rounded-[2px]" />
-                  <div className="w-[0.75rem] h-[0.75rem] bg-[#7FBA00] rounded-[2px]" />
-                  <div className="w-[0.75rem] h-[0.75rem] bg-[#00A4EF] rounded-[2px]" />
-                  <div className="w-[0.75rem] h-[0.75rem] bg-[#FFB900] rounded-[2px]" />
-                </div>
-              )}
-              {theme.logoType === 'aws' && (
-                <div className="w-[1.7rem] h-[1.7rem] rounded-full bg-[#FF9900] flex items-center justify-center text-[0.95rem] font-bold text-white leading-none">
-                  A
-                </div>
-              )}
-              {theme.logoType === 'anthropic' && (
-                <div className="w-[1.7rem] h-[1.7rem] rounded-full bg-white text-black flex items-center justify-center text-[1rem] font-bold leading-none">
-                  ✦
-                </div>
-              )}
-            </div>
-
-            <div className="flex flex-col">
-              <span className="text-[1.25rem] font-mono font-bold uppercase tracking-wider text-white">
-                {theme.issuer}
-              </span>
-              <span className="text-[1.05rem] font-mono uppercase tracking-widest text-white/50">
-                {section.badge || `Credential 0${index + 1}`}
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-[0.8rem]">
-            <span
-              className="text-[1.05rem] md:text-[1.1rem] font-mono font-bold tracking-wider uppercase px-[1.1rem] py-[0.4rem] rounded-full border"
-              style={{
-                color: theme.accentColor,
-                backgroundColor: theme.accentBg,
-                borderColor: theme.accentBorder,
-              }}
-            >
-              {theme.category}
-            </span>
-
-            <div className="flex items-center gap-[0.5rem] bg-white/[0.06] border border-white/10 px-[1.1rem] py-[0.4rem] rounded-full">
-              <span className="w-[0.65rem] h-[0.65rem] rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-[1rem] md:text-[1.05rem] font-mono text-white/80 font-medium">
-                VERIFIED
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Content Area */}
-        <div className="my-auto py-[1.2rem] md:py-[1.8rem] relative z-10 flex flex-col gap-[1.4rem]">
-          <div>
-            <h2 className="text-[2.2rem] md:text-[3.2rem] font-bold tracking-tight text-white leading-[1.2] mb-[0.8rem]">
-              {section.section_title}
-            </h2>
-            <p className="text-[1.35rem] md:text-[1.5rem] font-normal text-white/70 tracking-tight leading-relaxed max-w-[50rem]">
-              {section.body.split('\n\n')[0]}
-            </p>
-          </div>
-
-          {/* Interactive Feature Architecture Box */}
-          <div className="p-[1.6rem] md:p-[1.8rem] rounded-[20px] bg-white/[0.04] border border-white/10 backdrop-blur-md flex flex-col gap-[1.2rem]">
-            <div className="flex items-center justify-between text-[1.1rem] md:text-[1.15rem] font-mono text-white/50 border-b border-white/10 pb-[0.8rem] flex-wrap gap-[0.4rem]">
-              <span>VALIDATED COMPETENCIES</span>
-              <span style={{ color: theme.accentColor }}>{theme.metric}</span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-[0.8rem]">
-              {theme.highlights.map((highlight, idx) => (
-                <div key={idx} className="flex items-center gap-[0.7rem] text-[1.15rem] md:text-[1.2rem] text-white/85">
-                  <span
-                    className="w-[0.5rem] h-[0.5rem] rounded-full shrink-0"
-                    style={{ backgroundColor: theme.accentColor }}
-                  />
-                  <span className="font-medium tracking-tight">{highlight}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Footer: Skills Tags & Direct Verification CTA */}
-        <div className="flex items-center justify-between pt-[1.6rem] md:pt-[1.8rem] border-t border-white/10 relative z-10 gap-[1.2rem] flex-wrap">
-          {/* Skill Pills */}
-          <div className="flex items-center gap-[0.6rem] flex-wrap max-w-full">
-            {skillsList.slice(0, 3).map((skill, idx) => (
-              <span
-                key={idx}
-                className="text-[1.05rem] md:text-[1.1rem] font-mono px-[1rem] py-[0.35rem] rounded-full bg-white/[0.08] text-white/90 font-medium"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
-
-          {/* Dedicated Verification CTA Button */}
+          {/* Interactive Floating Verification CTA at Bottom Right */}
           <a
             href={verifyUrl}
             target="_blank"
@@ -233,20 +167,152 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
             onClick={(e) => {
               e.stopPropagation();
             }}
-            className="group/btn flex items-center gap-[0.8rem] text-[1.2rem] md:text-[1.3rem] font-mono font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 px-[1.6rem] md:px-[1.8rem] py-[0.8rem] rounded-full transition-all shrink-0 shadow-[0_4px_24px_rgba(0,0,0,0.35)] hover:shadow-[0_6px_32px_rgba(0,0,0,0.5)] cursor-pointer"
+            className="absolute bottom-[2rem] right-[2rem] md:bottom-[3rem] md:right-[3rem] z-20 flex items-center gap-[0.8rem] text-[1.2rem] md:text-[1.3rem] font-mono font-semibold px-[1.6rem] md:px-[2rem] py-[0.8rem] md:py-[1rem] rounded-full backdrop-blur-md transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.35)] hover:shadow-[0_6px_32px_rgba(0,0,0,0.5)] cursor-pointer group/cta"
+            style={{
+              backgroundColor: theme.ctaBg,
+              color: theme.ctaText,
+              border: theme.ctaBorder,
+            }}
           >
             <span>Verify Credential</span>
-            <span
-              style={{ color: theme.accentColor }}
-              className="font-bold text-[1.4rem] md:text-[1.5rem] group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform"
-            >
+            <span className="font-bold text-[1.4rem] md:text-[1.5rem] group-hover/cta:translate-x-1 group-hover/cta:-translate-y-1 transition-transform">
               ↗
             </span>
           </a>
         </div>
-      </div>
+      ) : (
+        /* ================= PREVIOUS SYNTHETIC UI CARD VIEW (PRESERVED FOR INSTANT REVERT) ================= */
+        <div
+          className={`w-full h-auto md:h-full p-[2.4rem] md:p-[4.4rem] flex flex-col justify-between bg-gradient-to-br ${theme.gradient} text-white relative overflow-hidden rounded-[32px] md:rounded-[64px] gap-[2rem] md:gap-0`}
+        >
+          {/* Subtle decorative ambient mesh glow */}
+          <div
+            className="absolute -top-[20%] -right-[20%] w-[38rem] h-[38rem] rounded-full blur-[110px] pointer-events-none opacity-25"
+            style={{ backgroundColor: theme.accentColor }}
+          />
 
-      {/* Description Overlay: Opens on Eye Button Click */}
+          {/* Top Header: Issuer Logo Badge + Category Badge + Verified Status */}
+          <div className="flex items-center justify-between w-full relative z-10 gap-[1rem] flex-wrap">
+            <div className="flex items-center gap-[1.2rem]">
+              <div className="p-[0.8rem] rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15 flex items-center justify-center shrink-0 shadow-sm">
+                {theme.logoType === 'microsoft' && (
+                  <div className="grid grid-cols-2 gap-[2px] w-[1.7rem] h-[1.7rem]">
+                    <div className="w-[0.75rem] h-[0.75rem] bg-[#F25022] rounded-[2px]" />
+                    <div className="w-[0.75rem] h-[0.75rem] bg-[#7FBA00] rounded-[2px]" />
+                    <div className="w-[0.75rem] h-[0.75rem] bg-[#00A4EF] rounded-[2px]" />
+                    <div className="w-[0.75rem] h-[0.75rem] bg-[#FFB900] rounded-[2px]" />
+                  </div>
+                )}
+                {theme.logoType === 'aws' && (
+                  <div className="w-[1.7rem] h-[1.7rem] rounded-full bg-[#FF9900] flex items-center justify-center text-[0.95rem] font-bold text-white leading-none">
+                    A
+                  </div>
+                )}
+                {theme.logoType === 'anthropic' && (
+                  <div className="w-[1.7rem] h-[1.7rem] rounded-full bg-white text-black flex items-center justify-center text-[1rem] font-bold leading-none">
+                    ✦
+                  </div>
+                )}
+              </div>
+
+              <div className="flex flex-col">
+                <span className="text-[1.25rem] font-mono font-bold uppercase tracking-wider text-white">
+                  {theme.issuer}
+                </span>
+                <span className="text-[1.05rem] font-mono uppercase tracking-widest text-white/50">
+                  {section.badge || `Credential 0${index + 1}`}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-[0.8rem]">
+              <span
+                className="text-[1.05rem] md:text-[1.1rem] font-mono font-bold tracking-wider uppercase px-[1.1rem] py-[0.4rem] rounded-full border"
+                style={{
+                  color: theme.accentColor,
+                  backgroundColor: theme.accentBg,
+                  borderColor: theme.accentBorder,
+                }}
+              >
+                {theme.category}
+              </span>
+
+              <div className="flex items-center gap-[0.5rem] bg-white/[0.06] border border-white/10 px-[1.1rem] py-[0.4rem] rounded-full">
+                <span className="w-[0.65rem] h-[0.65rem] rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-[1rem] md:text-[1.05rem] font-mono text-white/80 font-medium">
+                  VERIFIED
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Main Content Area */}
+          <div className="my-auto py-[1.2rem] md:py-[1.8rem] relative z-10 flex flex-col gap-[1.4rem]">
+            <div>
+              <h2 className="text-[2.2rem] md:text-[3.2rem] font-bold tracking-tight text-white leading-[1.2] mb-[0.8rem]">
+                {section.section_title}
+              </h2>
+              <p className="text-[1.35rem] md:text-[1.5rem] font-normal text-white/70 tracking-tight leading-relaxed max-w-[50rem]">
+                {section.body.split('\n\n')[0]}
+              </p>
+            </div>
+
+            {/* Interactive Feature Architecture Box */}
+            <div className="p-[1.6rem] md:p-[1.8rem] rounded-[20px] bg-white/[0.04] border border-white/10 backdrop-blur-md flex flex-col gap-[1.2rem]">
+              <div className="flex items-center justify-between text-[1.1rem] md:text-[1.15rem] font-mono text-white/50 border-b border-white/10 pb-[0.8rem] flex-wrap gap-[0.4rem]">
+                <span>VALIDATED COMPETENCIES</span>
+                <span style={{ color: theme.accentColor }}>{theme.metric}</span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-[0.8rem]">
+                {theme.highlights.map((highlight, idx) => (
+                  <div key={idx} className="flex items-center gap-[0.7rem] text-[1.15rem] md:text-[1.2rem] text-white/85">
+                    <span
+                      className="w-[0.5rem] h-[0.5rem] rounded-full shrink-0"
+                      style={{ backgroundColor: theme.accentColor }}
+                    />
+                    <span className="font-medium tracking-tight">{highlight}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Footer: Skills Tags & Direct Verification CTA */}
+          <div className="flex items-center justify-between pt-[1.6rem] md:pt-[1.8rem] border-t border-white/10 relative z-10 gap-[1.2rem] flex-wrap">
+            <div className="flex items-center gap-[0.6rem] flex-wrap max-w-full">
+              {skillsList.slice(0, 3).map((skill, idx) => (
+                <span
+                  key={idx}
+                  className="text-[1.05rem] md:text-[1.1rem] font-mono px-[1rem] py-[0.35rem] rounded-full bg-white/[0.08] text-white/90 font-medium"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+
+            <a
+              href={verifyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              className="group/btn flex items-center gap-[0.8rem] text-[1.2rem] md:text-[1.3rem] font-mono font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 px-[1.6rem] md:px-[1.8rem] py-[0.8rem] rounded-full transition-all shrink-0 shadow-[0_4px_24px_rgba(0,0,0,0.35)] hover:shadow-[0_6px_32px_rgba(0,0,0,0.5)] cursor-pointer"
+            >
+              <span>Verify Credential</span>
+              <span
+                style={{ color: theme.accentColor }}
+                className="font-bold text-[1.4rem] md:text-[1.5rem] group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform"
+              >
+                ↗
+              </span>
+            </a>
+          </div>
+        </div>
+      )}
+
+      {/* Description Overlay: Opens on Eye Button Click (Works for both views) */}
       <AnimatePresence>
         {showInfo && (
           <motion.div
