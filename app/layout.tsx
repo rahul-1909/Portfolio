@@ -16,13 +16,21 @@ export const metadata: Metadata = {
     siteName: 'Rahul Teja',
     images: [
       {
-        url: '/og-image.png',
+        url: '/og-image.png?v=2',
         width: 1200,
         height: 630,
+        alt: 'Rahul Teja - AI Engineer Portfolio',
       },
     ],
     locale: 'en_US',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Rahul Teja - AI Engineer',
+    description:
+      'Portfolio of Rahul Teja, AI Engineer. Selected projects, professional experience, technical skills, and certifications.',
+    images: ['/og-image.png?v=2'],
   },
   icons: {
     icon: [
