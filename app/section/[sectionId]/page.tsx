@@ -487,23 +487,7 @@ export default function SectionPage() {
       <div
         ref={rightScrollRef}
         onScroll={updateActiveSectionIndex}
-        className="absolute top-0 right-0 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none flex justify-center md:justify-end px-4 md:px-8 pt-[7.5rem] md:pt-0 pb-[12rem] md:pb-0 z-10"
-        style={{
-          paddingTop:
-            project.id === 'skills' || project.id === 'certifications'
-              ? 'clamp(6rem, 10vh, 12rem)'
-              : project.id === 'experience'
-              ? 'max(2rem, calc((100vh - 60.58rem) / 2))'
-              : 'max(2rem, calc((100vh - 70.85rem) / 2))',
-          paddingBottom:
-            project.id === 'skills' || project.id === 'certifications'
-              ? '24rem'
-              : project.id === 'experience'
-              ? showInfo
-                ? '24rem'
-                : 'max(2rem, calc((100vh - 60.58rem) / 2))'
-              : 'max(2rem, calc((100vh - 70.85rem) / 2))',
-        }}
+        className="absolute top-0 right-0 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none flex justify-center md:justify-end px-4 md:px-8 z-10"
       >
         <div
           className={`flex flex-col gap-8 max-md:gap-[2rem] ${
@@ -513,6 +497,18 @@ export default function SectionPage() {
               ? 'w-full max-w-[38rem] md:w-[74rem] md:max-w-none'
               : 'w-full max-w-[35.5rem] md:w-[69rem] md:max-w-none'
           } shrink-0 items-center md:items-end mx-auto md:mx-0`}
+          style={{
+            paddingTop:
+              project.id === 'skills' || project.id === 'certifications'
+                ? 'clamp(6rem, 10vh, 12rem)'
+                : project.id === 'projects'
+                ? 'max(2rem, calc((100vh - 70.85rem) / 2))'
+                : project.id === 'experience'
+                ? showInfo
+                  ? 'clamp(6rem, 10vh, 12rem)'
+                  : 'max(2rem, calc((100vh - 60.58rem) / 2))'
+                : 'max(2rem, calc((100vh - 70.85rem) / 2))',
+          }}
         >
           {project.id === 'skills' ? (
             <motion.div
@@ -715,7 +711,23 @@ export default function SectionPage() {
           </motion.div>
         ))
       )}
-          </div>
+
+          {/* Symmetrical Bottom Spacer for Scrollable Stacks */}
+          {(project.id === 'certifications' || project.id === 'skills' || (project.id === 'experience' && showInfo)) && (
+            <div
+              className="shrink-0 pointer-events-none w-full -mt-8"
+              style={{ height: 'clamp(6rem, 10vh, 12rem)' }}
+              aria-hidden="true"
+            />
+          )}
+          {project.id === 'projects' && (
+            <div
+              className="shrink-0 pointer-events-none w-full -mt-8"
+              style={{ height: 'max(2rem, calc((100vh - 70.85rem) / 2))' }}
+              aria-hidden="true"
+            />
+          )}
+        </div>
         </div>
     </div>
   );
