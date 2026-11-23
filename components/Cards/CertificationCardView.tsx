@@ -169,7 +169,7 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
               onClick={(e) => {
                 e.stopPropagation();
               }}
-              className="absolute bottom-[1.4rem] right-[1.4rem] md:bottom-[2.2rem] md:right-[2.2rem] z-20 flex items-center gap-[0.8rem] text-[1.2rem] md:text-[1.3rem] font-mono font-semibold px-[1.6rem] md:px-[2rem] py-[0.8rem] md:py-[1rem] rounded-full bg-black/30 hover:bg-black/45 text-white backdrop-blur-xl border border-white/25 hover:border-white/40 transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.5)] cursor-pointer group/cta"
+              className="absolute bottom-[1.4rem] right-[1.4rem] md:bottom-[2.2rem] md:right-[2.2rem] z-20 flex items-center gap-[0.8rem] text-[1.2rem] md:text-[1.3rem] font-mono font-semibold px-[1.6rem] md:px-[2rem] py-[0.8rem] md:py-[1rem] rounded-full bg-black/10 hover:bg-black/20 text-white backdrop-blur-xl border border-white/20 hover:border-white/35 transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.15),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.25),inset_0_1px_1px_rgba(255,255,255,0.45)] cursor-pointer group/cta drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]"
             >
               <span>Verify Credential</span>
               <span className="font-bold text-[1.4rem] md:text-[1.5rem] group-hover/cta:translate-x-1 group-hover/cta:-translate-y-1 transition-transform">
@@ -292,7 +292,7 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
                 onClick={(e) => {
                   e.stopPropagation();
                 }}
-                className="group/btn flex items-center gap-[0.8rem] text-[1.2rem] md:text-[1.3rem] font-mono font-semibold text-white bg-black/30 hover:bg-black/45 border border-white/25 hover:border-white/40 px-[1.6rem] md:px-[1.8rem] py-[0.8rem] rounded-full backdrop-blur-xl transition-all shrink-0 shadow-[0_8px_32px_rgba(0,0,0,0.2),inset_0_1px_1px_rgba(255,255,255,0.3)] cursor-pointer"
+                className="group/btn flex items-center gap-[0.8rem] text-[1.2rem] md:text-[1.3rem] font-mono font-semibold text-white bg-black/10 hover:bg-black/20 border border-white/20 hover:border-white/35 px-[1.6rem] md:px-[1.8rem] py-[0.8rem] rounded-full backdrop-blur-xl transition-all shrink-0 shadow-[0_8px_32px_rgba(0,0,0,0.15),inset_0_1px_1px_rgba(255,255,255,0.3)] cursor-pointer drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]"
               >
                 <span>Verify Credential</span>
                 <span
