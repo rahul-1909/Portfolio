@@ -490,7 +490,7 @@ export default function SectionPage() {
         className="absolute top-0 right-0 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none flex justify-center md:justify-end px-4 md:px-8 z-10"
       >
         <div
-          className={`flex flex-col gap-8 max-md:gap-[2rem] ${
+          className={`section-card-stack flex flex-col gap-8 max-md:gap-[2rem] ${
             project.id === 'experience' || project.id === 'skills'
               ? 'w-full max-w-[35.5rem] md:w-[59rem] md:max-w-none'
               : project.id === 'certifications'
@@ -498,7 +498,7 @@ export default function SectionPage() {
               : 'w-full max-w-[35.5rem] md:w-[69rem] md:max-w-none'
           } shrink-0 items-center md:items-end mx-auto md:mx-0`}
           style={{
-            paddingTop:
+            ['--stack-pt-desktop' as string]:
               project.id === 'skills' || project.id === 'certifications'
                 ? 'clamp(6rem, 10vh, 12rem)'
                 : project.id === 'projects'
@@ -508,7 +508,7 @@ export default function SectionPage() {
                   ? 'clamp(6rem, 10vh, 12rem)'
                   : 'max(2rem, calc((100vh - 60.58rem) / 2))'
                 : 'max(2rem, calc((100vh - 70.85rem) / 2))',
-          }}
+          } as React.CSSProperties}
         >
           {project.id === 'skills' ? (
             <motion.div
@@ -712,17 +712,17 @@ export default function SectionPage() {
         ))
       )}
 
-          {/* Symmetrical Bottom Spacer for Scrollable Stacks */}
+          {/* Desktop Symmetrical Bottom Spacer */}
           {(project.id === 'certifications' || project.id === 'skills' || (project.id === 'experience' && showInfo)) && (
             <div
-              className="shrink-0 pointer-events-none w-full -mt-8"
+              className="hidden md:block shrink-0 pointer-events-none w-full -mt-8"
               style={{ height: 'clamp(6rem, 10vh, 12rem)' }}
               aria-hidden="true"
             />
           )}
           {project.id === 'projects' && (
             <div
-              className="shrink-0 pointer-events-none w-full -mt-8"
+              className="hidden md:block shrink-0 pointer-events-none w-full -mt-8"
               style={{ height: 'max(2rem, calc((100vh - 70.85rem) / 2))' }}
               aria-hidden="true"
             />

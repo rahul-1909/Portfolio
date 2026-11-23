@@ -124,3 +124,16 @@ body {
 .social-button {
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* Responsive Section Card Stack Spacing: Generous mobile header & dock clearance, symmetrical desktop gaps */
+.section-card-stack {
+  padding-top: 13rem;
+  padding-bottom: 12rem;
+}
+
+@media (min-width: 768px) {
+  .section-card-stack {
+    padding-top: var(--stack-pt-desktop, clamp(6rem, 10vh, 12rem));
+    padding-bottom: 0;
+  }
+}
