@@ -138,7 +138,7 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
 }) => {
   const theme = certThemes[index % certThemes.length];
   const skillsList = section.tech ? section.tech.split('·').map((t) => t.trim()) : [];
-  const verifyUrl = section.live_url || section.repo_url || '#';
+  const verifyUrl = section.live_url || section.repo_url;
   const certImageSrc = section.image || `/certificates/${theme.certFile}`;
 
   return (
@@ -156,21 +156,23 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
             loading="eager"
           />
 
-          {/* Dedicated Floating Verification CTA at Bottom Right */}
-          <a
-            href={verifyUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            className="absolute bottom-[1.4rem] right-[1.4rem] md:bottom-[2.2rem] md:right-[2.2rem] z-20 flex items-center gap-[0.8rem] text-[1.2rem] md:text-[1.3rem] font-mono font-semibold px-[1.6rem] md:px-[2rem] py-[0.8rem] md:py-[1rem] rounded-full bg-black/80 hover:bg-black text-white backdrop-blur-md transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.35)] hover:shadow-[0_6px_32px_rgba(0,0,0,0.5)] cursor-pointer group/cta"
-          >
-            <span>Verify Credential</span>
-            <span className="font-bold text-[1.4rem] md:text-[1.5rem] group-hover/cta:translate-x-1 group-hover/cta:-translate-y-1 transition-transform">
-              ↗
-            </span>
-          </a>
+          {/* Dedicated Floating Verification CTA at Bottom Right (Only if valid verification URL exists) */}
+          {verifyUrl && (
+            <a
+              href={verifyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              className="absolute bottom-[1.4rem] right-[1.4rem] md:bottom-[2.2rem] md:right-[2.2rem] z-20 flex items-center gap-[0.8rem] text-[1.2rem] md:text-[1.3rem] font-mono font-semibold px-[1.6rem] md:px-[2rem] py-[0.8rem] md:py-[1rem] rounded-full bg-black/80 hover:bg-black text-white backdrop-blur-md transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.35)] hover:shadow-[0_6px_32px_rgba(0,0,0,0.5)] cursor-pointer group/cta"
+            >
+              <span>Verify Credential</span>
+              <span className="font-bold text-[1.4rem] md:text-[1.5rem] group-hover/cta:translate-x-1 group-hover/cta:-translate-y-1 transition-transform">
+                ↗
+              </span>
+            </a>
+          )}
         </div>
       ) : (
         /* ================= PREVIOUS SYNTHETIC UI CARD VIEW (PRESERVED FOR INSTANT REVERT) ================= */
@@ -278,23 +280,25 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
               ))}
             </div>
 
-            <a
-              href={verifyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-              className="group/btn flex items-center gap-[0.8rem] text-[1.2rem] md:text-[1.3rem] font-mono font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 px-[1.6rem] md:px-[1.8rem] py-[0.8rem] rounded-full transition-all shrink-0 shadow-[0_4px_24px_rgba(0,0,0,0.35)] hover:shadow-[0_6px_32px_rgba(0,0,0,0.5)] cursor-pointer"
-            >
-              <span>Verify Credential</span>
-              <span
-                style={{ color: theme.accentColor }}
-                className="font-bold text-[1.4rem] md:text-[1.5rem] group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform"
+            {verifyUrl && (
+              <a
+                href={verifyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                className="group/btn flex items-center gap-[0.8rem] text-[1.2rem] md:text-[1.3rem] font-mono font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 px-[1.6rem] md:px-[1.8rem] py-[0.8rem] rounded-full transition-all shrink-0 shadow-[0_4px_24px_rgba(0,0,0,0.35)] hover:shadow-[0_6px_32px_rgba(0,0,0,0.5)] cursor-pointer"
               >
-                ↗
-              </span>
-            </a>
+                <span>Verify Credential</span>
+                <span
+                  style={{ color: theme.accentColor }}
+                  className="font-bold text-[1.4rem] md:text-[1.5rem] group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform"
+                >
+                  ↗
+                </span>
+              </a>
+            )}
           </div>
         </div>
       )}
@@ -377,15 +381,21 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
                 transition={{ duration: 0.5, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
                 className="pt-[2rem] border-t border-black/10 flex items-center justify-between flex-wrap gap-[1.2rem]"
               >
-                <a
-                  href={verifyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-[2.4rem] py-[1.2rem] rounded-full bg-light-black text-white text-[1.4rem] font-semibold flex items-center gap-[0.8rem] hover:bg-black transition-colors"
-                >
-                  <span>Open Official Verification</span>
-                  <span className="text-[1.5rem]">↗</span>
-                </a>
+                {verifyUrl ? (
+                  <a
+                    href={verifyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-[2.4rem] py-[1.2rem] rounded-full bg-light-black text-white text-[1.4rem] font-semibold flex items-center gap-[0.8rem] hover:bg-black transition-colors"
+                  >
+                    <span>Open Official Verification</span>
+                    <span className="text-[1.5rem]">↗</span>
+                  </a>
+                ) : (
+                  <span className="px-[2.4rem] py-[1.2rem] rounded-full bg-black/5 text-[#555555] text-[1.3rem] font-mono font-medium">
+                    Offline Verifiable Credential
+                  </span>
+                )}
 
                 <button
                   type="button"
