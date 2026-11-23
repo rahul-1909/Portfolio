@@ -567,7 +567,7 @@ export const ProjectSlider: React.FC = () => {
                 Rahul Teja
               </h1>
               <p className="text-[2.2rem] font-normal text-grey leading-none m-0 tracking-tight mt-[0.4rem]">
-                Software Engineer
+                AI Engineer
               </p>
             </motion.div>
           ) : (
@@ -812,7 +812,7 @@ export const ProjectSlider: React.FC = () => {
                 </div>
                 <div className="overflow-hidden pb-2 relative w-[40rem] max-phone:w-auto max-phone:whitespace-nowrap">
                   <p className="text-[3.2rem] max-phone:text-[1.8rem] font-normal text-grey leading-none m-0 tracking-normal">
-                    Software Engineer
+                    AI Engineer
                   </p>
                 </div>
               </div>

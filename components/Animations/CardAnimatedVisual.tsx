@@ -219,18 +219,18 @@ export const CardAnimatedVisual: React.FC<CardAnimatedVisualProps> = ({ projectI
           key="exp-star"
           className="relative flex items-center justify-center"
           animate={{
-            opacity: [0, 1, 1, 1, 1, 0, 0, 0],
-            scale: [0.25, 1.15, 0.96, 1.06, 1.0, 0.15, 0, 0],
-            rotate: [-25, 8, -4, 5, 0, 40, 0, 0],
+            opacity: [1, 1, 1, 1, 1, 0, 0, 1],
+            scale: [1.0, 1.15, 0.96, 1.06, 1.0, 0.15, 0, 1.0],
+            rotate: [0, 8, -4, 5, 0, 40, 0, 0],
             filter: [
-              'blur(6px)',
+              'blur(0px)',
               'blur(0px)',
               'blur(0px)',
               'blur(0px)',
               'blur(0px)',
               'blur(6px)',
               'blur(8px)',
-              'blur(8px)',
+              'blur(0px)',
             ],
           }}
           transition={{

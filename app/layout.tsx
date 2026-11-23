@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     siteName: 'Rahul Teja',
     images: [
       {
-        url: '/og-image.png?v=2',
+        url: '/og-image.png?v=3',
         width: 1200,
         height: 630,
         alt: 'Rahul Teja - AI Engineer Portfolio',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     title: 'Rahul Teja - AI Engineer',
     description:
       'Portfolio of Rahul Teja, AI Engineer. Selected projects, professional experience, technical skills, and certifications.',
-    images: ['/og-image.png?v=2'],
+    images: ['/og-image.png?v=3'],
   },
   icons: {
     icon: [
