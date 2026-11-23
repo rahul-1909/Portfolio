@@ -113,10 +113,14 @@ export const ProjectCardView: React.FC<ProjectCardViewProps> = ({
   const isLiveDemo = !isExploreRepos && !!section.live_url && !section.live_url.includes('github.com');
 
   return (
-    <div className="w-full h-auto md:h-full relative select-none flex flex-col justify-between overflow-hidden rounded-[32px] md:rounded-[64px]">
+    <div
+      className="w-full h-auto md:h-full relative select-none flex flex-col justify-between overflow-hidden rounded-[32px] md:rounded-[64px] touch-pan-y"
+      style={{ touchAction: 'pan-y' }}
+    >
       {/* Front Card Surface */}
       <div
-        className={`w-full h-auto md:h-full p-[2.4rem] md:p-[5.4rem] flex flex-col justify-between bg-gradient-to-br ${theme.gradient} text-white relative overflow-hidden rounded-[32px] md:rounded-[64px] gap-[2rem] md:gap-0`}
+        className={`w-full h-auto md:h-full p-[2.4rem] md:p-[5.4rem] flex flex-col justify-between bg-gradient-to-br ${theme.gradient} text-white relative overflow-hidden rounded-[32px] md:rounded-[64px] gap-[2rem] md:gap-0 touch-pan-y`}
+        style={{ touchAction: 'pan-y' }}
       >
         {/* Subtle decorative mesh glow */}
         <div
@@ -132,13 +136,13 @@ export const ProjectCardView: React.FC<ProjectCardViewProps> = ({
         )}
 
         {/* Top Header: Category Tag & Status Badge */}
-        <div className="flex items-center justify-between w-full relative z-10 gap-[1.2rem] flex-wrap">
+        <div className="flex items-center justify-between w-full relative z-10 gap-[1.2rem] flex-wrap touch-pan-y" style={{ touchAction: 'pan-y' }}>
           <div className="flex items-center gap-[0.8rem]">
             {isExploreRepos && (
               <GitHubIcon className="w-[1.6rem] h-[1.6rem]" color={theme.accentColor} />
             )}
             <span
-              className="text-[1.2rem] max-phone:text-[1rem] font-mono font-bold tracking-wider uppercase px-[1.2rem] py-[0.5rem] rounded-full border"
+              className="text-[1.2rem] max-phone:text-[1rem] font-mono font-bold tracking-wider uppercase px-[1.2rem] py-[0.5rem] rounded-full border pointer-events-none"
               style={{
                 color: theme.accentColor,
                 backgroundColor: theme.accentBg,
@@ -149,7 +153,7 @@ export const ProjectCardView: React.FC<ProjectCardViewProps> = ({
             </span>
           </div>
 
-          <div className="flex items-center gap-[0.6rem] bg-white/[0.06] border border-white/10 px-[1.2rem] py-[0.5rem] rounded-full">
+          <div className="flex items-center gap-[0.6rem] bg-white/[0.06] border border-white/10 px-[1.2rem] py-[0.5rem] rounded-full pointer-events-none">
             <span
               className={`w-[0.7rem] h-[0.7rem] rounded-full ${
                 isLiveDemo || isExploreRepos ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'
@@ -162,26 +166,29 @@ export const ProjectCardView: React.FC<ProjectCardViewProps> = ({
         </div>
 
         {/* Main Content Area */}
-        <div className="my-auto py-[2.4rem] relative z-10 flex flex-col gap-[1.8rem]">
-          <div>
-            <h2 className="text-[4.6rem] max-phone:text-[3rem] font-bold tracking-tight text-white leading-none mb-[1rem]">
+        <div className="my-auto py-[2.4rem] relative z-10 flex flex-col gap-[1.8rem] touch-pan-y" style={{ touchAction: 'pan-y' }}>
+          <div className="touch-pan-y" style={{ touchAction: 'pan-y' }}>
+            <h2 className="text-[4.6rem] max-phone:text-[3rem] font-bold tracking-tight text-white leading-none mb-[1rem] pointer-events-none">
               {section.section_title}
             </h2>
-            <p className="text-[2rem] max-phone:text-[1.5rem] font-medium text-white/70 tracking-tight leading-snug">
+            <p className="text-[2rem] max-phone:text-[1.5rem] font-medium text-white/70 tracking-tight leading-snug pointer-events-none">
               {section.subtitle}
             </p>
           </div>
 
           {/* Interactive Feature Architecture Box */}
-          <div className="p-[2.2rem] max-phone:p-[1.6rem] rounded-[22px] bg-white/[0.04] border border-white/10 backdrop-blur-md flex flex-col gap-[1.4rem]">
-            <div className="flex items-center justify-between text-[1.2rem] font-mono text-white/50 border-b border-white/10 pb-[1rem]">
+          <div
+            className="p-[2.2rem] max-phone:p-[1.6rem] rounded-[22px] bg-white/[0.04] border border-white/10 backdrop-blur-md flex flex-col gap-[1.4rem] touch-pan-y"
+            style={{ touchAction: 'pan-y' }}
+          >
+            <div className="flex items-center justify-between text-[1.2rem] font-mono text-white/50 border-b border-white/10 pb-[1rem] pointer-events-none">
               <span>{isExploreRepos ? 'GITHUB ECOSYSTEM' : 'CORE ARCHITECTURE'}</span>
               <span style={{ color: theme.accentColor }}>{theme.metric}</span>
             </div>
 
-            <div className="grid grid-cols-2 max-phone:grid-cols-1 gap-[1rem]">
+            <div className="grid grid-cols-2 max-phone:grid-cols-1 gap-[1rem] touch-pan-y" style={{ touchAction: 'pan-y' }}>
               {theme.highlights.map((highlight, idx) => (
-                <div key={idx} className="flex items-center gap-[0.8rem] text-[1.3rem] max-phone:text-[1.15rem] text-white/85">
+                <div key={idx} className="flex items-center gap-[0.8rem] text-[1.3rem] max-phone:text-[1.15rem] text-white/85 pointer-events-none">
                   <span
                     className="w-[0.5rem] h-[0.5rem] rounded-full shrink-0"
                     style={{ backgroundColor: theme.accentColor }}
@@ -194,9 +201,9 @@ export const ProjectCardView: React.FC<ProjectCardViewProps> = ({
         </div>
 
         {/* Bottom Footer: Tech Badges & Live/Details Action */}
-        <div className="flex items-end justify-between pt-[2.4rem] border-t border-white/10 relative z-10 gap-[1.6rem] flex-wrap">
+        <div className="flex items-end justify-between pt-[2.4rem] border-t border-white/10 relative z-10 gap-[1.6rem] flex-wrap touch-pan-y" style={{ touchAction: 'pan-y' }}>
           {/* Tech Badges */}
-          <div className="flex items-center gap-[0.8rem] flex-wrap max-w-[65%] max-phone:max-w-full">
+          <div className="flex items-center gap-[0.8rem] flex-wrap max-w-[65%] max-phone:max-w-full pointer-events-none">
             {techList.slice(0, 4).map((tech, idx) => (
               <span
                 key={idx}

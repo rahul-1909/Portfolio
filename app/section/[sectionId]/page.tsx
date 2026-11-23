@@ -61,11 +61,19 @@ export default function SectionPage() {
   const [showInfo, setShowInfo] = useState(false);
   const [activeDescTab, setActiveDescTab] = useState(0);
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const rightScrollRef = useRef<HTMLDivElement>(null);
   const targetScrollTop = useRef(0);
   const currentScrollTop = useRef(0);
   const isAnimatingScroll = useRef(false);
   const animFrameId = useRef<number | null>(null);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const currentSection = project?.sections[activeSectionIndex] || project?.sections[0];
   const currentExternalUrl =
@@ -168,6 +176,7 @@ export default function SectionPage() {
 
     const handleGlobalWheel = (e: WheelEvent) => {
       if (e.ctrlKey) return;
+      if (window.innerWidth < 768) return;
       const scroller = rightScrollRef.current;
       if (!scroller) return;
 
@@ -487,7 +496,12 @@ export default function SectionPage() {
       <div
         ref={rightScrollRef}
         onScroll={updateActiveSectionIndex}
-        className="absolute top-0 right-0 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none flex justify-center md:justify-end px-4 md:px-8 z-10"
+        className="absolute top-0 right-0 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none flex justify-center md:justify-end px-4 md:px-8 z-10 touch-pan-y"
+        style={{
+          WebkitOverflowScrolling: 'touch',
+          touchAction: 'pan-y',
+          overscrollBehaviorY: 'contain',
+        }}
       >
         <div
           className={`section-card-stack flex flex-col gap-8 max-md:gap-[2rem] ${
@@ -496,8 +510,9 @@ export default function SectionPage() {
               : project.id === 'certifications'
               ? 'w-full max-w-[38rem] md:w-[74rem] md:max-w-none'
               : 'w-full max-w-[35.5rem] md:w-[69rem] md:max-w-none'
-          } shrink-0 items-center md:items-end mx-auto md:mx-0`}
+          } shrink-0 items-center md:items-end mx-auto md:mx-0 touch-pan-y`}
           style={{
+            touchAction: 'pan-y',
             ['--stack-pt-desktop' as string]:
               project.id === 'skills' || project.id === 'certifications'
                 ? 'clamp(6rem, 10vh, 12rem)'
@@ -533,16 +548,17 @@ export default function SectionPage() {
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, ease: [0.32, 0, 0, 1] }}
-                  whileHover={{ scale: 1.01, transition: { duration: 0.25, ease: 'easeOut' } }}
-                  whileTap={{ scale: 0.99 }}
+                  whileHover={isMobile ? undefined : { scale: 1.01, transition: { duration: 0.25, ease: 'easeOut' } }}
+                  whileTap={isMobile ? undefined : { scale: 0.99 }}
                   onClick={() => setShowInfo(true)}
-                  className="w-full aspect-[33.5/34.4] !rounded-[64px] max-phone:!rounded-[32px] overflow-hidden relative shrink-0 cursor-pointer group bg-[#26272b]"
+                  className="w-full aspect-[33.5/34.4] !rounded-[64px] max-phone:!rounded-[32px] overflow-hidden relative shrink-0 cursor-pointer group bg-[#26272b] touch-pan-y"
                   style={{
                     borderRadius: 64,
                     overflow: 'hidden',
                     boxShadow: 'none',
                     border: 'none',
                     outline: 'none',
+                    touchAction: 'pan-y',
                   }}
                 >
                   <div className="w-full h-full flex flex-col justify-between p-[5.4rem] max-phone:p-[3.2rem] text-white select-none relative overflow-hidden transition-colors duration-500 bg-[#26272b]">
@@ -607,8 +623,8 @@ export default function SectionPage() {
                     delay: idx === 0 ? 0.05 : 0.08 + idx * 0.06,
                     ease: [0.32, 0, 0, 1],
                   }}
-                  whileHover={{ scale: 1.01, transition: { duration: 0.25, ease: 'easeOut' } }}
-                  whileTap={{ scale: 0.99 }}
+                  whileHover={isMobile ? undefined : { scale: 1.01, transition: { duration: 0.25, ease: 'easeOut' } }}
+                  whileTap={isMobile ? undefined : { scale: 0.99 }}
                   onClick={() => {
                     if (project.id === 'certifications') {
                       if (section.live_url) {
@@ -628,12 +644,13 @@ export default function SectionPage() {
                       : idx === 0
                       ? 'aspect-[33.5/34.4] rounded-[32px] md:rounded-[64px] bg-[#18191c]'
                       : 'aspect-square rounded-[32px] md:rounded-[64px] bg-[#18191c]'
-                  } overflow-hidden relative shrink-0 cursor-pointer group`}
+                  } overflow-hidden relative shrink-0 cursor-pointer group touch-pan-y`}
                   style={{
                     overflow: 'hidden',
                     boxShadow: 'none',
                     border: 'none',
                     outline: 'none',
+                    touchAction: 'pan-y',
                   }}
                 >
                   {project.id === 'projects' ? (

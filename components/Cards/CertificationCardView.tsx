@@ -143,11 +143,15 @@ export const CertificationCardView: React.FC<CertificationCardViewProps> = ({
 
   return (
     <div
-      className="w-full h-auto relative select-none flex flex-col justify-center items-center overflow-hidden rounded-[16px] md:rounded-[24px]"
+      className="w-full h-auto relative select-none flex flex-col justify-center items-center overflow-hidden rounded-[16px] md:rounded-[24px] touch-pan-y"
+      style={{ touchAction: 'pan-y' }}
     >
       {USE_ORIGINAL_CERTIFICATES ? (
         /* ================= FULL-SIZE ORIGINAL MASTER CERTIFICATE VIEW ================= */
-        <div className="w-full h-auto relative flex items-center justify-center overflow-hidden rounded-[16px] md:rounded-[24px] shadow-[0_16px_40px_rgba(0,0,0,0.14)] hover:shadow-[0_24px_60px_rgba(0,0,0,0.22)] transition-all duration-300 border border-black/10 bg-white group/cert">
+        <div
+          className="w-full h-auto relative flex items-center justify-center overflow-hidden rounded-[16px] md:rounded-[24px] shadow-[0_16px_40px_rgba(0,0,0,0.14)] hover:shadow-[0_24px_60px_rgba(0,0,0,0.22)] transition-all duration-300 border border-black/10 bg-white group/cert touch-pan-y"
+          style={{ touchAction: 'pan-y' }}
+        >
           {/* Natural Full-Length Certificate Image */}
           <img
             src={certImageSrc}

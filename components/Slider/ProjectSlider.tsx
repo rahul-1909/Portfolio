@@ -486,7 +486,7 @@ export const ProjectSlider: React.FC = () => {
         selectedProject ? 'px-0 max-phone:px-[6vw]' : 'px-0'
       }`}
       onWheel={handleWheel}
-      style={{ touchAction: selectedProject ? 'auto' : 'none' }}
+      style={{ touchAction: selectedProject ? 'pan-y' : 'none' }}
     >
       {/* DESKTOP FLOATING UNEXPAND BUTTON: Moves vertically with cursor */}
       <AnimatePresence>
@@ -1289,7 +1289,12 @@ export const ProjectSlider: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="absolute top-0 right-0 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none flex justify-center md:justify-end px-4 md:px-8 z-10"
+            className="absolute top-0 right-0 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none flex justify-center md:justify-end px-4 md:px-8 z-10 touch-pan-y"
+            style={{
+              WebkitOverflowScrolling: 'touch',
+              touchAction: 'pan-y',
+              overscrollBehaviorY: 'contain',
+            }}
           >
             <div
               className={`section-card-stack flex flex-col gap-8 max-md:gap-[2rem] ${
@@ -1298,8 +1303,9 @@ export const ProjectSlider: React.FC = () => {
                   : selectedProject.id === 'certifications'
                   ? 'w-full max-w-[38rem] md:w-[74rem] md:max-w-none'
                   : 'w-full max-w-[35.5rem] md:w-[69rem] md:max-w-none'
-              } shrink-0 items-center md:items-end mx-auto md:mx-0`}
+              } shrink-0 items-center md:items-end mx-auto md:mx-0 touch-pan-y`}
               style={{
+                touchAction: 'pan-y',
                 ['--stack-pt-desktop' as string]:
                   selectedProject.id === 'skills' || selectedProject.id === 'certifications'
                     ? 'clamp(6rem, 10vh, 12rem)'
@@ -1336,16 +1342,17 @@ export const ProjectSlider: React.FC = () => {
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, ease: [0.32, 0, 0, 1] }}
-                    whileHover={{ scale: 1.01, transition: { duration: 0.25, ease: 'easeOut' } }}
-                    whileTap={{ scale: 0.99 }}
+                    whileHover={isMobile ? undefined : { scale: 1.01, transition: { duration: 0.25, ease: 'easeOut' } }}
+                    whileTap={isMobile ? undefined : { scale: 0.99 }}
                     onClick={() => setShowInfo(true)}
-                    className="w-full aspect-[33.5/34.4] !rounded-[64px] max-phone:!rounded-[32px] overflow-hidden relative shrink-0 cursor-pointer group bg-[#26272b]"
+                    className="w-full aspect-[33.5/34.4] !rounded-[64px] max-phone:!rounded-[32px] overflow-hidden relative shrink-0 cursor-pointer group bg-[#26272b] touch-pan-y"
                     style={{
                       borderRadius: 64,
                       overflow: 'hidden',
                       boxShadow: 'none',
                       border: 'none',
                       outline: 'none',
+                      touchAction: 'pan-y',
                     }}
                   >
                     <div className="w-full h-full flex flex-col justify-between p-[5.4rem] max-phone:p-[3.2rem] text-white select-none relative overflow-hidden transition-colors duration-500 bg-[#26272b]">
@@ -1419,8 +1426,8 @@ export const ProjectSlider: React.FC = () => {
                       delay: isFirstCard ? 0 : 0.08 + idx * 0.06,
                       ease: [0.32, 0, 0, 1],
                     }}
-                    whileHover={{ scale: 1.01, transition: { duration: 0.25, ease: 'easeOut' } }}
-                    whileTap={{ scale: 0.99 }}
+                    whileHover={isMobile ? undefined : { scale: 1.01, transition: { duration: 0.25, ease: 'easeOut' } }}
+                    whileTap={isMobile ? undefined : { scale: 0.99 }}
                     onClick={() => {
                       if (selectedProject.id === 'certifications') {
                         if (section.live_url) {
@@ -1440,12 +1447,13 @@ export const ProjectSlider: React.FC = () => {
                         : selectedProject.id === 'experience' || isFirstCard
                         ? 'aspect-[33.5/34.4] rounded-[32px] md:rounded-[64px] bg-[#EAEAEA]'
                         : 'aspect-square rounded-[32px] md:rounded-[64px] bg-[#EAEAEA]'
-                    } overflow-hidden relative shrink-0 cursor-pointer group`}
+                    } overflow-hidden relative shrink-0 cursor-pointer group touch-pan-y`}
                     style={{
                       overflow: 'hidden',
                       boxShadow: 'none',
                       border: 'none',
                       outline: 'none',
+                      touchAction: 'pan-y',
                     }}
                   >
                     {selectedProject.id === 'projects' ? (

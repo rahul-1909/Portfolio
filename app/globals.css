@@ -129,6 +129,8 @@ body {
 .section-card-stack {
   padding-top: 13rem;
   padding-bottom: 12rem;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
 }
 
 @media (min-width: 768px) {
